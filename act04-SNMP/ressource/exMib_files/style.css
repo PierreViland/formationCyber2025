@@ -1,0 +1,71 @@
+body {
+    color: Black;
+    font-family: arial,sans-serif ;
+}
+
+.titre {
+    font-size: large;
+    font-style: italic;
+    color: #c5ccff;
+    font-weight: bold;
+    padding-right: 50px;
+    text-align:right;
+}
+a:link { text-decoration:none; color:#00a; }
+a:visited { text-decoration:none; color:#88f; }
+a:hover { text-decoration:none;}
+a:active { text-decoration:none; color:#55f; }
+
+.details {
+    font-family:monospace;
+}
+
+.details td {
+    vertical-align : top;
+}
+
+.details, .enfants, .chemin, .listeOID, .modules, .afficheModulesOID {
+    border: 1px #3366cc solid;
+    margin: 5px;
+}
+.detailsTitre, .enfantsTitre, .cheminTitre, .listeOIDTitre, .modulesTitre,
+.afficheModulesOIDTitre {
+    background-color: #e5ecf9;
+    font-weight: bold;
+    padding: 3px 1px 3px 13px;
+}
+.detailsContenu, .enfantsContenu, .cheminContenu, .listeOIDContenu,
+.modulesContenu, .afficheModulesOIDContenu {
+    padding-left : 10px;
+}
+
+.titreDetailsModule {
+    padding-top:20px;
+    background-color: #e5ecf9;
+    font-weight: bold;
+}
+
+.cheminContenu {
+    overflow: auto;
+}
+
+.enfants {
+}
+.details {
+}
+
+.footer {
+    font-size: small;
+    font-style: italic;
+    color: #c5ccff;
+    text-align:center;
+}
+
+ul {
+    padding:0px 0px 0px 15px;
+    margin:0px;
+}
+
+li {
+    padding : 0px;
+}

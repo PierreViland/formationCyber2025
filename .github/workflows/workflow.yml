@@ -2,12 +2,12 @@ name: Build LaTeX Document
 
 on:
   push:
-    paths:
-      - '**.tex'
-      - '**.sty'
-      - '**.bib'
-      - '**.sh'
-      - '.github/workflows/**'  # Ajouté : surveille les fichiers YAML de workflow
+    #  paths:
+    #  - '**.tex'
+    #  - '**.sty'
+    #  - '**.bib'
+    #  - '**.sh'
+    #  - '.github/workflows/**'  # Ajouté : surveille les fichiers YAML de workflow
   workflow_dispatch:
 
 jobs:

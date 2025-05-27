@@ -1,0 +1,1400 @@
+\documentclass[french, 12pt]{article}%
+
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+
+\usepackage{textcomp}
+
+\usepackage[official]{eurosym}
+
+\usepackage{appendix}
+\usepackage{pdfpages}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\itemE}{\item[$\bullet$]}
+
+\newcommand{\titreSeq}{HTTPS}
+\newcommand{\lycee}{Academie rennes}
+\newcommand{\classSeq}{CIEL }
+\newcommand{\matiereSeq}{IR}      
+\newcommand{\numSeq}{Cyber}
+\newcommand{\numAct}{02}
+\newcommand{\objSeance}{Mettre en place un service web sécurisé}
+
+\newcommand{\moySeq}{\begin{itemize}	
+\itemE VM Kali
+\itemE VM serveurCyber
+\itemE VM Pfsense
+\end{itemize}}
+
+
+\newcommand{\paraL}[1]{\tiny\noindent\rule{1.0\linewidth}{0.5pt}\paragraph*{#1}\  \normalsize}
+
+
+\newcommand{\compSeq}{\begin{itemize}
+\item  
+\end{itemize}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%Algo
+\usepackage[linesnumbered, french]{algorithm2e}
+\SetKwFor{For}{Pour}{faire}{fin}
+\SetKwFor{While}{Tant que}{faire}{fin}%
+\SetKw{KwTo}{?}
+\SetKw{KwPas}{par pas de}
+\SetKw{KwRet}{Retourne}
+\SetKwProg{Fn}{Fonction }{ arguments }{fin}
+\SetKwRepeat{Repeat}{Répéter}{jusqu'?}%
+\SetKwIF{If}{ElseIf}{Else}{Si}{alors}{Sinon si}{Sinon}{Fin}
+
+
+\usepackage{listings} %%%%Présenration code source
+\lstset{language=C++,
+    %numbers=left,
+   %stepnumber=1,
+    showstringspaces=false,
+    tabsize=1,
+    breaklines=true,
+    breakatwhitespace=false,
+    basicstyle=\footnotesize,
+    keywordstyle=\color{blue}\footnotesize,
+    stringstyle=\color{red}\footnotesize,
+    commentstyle=\color{magenta}\footnotesize,
+    morecomment=[l][\color{magenta}]{\#}
+    }
+\lstdefinestyle{commande}{
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  %numbers=left,
+  %numberstyle=\tiny\color{gray},
+  numbersep=5pt,
+  breaklines=true,
+  frame=single,
+  backgroundcolor=\color{lightgray!10},
+  %captionpos=b,
+  %caption=\lstname   
+    extendedchars=true,
+    literate={é}{{\'e}}1
+             {è}{{\`e}}1
+             {à}{{\`a}}1
+             {ç}{{\c{c}}}1
+             {✔}{{\checkmark}}1,
+}
+%\usepackage[T1]{fontenc}
+
+\newcommand{\itemB}{\item[$\Box$]}
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in 
+\usepackage{multicol}
+
+\linespread{1.1} 
+\usepackage{amsmath}%
+\usepackage{amsfonts}%
+\usepackage{amssymb}%
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage{enumitem}
+
+%\usepackage[T1]{fontenc}    
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage{array}
+\usepackage{mwe}
+%-------------------------------------------
+\newtheorem{theorem}{Theorem}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+
+
+
+\usepackage{xcolor}
+
+\usepackage{colortbl}
+\definecolor{vert_capet}{RGB}{191,255,191}	
+\definecolor{bleu_snir}{RGB}{101,191,179}	
+\setlength{\doublerulesep}{\arrayrulewidth}
+%-------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{tikz, xcolor, lipsum}
+\makeatletter
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+
+\tikzset{titre_bleu_snir/.style =
+	{draw=bleu_snir, line width=1.5pt, fill=white,
+	rectangle, rounded corners, right,minimum height=2em}}
+\newcommand{\titreencadre}{Titre}
+\makeatletter
+\mdfdefinestyle{encadrestyle}{%
+	linewidth=1.5pt,roundcorner=5pt,linecolor=bleu_snir,
+	apptotikzsetting={\tikzset{mdfbackground/.append style ={%
+		fill=white}}},
+	frametitlefont=\bfseries,
+	singleextra={%
+		\node[titre_bleu_snir,xshift=2em] at (P-|O) %
+			{~\mdf@frametitlefont{\titreencadre}\hbox{~}};},
+	firstextra={%
+		\node[titre_bleu_snir,xshift=2em] at (P-|O) %
+		{~\mdf@frametitlefont{\titreencadre}\hbox{~}};},
+	}
+\mdfdefinestyle{encadresanstitrestyle}{%
+	linewidth=1.5pt,roundcorner=5pt,linecolor=bleu_snir
+	apptotikzsetting={\tikzset{mdfbackground/.append style ={%
+		fill=yellow!20}}},
+	}
+
+\newenvironment{encadre}[1]{\renewcommand{\titreencadre}{#1}
+	\begin{mdframed}[style=encadrestyle]
+	\vspace{0.5\baselineskip}
+	}{%
+	\end{mdframed}}
+
+\newenvironment{encadresanstitre}{
+	\begin{mdframed}[style=encadresanstitrestyle]
+	}{%
+	\end{mdframed}}
+\makeatother
+\usepackage{colortbl}
+\definecolor{vert_capet}{RGB}{191,255,191}	
+\definecolor{bleu_snir}{RGB}{101,191,179}	
+\setlength{\doublerulesep}{\arrayrulewidth}
+%-------------------------------------------
+\usepackage{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newif\ifPROF
+
+%\def\PourProf{0}
+\ifdefined\PourProf
+  \PROFtrue
+  \newenvironment{corr}{\begingroup \color{red}}{\normalcolor \endgroup}
+\else
+  \PROFfalse
+  \newenvironment{corr}{\begingroup \color{white}}{\normalcolor \endgroup}
+\fi
+
+%\PROFtrue
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%Note et pied de page
+\usepackage{fancybox}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.5cm,bottom=2cm,headheight=2cm]{geometry}
+\pagestyle{fancy}
+\fancyhead[R]{\includegraphics[scale=0.3]{logo_CIEL.png}}
+\fancyhead[C]{Prénom}
+\fancyhead[L]{Nom}
+\fancyfoot[C]{Page \thepage/\pageref{LastPage}}
+\fancyfoot[L]{\classSeq ~\matiereSeq}
+\fancyfoot[R]{Formation \numSeq  ~ Act \numAct}
+\renewcommand{\headrulewidth}{1pt}
+%%%Note et pied de page 
+
+
+
+\begin{document}
+\lstset{basicstyle = \ttfamily,columns=fullflexible}
+
+\title{\titreSeq\\
+ \includegraphics[scale=0.5]{logo_sti2d.png}\\
+}
+\author{\lycee}
+\date{}%\today}
+%\maketitle
+
+\noindent\begin{tabular}{!{\vrule width 1.5pt}m{0.7\linewidth}!{\vrule width 1.5pt}m{0.2\linewidth}!{\vrule width 1.5pt}}
+\hline\hline
+\cellcolor{green!25}
+\begin{center}
+	\Large\textbf{\titreSeq}  
+\end{center}
+  & 
+
+\begin{minipage}{1.0\linewidth}
+  \vspace*{0.1cm} 
+\centering\includegraphics[scale=0.2]{logo_lycee.jpg}
+
+{\tiny\today}
+  \vspace*{0.1cm} 
+\end{minipage}\\ \hline\hline
+
+\multicolumn{2}{!{\vrule width 1.5pt}l!{\vrule width 1.5pt}}{
+\begin{minipage}{14cm}
+\vspace*{0.1cm} 
+\textbf{Objectif} : \objSeance
+\vspace*{0.1cm} 
+\end{minipage}} \\ \hline\hline
+
+\multicolumn{2}{!{\vrule width 1.5pt}l!{\vrule width 1.5pt}}{
+\begin{minipage}{14cm}
+\vspace*{0.1cm} 
+\textbf{Moyens} : 
+\moySeq
+\vspace*{0.1cm} 
+\end{minipage}} \\ \hline\hline
+%
+%\multicolumn{2}{!{\vrule width 1.5pt}l!{\vrule width 1.5pt}}{
+%\begin{minipage}{14cm}
+%\vspace*{0.1cm}
+%\tiny
+%Compétences attendues :
+%\compSeq
+%\vspace*{0.1cm}
+%\end{minipage}}
+%\normalsize \\ \hline\hline
+\end{tabular}
+
+\tableofcontents
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problème de sécurité}
+Dans le système précent qui a été mis en place, les échanges s'effectuent via le protocole http, et donc sont non sécurisé. Cela signifie que
+\begin{itemize}
+\itemE les données échangées ne sont pas chiffrées, donc elles peuvent être lues ou interceptées par une personne malveillante. 
+\itemE De plus, le site n’est pas certifié, ce qui veut dire qu'on ne peut pas vérifier l'identité du site, il pourrait donc s'agir d'un faux site se faisant passer pour un autre.
+\end{itemize} 
+
+\paragraph{Mise en pratique}
+
+Votre machine hôte veut visualiser le contenu du page web de votre serveur.  Un pirate se place sur le même réseau et à l'aide de Wireshark, il est capable de visualiser le trafic entre le client le serveur Ubuntu.
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/topReseau.png}
+\end{center}
+
+Même si cette manipulation a déjà été effectuée, il est intéressant de la refaire afin de visualiser la différence entre une connexion en HTTP et en HTTPS.
+
+Voici un exemple de capture réalisée avec Wireshark sous Kali Linux. L’échange entre le client (192.168.1.130) et le serveur (192.168.1.30) y est clairement visible, ce qui souligne l'absence de chiffrement. 
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/captureWireshark}
+\end{center}
+
+
+\section{Les certificats TLS}
+Les certificats TLS permettent de garantir 3 principes de sécurité \footnote{section inspirée de https://aymericlagier.com/2021/04/07/les-certificats-tls/} : 
+\begin{itemize}
+\itemE L'authentification
+\itemE La confidentialité
+\itemE L'intégrité
+\end{itemize}
+
+\subsection{Base d'un certificat}
+
+La base des certificat repose sur la cryptographie asymétrique (Ex RSA) avec la génération d'une clef publique et d'une clef privée
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/clefPubliquePrive}
+\end{center}
+
+ 
+\paragraph{Pour rappel, la clef public} permet de 
+\begin{itemize}
+\itemE Chiffrer un message
+\itemE Vérifier la signature d’un message signé par la clé privée
+\end{itemize}
+
+\paragraph{La clef privée} permet de 
+\begin{itemize}
+\itemE Déchiffrer un message chiffré avec la clef publique
+\itemE Signer un message
+\end{itemize}
+
+\subsection{Composition d'un certificat}
+Un certificat TLS est composé 
+
+\begin{itemize}
+\itemE d'une clef publique
+\itemE d'un ensemble d'attributs relatifs au certificat lui même (ex : date d'expiration), au site web (ex : DNS associés au certificat), à l'autorité de certification émettrice du certificat, etc.
+\end{itemize}
+
+Cette ensemble est alors \textbf{signé} par \textbf{une autorité de certification}.La signature assure l’intégrité des éléments composant le certificat.
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/certifcatDessin}
+\end{center}
+
+\paragraph{Exemple certificat Toutatice}
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/certifcatToutatice.png}
+\end{center}
+
+\subsection{Autorité de certification}
+Comme évoqué ci-dessus, un certificat est un ensemble d’informations (clef publique + attributs) signé par la clef privée d’une autorité de certification.
+
+\begin{encadre}{Autorité de certification (ou CA)}
+Entité de confiance qui émet et gère des certificats numériques permettant de vérifier l'identité des parties dans des communications sécurisées. Ces certificats assurent l'authenticité et la fiabilité des échanges.
+\end{encadre}
+
+En réalité, il n'existe pas une autorité de certification mais une hiérarchie d'autorités de certification pour segmenter la distribution de certificats. 
+
+Voici, quelques autorités de certification connues : 
+\begin{itemize}
+\itemE DigiCert
+\itemE GlobalSign
+\itemE Let's Encrypt (gratuit mais limité au service web et avec une mauvaise réputation)
+\end{itemize}
+
+La CA de Toutatice dans l'exemple au-dessus est  \textbf{GEANT OV RSA CA 4}. C'est une CA fournissant des certificats pour les institutions de recherche et d'enseignement européen .
+
+\vspace{0.5cm}
+
+Il est aussi tout a fait possible de créer sa propre \textbf{CA}. Il faudra dans ce cas, importer le certificat racine de notre CA. 
+
+
+
+\paragraph{Les certificats auto-signé} sont utilisés lors de phase de développement. Ces certificats, pouvant être générés facilement sur un poste de développement avec des outils comme openssl, ne sont signés par aucune autorité de certification.
+
+Cette absence d’autorité de certification de confiance implique une facilité de falsification. Ne jamais faire confiance à un certificat auto-signé que vous n’avez pas vous même créé.
+
+
+\subsection{Utilisation des certificats}
+
+Dans un cas normal, 
+\begin{enumerate}
+\item Le site web acquiert un certificat d’une autorité de certification
+\item Lorsque l’utilisateur tente d’accèder au site web légitime, il récupère le certificat du site web
+\item Il vérifie sa date de validité, la signature du certificat et enfin que son autorité racine est bien reconnue comme étant de confiance
+\item Si tout est correct, le client a authentifié le serveur web, la communication sécurisée peut être établie et les échanges peuvent commencer.
+\end{enumerate}
+
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/certifcatUtilisation}
+\end{center}
+
+
+
+\subsection{Format des certificats : X.509}
+
+\textbf{X.509} est le standard international le plus courant utilisé pour définir le format des certificats numériques. Il contient plusieurs champs importants, notamment :
+\begin{itemize}
+\itemE \textbf{Version} : La version du standard X.509 (généralement version 3).
+\itemE \textbf{Numéro de série} : Identifiant unique du certificat, attribué par l'autorité de certification (CA).
+\itemE \textbf{Algorithme de signature} : Algorithme utilisé pour signer le certificat (par exemple, SHA-256).
+\itemE \textbf{Émetteur} : Nom de l'autorité de certification qui a émis le certificat.
+\itemE \textbf{Sujet} : Nom de l'entité à laquelle le certificat est attribué (nom du serveur, utilisateur, etc.).
+\itemE \textbf{Clef publique} : La clef publique associée à l'entité.
+\itemE \textbf{Période de validité} : Date de début et de fin de la validité du certificat.
+\itemE \textbf{Extensions (Version 3)} : Champs facultatifs, comme les noms alternatifs du sujet (SAN), les restrictions d'usage du certificat, etc.
+
+\end{itemize}
+
+X.509 est la norme principale pour les certificats numériques grâce à sa robustesse et son adoption massive, mais des alternatives existent pour des besoins spécifiques ou des contextes différent : \textbf{PGP}, \textbf{SPKI}, \textbf{JWT} ou encore \textbf{WebAuthn}. 
+
+
+\paragraph{X509 PEM} est un format de fichier utilisé pour stocker des certificats numériques conformes au standard X.509. Ces fichiers sont encodés en Base64 et entourés d'en-têtes spécifiques pour permettre un transport et une lecture faciles par les systèmes et les outils logiciels.
+
+
+\begin{lstlisting}[style=commande]
+-----BEGIN CERTIFICATE-----
+MIIEWTCCA0GgAwIBAgIBAjANBgkqhkiG9w0BAQsFADBbMRQwEgYDVQQDEwtpbnRl
+.....
+.....
+OkXQfq7Z8HgmS6jr+X89Dp6mM9VTZlUhFY9vcW/8uwT5kioZMdFVpGBVzLtnEtiR
+RCHkSSsYHz6dtpUAvw==
+-----END CERTIFICATE-----
+\end{lstlisting}  
+
+D'autres types de fichiers PEM peuvent avoir des en-têtes différents, comme :
+\begin{itemize}
+\itemE Pour une clé privée, 
+\end{itemize} 
+\begin{lstlisting}[style=commande]
+-----BEGIN PRIVATE KEY-----
+\end{lstlisting}
+\begin{itemize}
+\itemE Pour une demande de signature de certificat (CSR),
+\end{itemize}
+\begin{lstlisting}[style=commande]
+-----BEGIN CERTIFICATE REQUEST-----
+\end{lstlisting}
+
+\paragraph{Des outils existent pour pouvoir lire les certificats} 
+\begin{itemize}
+\itemE Sous Windows avec \textit{Gestionnaire de certificats Windows} ou \textit{Certmgr.msc} 
+\itemE Sous Linux : \textit{Openssl} avec la commande
+\end{itemize} 
+
+\begin{lstlisting}[style=commande]
+openssl x509 -in certificat.crt -text -nout
+\end{lstlisting}
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/exCertificat}
+\end{center}
+
+
+
+\section{HTTPS avec Nginx}
+Vous allez mettre en place une solution \textbf{https} sur un nginx.  La gestion des certificats se fera dans ce 1$^\text{er}$ exemple à l'aide de \textbf{Pfsense}. 
+
+
+\subsection{Création de certificats avec pfSense}
+
+\begin{minipage}{0.6\linewidth}
+\textbf{pfSense} est un système d'exploitation open source ayant pour but la mise en place de routeur/pare-feu basé sur le système d'exploitation FreeBSD. 
+
+\end{minipage}
+\begin{minipage}{0.36\linewidth}
+\begin{center}
+\includegraphics[scale=0.3]{./ressource/fpsenseLogo}
+\end{center}
+\end{minipage}
+
+\paragraph{Pour rappel}, pour vous connecter sur pfsense, allez sur l'interface web en utilisant l'adresse IP du LAN. Les identifiants sont 
+\begin{itemize}
+\itemE Login : \textit{admin}
+\itemE Mot de passe : \textit{pfsense} 
+\end{itemize}
+
+\subsubsection{pfSense : Créer une CA}
+Après s'être connecter à l'interface web : 
+
+\begin{enumerate}
+\item Aller dans System $>$ Certificates $>$ Authorities
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/caPfsense}
+\end{center}
+
+\item Cliquez sur \textbf{Add} pour créer une nouvelle CA avec la configuration suivante
+
+\end{enumerate}
+\begin{itemize}
+\itemE \textbf{Descriptive Name} : Donner un nom descriptif à votre CA (ex. "Mon-CA").
+\itemE \textbf{Method} : Choisir Create an Internal Certificate Authority.
+\itemE \textbf{Key Length} : Par défaut, utiliser 2048 bits ou plus.
+\itemE \textbf{Digest Algorithm} : Utiliser SHA-256.
+\itemE \textbf{Distinguished Name} : Remplir les champs comme le pays, l'organisation, le nom commun (Common Name) de votre CA.
+
+\end{itemize}
+
+
+
+Après avoir cliquer sur \textbf{Save}, il faut ensuite penser à télécharger le certificat du CA : 
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/ca_telecharger}
+\end{center}
+
+
+\subsubsection{pfSense : Créations de certificats signés}
+
+Pour créer un certificat signé, il faut bien sûr avoir un CA à disposition et respecter les informations suivantes
+
+
+\begin{enumerate}
+\item Aller dans System $>$ Certificates $>$ Certificates
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/certificatPfsense}
+\end{center}
+
+\item Cliquer sur \textbf{Add} pour la création d'un nouveau certificat avec la configuration suivante
+\end{enumerate}
+
+\begin{itemize}
+\itemE \textbf{Method} : Choisir Create an Internal Certificate.
+\itemE \textbf{Descriptive Name} : Donner un nom explicite à ce certificat.
+\itemE \textbf{Certificate Authority} : Sélectionnr la CA que vous avez créée dans la liste déroulante.
+\itemE \textbf{Key Length} : Par défaut, utilisez 2048 bits ou plus.
+\itemE \textbf{Digest Algorithm} : SHA-256 recommandé.
+
+\itemE \textbf{Distinguished Name} : le nom ou l'adresse IP de l'utilisateur ou du serveur
+\itemE \textbf{Common Name (CN)} : Utilisez le nom de domaine ou l'adresse IP du site (ex. site.exemple.com ou 192.168.1.1).
+\itemE \textbf{Alternative name} : permet de spécifier plusieurs noms de domaine (ou adresses IP) que le certificat doit sécuriser, en complément ou remplacement du \textbf{Common Name}
+\itemE \textbf{Certificate Type} : sélectionner
+	\begin{itemize}
+	\item[+] Server Certificate pour un site web.
+	\item[+] User Certificate pour une authentification utilisateur.
+	\end{itemize}
+
+\end{itemize}
+
+Une attention particulière doit être portée aux champs en rouge dans l'image ci-dessous.
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/Certif_Formation.png}
+\end{center}
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/Certif_Formation2.png}
+\end{center}
+
+
+
+
+Il faudra ensuite télécharger le certificat du serveur et sa clef privée (icône en rouge dans l'image ci-dessous).
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/certif_serveur}
+\end{center}
+
+
+
+
+
+\subsection{Importation certificat CA }
+Votre certificat a été signé par une autorité de certification qui n'est pas connu. Il faut donc que vous l'importiez dans votre navigateur.
+
+\subsubsection{Sous firefox}
+\begin{enumerate}
+\item Ouvrir les paramètres de certificats dans Firefox :
+\item Aller dans :
+Menu $\Rightarrow$ Paramètres  $\Rightarrow$  Confidentialité et sécurité  $\Rightarrow$ Section Certificats  $\Rightarrow$  Cliquez sur Afficher les certificats.  $\Rightarrow$ Importer votre certificat racine :
+\item Dans l'onglet Autorités, cliquer sur Importer et sélectionnez le  \textbf{certificat de votre CA}
+Lors de l'importation, cocher les cases pour faire confiance à cette CA pour :
+\begin{itemize}
+\itemE Identifier les sites web.
+\end{itemize}
+\end{enumerate}
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/newCA}
+\end{center}
+
+\subsubsection{Sous Chrome}
+\begin{enumerate}
+  \item Ouvrir Google Chrome.
+  \item Aller dans : 
+	Paramètres $\rightarrow$ Confidentialité et sécurité $\rightarrow$ Sécurité $\rightarrow$ Gérer les certificats   $\rightarrow$ Installé par vous  $\rightarrow$ Importé certificat approuvé
+  \item Sélectionner le fichier de certificat CA (par exemple, \texttt{.crt} ou \texttt{.pem}).
+  \item Valider importation et redémarrer Chrome si nécessaire.
+\end{enumerate}
+
+\subsection{Lancement du service}
+
+
+Pour lancer le serveur \textbf{LEMP} en mode sécurisé, il faut 
+\begin{enumerate}
+\item Se placer dans le bon répertoire puis stopper le container de la version non sécurisée : 
+\end{enumerate}
+
+\begin{lstlisting}[style=commande]
+pviland@serveurCyber:~$ cd 00-serveurLemp/
+
+pviland@serveurCyber:~/00-serveurLemp$ sudo docker compose down
+[+] Running 5/5
+ ✔ Container nginxPV             Removed                                   0.5s 
+ ✔ Container phpmyadminPV        Removed                                   1.6s 
+ ✔ Container phpPV               Removed                                   0.4s 
+ ✔ Container mysqlPV             Removed                                   1.7s 
+ ✔ Network 00-serveurlemp_mynet  Removed                                   0.1s 
+pviland@serveurCyber:~/00-serveurLemp$
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+\end{lstlisting}
+
+
+\begin{enumerate}[resume]
+\item Se placer dans la branche \verb?httpNginx_2? du dépôt
+\end{enumerate}
+
+\begin{lstlisting}[style=commande]
+git branch
+  httpNginx_2
+  httpsApache
+* main
+
+pviland@serveurCyber:~/00-serveurLemp$ git switch httpNginx_2 
+Switched to branch 'httpNginx_2'
+\end{lstlisting}
+
+\begin{enumerate}[resume]
+\item Depuis la machine hôte, copier la clef privée et le certificat du serveur dans le répertoire \verb?~/00-serveurLemp/ssl?
+\end{enumerate}
+
+
+\begin{lstlisting}[style=commande]
+pierre@pierreUbuntu:~/Téléchargements/certificat_et_clef$  serveur_PV_30.crt serveur_PV_30.key pviland@192.168.1.30:~/00-serveurLemp/ssl
+\end{lstlisting}
+
+\begin{enumerate}[resume]
+\item Vérifier sur votre VM que le certificat et la clef sont présents
+\end{enumerate}
+
+\begin{lstlisting}[style=commande]
+pviland@serveurCyber:~/00-serveurLemp$ cd ssl/
+\end{lstlisting}
+
+\begin{lstlisting}[style=commande]
+pviland@serveurCyber:~/00-serveurLemp/ssl$ ll
+total 20
+drwxrwxr-x 2 pviland pviland 4096 mai    8 16:49 ./
+drwxrwxr-x 9 pviland pviland 4096 mai    8 07:12 ../
+-rw-rw-r-- 1 pviland pviland 1594 mai    8 16:45 serveur_PV_30.crt
+-rw-rw-r-- 1 pviland pviland 1704 mai    8 16:45 serveur_PV_30.key
+\end{lstlisting}
+
+\begin{enumerate}[resume]
+\item Après cette replacer dans le répertoire \verb?~/00-serveurLem?,  lancer alors les containers 
+\end{enumerate}
+
+\begin{lstlisting}[style=commande]
+pviland@serveurCyber:~/00-serveurLemp$ cd ..
+pviland@serveurCyber:~/00-serveurLemp$ sudo docker compose up -d
+[+] Running 5/5
+ ✔ Network 00-serveurlemp_mynet  Created                                   0.2s 
+ ✔ Container phpmyadminPV        Started                                   1.6s 
+ ✔ Container mysqlPV             Started                                   1.7s 
+ ✔ Container phpPV               Started                                   2.1s 
+ ✔ Container nginxPV             Started                                   2.7s 
+\end{lstlisting}
+
+
+
+\begin{enumerate}[resume]
+\item Vous devez avoir accès à votre site de manière sécurisée. \footnote{Pour ne pas avoir des problèmes de cache, les tests ont été réalisés en navigation privé}
+\end{enumerate}
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/nginxHttps}
+\end{center}
+
+\subsection{Explication de la configuration}
+Pour pouvoir lancer nginx en mode sécurisé, il faut effectuer les modifications suivantes  
+
+\paragraph{Modification du docker-compose.yml}
+
+Pour rappel  
+\begin{encadre}{Un fichier \verb?docker-compose.yml?}
+ est un fichier de configuration qui permet de définir et gérer plusieurs conteneurs Docker à l’aide d’un seul fichier, en spécifiant leurs images, volumes, réseaux, et dépendances.
+\end{encadre}
+
+Il faut dans ce fichier
+
+\begin{itemize}
+\itemE Rajouter la redirection du port d'écoute https : 443 sur le container de Nginx 
+\end{itemize}
+
+\begin{lstlisting}[style=commande]
+ports:
+      - "80:80"  # Port hote : Port conteneur
+      - "443:443"
+\end{lstlisting}
+
+\begin{itemize}
+\itemE Ajouter le dossier partagé entre l'hôte et le container
+\end{itemize}
+\begin{lstlisting}[style=commande]
+volumes:
+      - ./src:/var/www/php  # Montage du repertoire src de l'hote dans /var/www/php du conteneur
+      - ./.docker/nginx/conf.d/default.d:/etc/nginx/conf.d/default.conf  # Configuration personnalisee de Nginx
+      - ./ssl/:/etc/nginx/ssl/ #Dossier pour les certificats     #<= NOUVELLE LIGNE
+\end{lstlisting}
+
+\paragraph{Modification du fichier default.conf} \ 
+
+Le fichier \verb?default.conf? contient la configuration par défaut du serveur \textbf{Nginx}. Il est disponible aussi (grâce au volume partagé) dans le répertoire \verb?./.docker/nginx/conf.d/? de la machine hôte.  Les modification principales sont : 
+
+\begin{itemize}
+\itemE La redirection permanente du http vers le https. \textit{ligne 8}
+\end{itemize}
+
+\begin{lstlisting}[style=commande]
+    return 301 https://$host$request_uri;
+\end{lstlisting}
+où 
+\begin{itemize}
+\item[+] \verb?301? : indique une redirection permanente
+\item[+] \verb?host? : représente le nom l'IP  (ex. 192.168.1.30) ou l'URL
+\item[+]  \verb?request_uri? : représente le partie chemin + la page + requête éventuelle (\textit{mapage.html?var=1})
+\end{itemize}
+
+\begin{itemize}
+\itemE Mettre le serveur à l'écoute sur le port 443 en utilisant SSL. \textit{ligne 12 à 22}
+
+	\begin{itemize}
+	\item[+] Activation des connexion sur l'addresse IP 192.168.1.30 en IPv4 et IPV6 en HTTP/2 
+	
+	\begin{lstlisting}[style=commande]
+	listen 443 ssl http2;  # Activation du support HTTP/2 pour de meilleures performances
+	listen [::]:443 ssl http2;	
+	server_name 192.168.1.30;
+	\end{lstlisting}
+	\end{itemize}
+
+	\begin{itemize}
+	\item[+] Sélection de la clef privée et du certificat du serveur. 
+	
+	\begin{lstlisting}[style=commande]
+	    # Définition des certificats SSL                                                                                           
+         ssl_certificate /etc/nginx/ssl/serveur_PV_30.crt;
+         ssl_certificate_key /etc/nginx/ssl/serveur_PV_30.key;
+	\end{lstlisting}
+	Les chemins spécifiés ci-dessous doivent correspondre au volume partagé  décrit ligne 11 du \verb?docker-compose.yml?.
+	\end{itemize}
+
+\end{itemize}
+
+\section{HTTPS avec Apache}
+Dans ce deuxième exemple, vous allez utiliser  :
+ \begin{itemize}
+ \itemE \textbf{Openssl} pour la génération des certificats
+ \itemE \textbf{Apache} pour la serveur Web \footnote{Le dépôt s’appelait initialement 00-serveurLemp, en référence à la \textbf{stack LEMP} (Linux, Nginx, MySQL, PHP). Une branche dédiée a ensuite été créée pour illustrer l’utilisation du HTTPS avec un serveur Apache, formant ainsi un serveur \textbf{LAMP}. Toutefois, le nom du dépôt est resté inchangé.}
+ \end{itemize}
+
+Avant de commencer, il faut stopper les containers précédemment utilisés. 
+\begin{lstlisting}[style=commande]
+sudo docker compose down
+\end{lstlisting}
+
+Puis ensuite, il faut se mettre sur la branche \verb?httpsApache ?
+\begin{lstlisting}[style=commande]
+git switch httpsApache 
+\end{lstlisting}
+
+\newpage
+
+\subsection{Création de certificat avec Openssl}
+Cette section présente de manière générale les commandes à utiliser pour générer des certificats. Une solution plus pratique sera présentée dans la section \ref{lbl_script}.
+
+\begin{encadre}{OpenSSL}
+Bibliothèque open-source puissante qui implémente les protocoles cryptographiques TLS/SSL pour sécuriser les communications sur Internet. Elle fournit également des outils en ligne de commande permettant de gérer des clefs, certificats, chiffrements, et bien plus, pour garantir la sécurité des données.
+\end{encadre}
+
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/logoOpenSSL}
+\end{center}
+
+\subsubsection{Openssl : Créer votre CA}
+\begin{enumerate}
+\item Sous une distribution linux type ubuntu, créer une clef privée RSA pour la CA : 
+\end{enumerate}
+
+\begin{lstlisting}[style=commande]
+openssl genrsa -out ca.key 2048
+\end{lstlisting}
+avec
+\begin{itemize}
+\itemE \verb?ca.key? : la clef privée de la CA
+\itemE \verb?2024? : la taille de la clef en bits (à augmenter plus de sécurité)
+\end{itemize}
+
+
+\begin{enumerate}[resume]
+\item Créer un certificat auto-signé pour la CA
+\end{enumerate}
+\begin{lstlisting}[style=commande]
+openssl req -x509 -new -nodes -key ca.key -sha256 -days 3650 -out ca.crt
+\end{lstlisting}
+avec 
+
+\begin{itemize}
+\itemE \verb?-x509? : Indique qu'il s'agit d'un certificat auto-signé.
+\itemE \verb?ca.key? : Utilise la clef privée créée à l'étape précédente.
+\itemE \verb?3650? : Durée de validité du certificat en jours (10 ans ici).
+\itemE Répondre aux questions du \verb?Distinguished Name?
+\end{itemize}
+
+
+\vspace{0.5cm}
+La CA est alors constituée de
+\begin{itemize}
+\itemE \verb?ca.key? : la clef privée de la CA de chiffrement
+\itemE \verb?ca.crt? : le certificat auto-signé de la CA 
+\end{itemize}
+
+
+\subsubsection{Openssl : créations de certificats signés}
+
+
+\begin{enumerate}
+\item  Générer une clef privée pour le certificat
+\end{enumerate}
+\begin{lstlisting}[style=commande]
+openssl genrsa -out clef.key 2048
+\end{lstlisting}
+avec 
+\begin{itemize}
+\itemE \verb?clef.key? : clef privée pour le certificat
+\end{itemize}
+
+\begin{enumerate}[resume]
+\item Créer une demande de signature de certificat (CSR). IL faudra répondre au question du \verb?Distinguished Name?
+\end{enumerate}
+\begin{lstlisting}[style=commande]
+openssl req -new -key clef.key -out certificatNonSigne.csr
+\end{lstlisting}
+avec 
+\begin{itemize}
+\itemE \verb?certificatNonSigne.csr? : Demande de signature. 
+\end{itemize}
+
+
+\begin{enumerate}[resume]
+\item Signer la CSR avec votre CA (manque le SAN)
+\end{enumerate}
+\begin{lstlisting}[style=commande]
+openssl x509 -req -in certificatNonSigne.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out certificatSigne.crt -days 365 -sha256
+\end{lstlisting}
+avec 
+\begin{itemize}
+\itemE \verb?certificatNonSigne.csr? : certificat non signé
+\itemE \verb?ca.crt? : certificat de la CA
+\itemE \verb?ca.key? : clé privée de la CA
+\itemE \verb?certificatSigne.crt? : certificat signé
+\end{itemize}
+\paragraph{Remarque } :  Le \textbf{SAN} pour Subject Alternative Name permet de spécifier des noms supplémentaires ou des adresses IP pour lequel le certificat est valide. C'est devenu obligatoire pour la plus part des navigateur.  Nous verrons dans la section suivante la manière des les configurer.
+
+
+\paragraph{L'ensemble des fichiers } généré est 
+\begin{itemize}
+\itemE \verb?ca.crt? : certificat de la CA
+\itemE \verb?ca.key? : clef privée de la CA
+\itemE \verb?certificatSigne.crt? : certificat signé
+\itemE \verb?clef.key? :clef privée liée au certificat
+\end{itemize}
+
+\subsubsection{Openssl : script}
+\label{lbl_script}
+Un script vous est proposé dans le répertoire \verb?openssl? présent dans votre répertoire de travail \verb?00-serveurLemp?. il permet de générer : 
+\begin{itemize}
+\itemE Une clef privée pour un CA
+\itemE Un certificat pour un CA
+\itemE Une clef privée pour un serveur
+\itemE Un certificat pour le serveur signée par le CA.
+\end{itemize}
+
+\paragraph{Configuration du script} \ 
+Pour utiliser ce script, les champs ci-dessous doivent être configurés : 
+
+\begin{lstlisting}[style=commande]
+  3 # Définition des fichiers
+  4 CA_KEY="ca.key"   #Clef privee du CA
+  5 CA_CERT="ca.crt"  #Certificat du CA
+  6 
+  7 SERVER_KEY="server_30.key"  #Clef privee du serveur
+  8 SERVER_CSR="server_30.csr"  #Certificat du serveur en attente de signature Certificate Signing Request
+  9 SERVER_CERT="server_30.crt" #Certificat du serveur
+ 10 SERVER_EXT="server_30.ext"  #Contient des options pour la generation du certificat serveur (pas utilise apres)
+ 11 
+ 12 # Common name du CA
+ 13 CA_CN="CA_Broce"        #Nom courant du CA
+ 14 
+ 15 # Variables du serveur
+ 16 SERVER_CN="ex_apache_sec.com"   #Nom courant du serveur
+ 17 IP_SERVER="192.168.1.30"        #Adresse IP du serveur    
+\end{lstlisting}
+
+Les noms des fichiers relatifs au serveur finissent tous par \verb?_30? ce qui correspond au dernier octet de mon @ IP 
+
+
+\paragraph{Création ou non d'un CA}
+Si vous souhaitez générer des certificats serveurs avec un même CA, il ne faut pas régénérer la clef et le certificat du CA. Dans ce cas, vous devrez commenter les lignes 21 à 25.
+
+\begin{lstlisting}[style=commande]
+ 20 # Création de la CA SI VOUS VOULEZ UN NOUVEAU CA => Decommente
+ 21 #echo "Création de la clef privée de la CA..."
+ 22 #openssl genrsa -out $CA_KEY 2048
+ 23 
+ 24 #echo "Création du certificat auto-signé de la CA..."
+ 25 #openssl req -x509 -new -key $CA_KEY -sha256 -days 3650 -out $CA_CERT -subj "/CN=$CA_CN"
+
+\end{lstlisting}
+
+
+\paragraph{Lancement du script et génération des clefs et des certificats}
+Il suffit ensuite de lancer le script
+
+\begin{lstlisting}[style=commande]
+./scriptGeneClef.sh 
+\end{lstlisting}
+Vous avez normalement à disposition (au minium les fichiers suivants 
+\begin{itemize}
+\itemE le certificat du CA (.crt)
+\itemE la clef privée du CA (.key)
+\itemE le certificat signée du serveur (.crt)
+\itemE la clef privée du serveur
+\end{itemize}
+
+\subsubsection{Configuration }
+
+
+\paragraph{Configuration des containers} via le  \verb?docker-compose.yml? . il doit contenir les lignes suivantes 
+
+\begin{lstlisting}[style=commande]
+  6     ports:
+  7       - "80:80"
+  8       - "443:443"
+  9     volumes:
+ 10       - ./.docker/apache2/:/etc/apache2/sites-enabled/
+ 11       - ./src:/var/www/html
+ 12       - ./openSSL/:/etc/ssl/
+\end{lstlisting}
+
+où 
+\begin{itemize}
+\itemE \textbf{Ligne 8} : redirection du port d'écoute https : 443 sur le container 
+\itemE \textbf{Ligne 10} : monte le répertoire locale contenant les fichiers de configuration de apache dans le répertoire du conflagration du container apache
+\itemE \textbf{Ligne 12} : idem mais pour le répertoire contenant la clef et le certificat du serveur 
+\end{itemize}
+
+Le montage des sources du site web se réalise de la même manière que précédemment (ligne 11)
+
+\paragraph{Configuration de Apache} via \verb?apache2_PV.conf? présent dans 
+
+\verb?./.docker/apache2/apache2PV.conf?
+
+Une fois ouvert, il est possible l'observer la redirection permanente de http vers https  ligne 6.
+\begin{lstlisting}[style=commande]
+  5     # Redirection de HTTP vers HTTPS
+  6     Redirect permanent / https:/192.168.1.30/
+\end{lstlisting}
+
+\textbf{Ligne 14 et 15}, il y a la déclaration du certificats et des clefs privée du serveur 
+\begin{lstlisting}[style=commande]
+ 14     SSLCertificateFile /etc/ssl/server_30.crt
+ 15     SSLCertificateKeyFile /etc/ssl/server_30.key
+\end{lstlisting}
+
+Le nom des fichiers \verb?server_30?, doit être adapté en fonction du certificat et de la clef générés dans la section \ref{lbl_script}. Le chemin, quant à lui, ne doit pas être modifié, sauf si vous avez changé la ligne 12 du fichier docker-compose.yml relative au montage du répertoire des certificats/clefs.
+
+
+\subsubsection{Lancement du service}
+
+Pour exécuter l'ensemble des containers de notre service web : 
+\begin{lstlisting}[style=commande]
+pviland@serveurCyber:~/00-serveurLemp$ sudo docker compose up -d
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[$\Rightarrow$] Il faut bien veiller à importer le CA dans votre navigateur pour avoir un site avec \textbf{Apache en https}
+\end{itemize}
+
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/apacheHttps}
+\end{center}
+
+En cliquant sur le cadenas à coté de l'URL, il est possible de voir les détails du CA (que l'on a donné durant l'exécution du script.)
+
+
+
+Normalement, si vous essayé, le navigateur retour une erreur bien connue..... Il faut importer le certificat du CA.
+
+
+
+\section{Certificat d'une CA officiel}
+
+\subsection{Autorités de certification publiques }
+Pour l'instant, seul les certificat signés par une CA personnelle ont été utilisé : 
+\begin{itemize}
+\itemE Notre CA personnel a signé nos propres certificats. 
+\itemE Nous devons installé manuellement le certificat du CA dans les navigateurs 
+\end{itemize} 
+
+Cette solution reste très utilisée et pratique dans des environnements privées et ou d'entreprises. Par contre, il y a deux inconvénients : 
+\begin{itemize}
+\itemE Les certificats ne sont pas reconnus publiquement
+\itemE Si la CA est compromise tous les certificats signés par cette dernière deviennent potentiellement compromis.
+\end{itemize}
+
+
+Pour aplier à ces inconvénient, il est possible d'obtenir des certificats par une CA publique. Il faut pour cela :  
+\begin{itemize}
+\itemE Avoir un nom de domaine et avoir accès au serveurs associés
+\itemE Choisir le type de certificat
+	\begin{itemize}
+	\item[$\Rightarrow$] Certificat DV (Domain Validation) : Valide uniquement la propriété du domaine. 
+	\item[$\Rightarrow$] Certificat OV (Organization Validation) : valide le nom de domaine mais aussi l'organisation/l'entreprise. Nécessite d'avoir des documents commerciaux
+	\item[$\Rightarrow$] Certificat EV (Extended Validation) : Validation complète (existance commerciale, légal et physique). S'affiche avec une bande verte dans certains navigateurs
+	\item[$\Rightarrow$] Certificat Wilcard : Sécurisé un nombre illimité de sous-domaine
+	\end{itemize}
+\end{itemize}
+
+\subsection{Mise en place : Let's Encrypt}
+
+\begin{encadre}{Let's encrypt}
+CA délivrant gratuitement des certificats DV d’une durée de 90 jours.
+\end{encadre}
+
+L'obtention simplifiée d'un certificat signé par Let's Encrypt se déroule de la manière suivante (en ayant au préalable installé un client ACME comme Certbot) :
+\begin{enumerate}
+    \item Configuration de la demande de certificat via un outil ACME (ex: Certbot), incluant le nom de domaine visé
+    
+    \item Génération et envoi d'une requête au CA (Let's Encrypt), avec les noms de domaine et un certificat non signé CSR
+    
+    \item Let's Encrypt répond avec un challenge ( de type \verb?http-01? incluant un \verb?token? + empreinte de la clef publique)
+    
+    \item Certbot construit le contenu attendu du challenge (token +empreinte clef publique) et le place dans un fichier situé dans le répertoire\\  \verb?.well-known/acme-challenge/?
+    
+    %\item Le client notifie Let's Encrypt que le challenge est prêt (requête \texttt{POST} sur l'URL du challenge).
+    
+    \item Let's Encrypt effectue une requête DNS pour résoudre le nom de domaine et obtenir son adresse IP 
+    
+    \item Let's Encrypt fait une requête HTTP vers l’URL du challenge :\\
+          \texttt{http://<domaine>/.well-known/acme-challenge/<token>}
+    
+    \item Le serveur web répond avec le contenu exact attendu (le \texttt{key authorization}).
+    
+    \item Let's Encrypt vérifie la validité du challenge 
+    
+    \item Si la vérification est réussie, Let's Encrypt signe et délivre le certificat.
+\end{enumerate}
+
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/schemaACME.png}
+\end{center}
+
+
+
+
+\paragraph{Remarque}
+\begin{itemize}
+  \itemE Si \textbf{Certbot} est utilisé en mode \texttt{standalone}, il lance un mini-serveur web temporaire pendant la procédure d’obtention du certificat.  
+Il est nécessaire de "couper" les services écoutant sur le port 80.
+\end{itemize}
+
+\paragraph{Visualisation des challenges}
+
+La commande suivante permet de voir la demande de challenge et la réponse attendue, tout en stoppant le processus avant d’envoyer la requête finale à Let's Encrypt :
+
+\begin{lstlisting}[style=commande]
+sudo certbot certonly --standalone --debug-challenges -v
+\end{lstlisting}
+
+Après avoir indiqué le nom de domaine (par exemple \verb?monsuperdomaine.com?, la commande affiche une sortie un retour similaire à : 
+
+\begin{lstlisting}[style=commande]
+URL:
+http://monsuperdomaine.com/.well-known/acme-challenge/Yv7DFlRl5iSlYnCslJG6v-HGu3GFzb7P457w6ZDOlRQ
+Expected value:
+Yv7DFlRl5iSlYnCslJG6v-HGu3GFzb7P457w6ZDOlRQ.7u6zb_yG6lp3U0INtsi6ELTfW2-htbSCy0ECCrokPCI
+--------------------------------------------------------------
+Press Enter to Continue
+\end{lstlisting}
+
+Tant que vous n’appuyez pas sur Entrée, vous pouvez tester manuellement la réponse du serveur au challenge avec une commande \texttt{curl}, par exemple :
+
+\begin{lstlisting}[style=commande]
+$curl http://192.168.1.31/.well-known/acme-challenge/Yv7DFlRl5iSlYnCslJG6v-HGu3GFzb7P457w6ZDOlRQ
+
+Yv7DFlRl5iSlYnCslJG6v-HGu3GFzb7P457w6ZDOlRQ.7u6zb_yG6lp3U0INtsi6ELTfW2-htbSCy0ECCrokPCI
+\end{lstlisting}
+
+Cette sortie doit correspondre exactement à la valeur attendue affichée précédemment.
+
+\paragraph{D'autres commandes} existent permettant d'administrer les certificats avec let's encrypt 
+\begin{itemize}
+\itemE Renouvellement certificats (validité 5 jours)
+\begin{lstlisting}[style=commande]
+sudo certbot renew
+\end{lstlisting}
+\itemE Affiche la liste des certificats actifs 
+\begin{lstlisting}[style=commande]
+certbot certificates
+\end{lstlisting}
+
+\itemE Supprime les certificats
+\begin{lstlisting}[style=commande]
+certbot delete --cert-name votredomaine.com
+\end{lstlisting}
+\itemE ...
+\end{itemize}
+
+
+\subsection{Let's encrypt + HTTPS + Phising}
+
+\paragraph{Présentation}
+Vous recevez un mail provenant de l'académie vous invitant à répondre à une enquête.  Vous cliquez alors sur lien  :
+
+\begin{itemize}
+  \itemE \href{https://ciel-broceliande.myasustor.com}{Enquête satisfaction académique}
+\end{itemize}
+
+Le navigateur ne signale aucun avertissement, car le site utilise le protocole HTTPS.  Pourtant, vous êtes sur un faux site.
+
+\paragraph{Remarque}  
+Des efforts sur le nom de domaine auraient pu être faits, par exemple en utilisant un nom comme \verb?webmail.ac-rennes.fr?, mais c'est juste pour la preuve de concept.
+
+
+\paragraph{Explication}
+
+\begin{itemize}
+\itemE Vous faîtes une demande de nom de domaine gratuitement ou en payant. Par exemple Asustor propose un service DNS pour pouvoir accéder au NAS depuis l'extérieur. 
+\itemE Sur votre box, vous redirigez les ports 80 et 443 sur votre serveur
+\itemE Vous faites une demande de certificat à  \textbf{Let's Encrypt} pour votre nom de domaine via la commande :  
+\end{itemize}
+
+\begin{lstlisting}[style=commande]
+$ sudo certbot certonly --standalone -d ciel-broceliande.myasustor.com
+
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Enter email address (used for urgent renewal and security notices)
+ (Enter 'c' to cancel): ....
+ 
+Certificate is saved at: /etc/letsencrypt/live/ciel-broceliande.myasustor.com/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/ciel-broceliande.myasustor.com/privkey.pem
+\end{lstlisting}    
+
+\begin{itemize}
+\itemE Vous créer sur votre serveur un site web ressemblant à un site connu par exemple en utilisant des commande de récupération de site : 
+\begin{lstlisting}[style=commande]
+httrack "http://www.exemple.com/page1.html" -O "/chemin/vers/dossier/local"
+
+wget -p -k -E -H -nd -P "./" -i url.txt
+\end{lstlisting}
+
+
+
+\itemE Vous récupérez les login et mot de passe
+\end{itemize}
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/fauxSite}
+\end{center}
+
+\paragraph{Mise en place}
+
+La mise en place de cette manipulation est disponible sur \textbf{github} à l'adresse suivante  : 
+
+\href{https://github.com/PierreViland/httpsPhishingExemple/}{https://github.com/PierreViland/httpsPhishingExemple/}
+
+\paragraph{Conclusion} \ 
+Ce n'est pas par ce que vous avez une site en \textbf{HTTPS} que vous devez en avoir une confiance aveugle et absolue.
+
+
+
+\section{HTTPS sur un serveur object connectés}
+
+Jusqu'à présent, nous avons uniquement abordé la génération de certificats pour des services connues (Nginx, Apache). Cependant, il est également possible de mettre en place une authentification mutuelle entre le serveur et les clients. Cette solution est souvent utilisée dans le cas des objets connectés, où le serveur souhaite vérifier l'authenticité des clients. 
+
+Dans l'exemple ci-dessous des capteurs filaires et non filaires envoient des données par exemple la température à un serveur. Il faut que 
+\begin{itemize}
+\itemE Le serveur identifie les capteurs pour empêcher l'envoie de fausse information par un serveur pirate
+\itemE Le capteur s'assure d'envoyer leurs données au bon serveur
+\itemE Les données doivent être envoyer de manière confidentielle.
+\end{itemize}
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/topoCapteurTemperature.png}
+\end{center}
+
+
+Un exemple de mise en place de ce système est présent sur le dépôt : 
+\begin{itemize}
+\itemE \href{https://github.com/PierreViland/serveurSimpleIot.git}{https://github.com/PierreViland/serveurSimpleIot}
+\end{itemize}
+
+\paragraph{Remarque préliminaire} : Ce dépôt contient des programmes client pour l’ESP32 ainsi que des programmes client en Python destinés à des machines standards. Ce code pourra être d'avantage exploité dans une séquence sur la sécurité des IoT plus particulièrement celle du Wifi.  
+
+\paragraph{Tests} \ 
+Pour réaliser les tests, il est nécessaire de stopper les containers précédemment créer.
+
+
+\subsection{En http}
+
+Avant tout chose, il faut cloner le dépôt dans un répertoire de travail 
+\begin{lstlisting}[style=commande]
+$ git clone https://github.com/PierreViland/serveurSimpleIot
+\end{lstlisting}
+
+
+Dans le répertoire \verb?00-base_http?, il faut ensuite: 
+
+\paragraph{Sur le serveur} 
+\begin{itemize}
+\itemE  Exécuter \verb?00-serveurHttp.py?. C'est un serveur qui se met en écoute sur le port 80 et qui affiche la température et le nom du capteur ayant émis les données.
+\end{itemize}
+
+
+\paragraph{Sur le client} 
+
+\begin{itemize}
+\itemE Configurer les lignes 8 et 11 du fichier \verb?01-clientEthernet.py?
+	\begin{itemize}
+	\item[+] ligne 8 : \verb?server_ip = "192.168.1.30"? $\Rightarrow$ Adresse ip du serveur
+	\item[+] ligne 11 : \verb?device_id = "device00"  ? $\Rightarrow$ nom de votre capteur
+	\end{itemize}
+\itemE lancer ensuite le client.
+\end{itemize}
+
+
+Vous devez voir des échanges entre le client et le serveur.
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/exServeurIotHttp}
+\end{center}
+
+Sur Wireshark, il est possible d'observer les échanges non chiffré de la communication (normale c'est en http). 
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/resWireshark}
+\end{center}
+
+\paragraph{Allez plus loin}. Le répertoire \verb?02-usurpation? contient des script permettant de se faire passer pour un device en falsifiant l'adresse IP et l'adresse MAC. Cet exemple est développé dans une séquence dédiées à la sécurité des Iot.
+
+\subsection{En https}
+
+L'ensemble des sources concernant la mise en place du https dans le cadre d'un serveur Iot est présent dans le répertoire \verb?01-https? Cette fois il faut \textbf{générer des certificats aussi bien pour le client que pour le serveur}.
+
+\vspace{0.5cm}
+Il est possible d'utiliser pfsense. Mais pour automa	tiser ces actions, il vous est proposé un script exploitant  \textbf{OpenSSL}. Il s'appelle \verb?geneCertificat.sh? et est présent dans le répertoire \verb?certificat?
+
+De la même manière que pour le serveur apache, il faut le configurer (uniquement les lignes avec des commentaires): 
+
+\begin{lstlisting}[style=commande]
+ # Définition des fichiers
+  4 CA_KEY="caIot.key"   					# Clef privee du CA
+  5 CA_CERT="caIot.crt"  					# Certificat du CA
+  6 
+  7 SERVER_KEY="serverIot_30.key"  	#Clef serveur
+  8 SERVER_CSR="serverIot_30.csr"
+  9 SERVER_CERT="serverIot_30.crt" #Certificat serveur
+ 10 SERVER_EXT="serverIot_30.ext"
+ 11 
+ 12 # Partie Client
+ 13 CLIENT_KEY="clientIot.key"				#Clef client
+ 14 CLIENT_CSR="clientIot.csr"
+ 15 CLIENT_CERT="clientIot.crt"				#Certificat serveur
+ 16 CLIENT_EXT="clientIot.ext"
+ 17 
+ 18 # Common Name
+ 19 CA_CN="CA_Broce"							#Nom courant de la CA
+ 20 SERVER_CN="serv_Iot.com"				#Nom courant du serveur
+ 21 IP_SERVER="192.168.1.30"				#SAN du serveur (subject alternative name)
+ 22 CLIENT_CN="clientIot"						#Nom courant du serveur
+\end{lstlisting}
+
+Les fichiers \texttt{.ext} et \texttt{.csr} ont les rôles suivants : 
+\begin{itemize}
+  \itemE \textbf{Fichiers \texttt{.ext}} : ils contiennent des extensions ou des paramètres de configuration supplémentaires pour les certificats. Ils sont utiles pour reproduire des certificats avec les mêmes caractéristiques (ex. : SAN).
+  
+  \itemE \textbf{Fichiers \texttt{.csr}} : ils regroupent les informations publiques (clé publique, nom commun, organisation, etc.) nécessaires à la création d’un certificat. Ce fichier est destiné à être transmis à une autorité de certification (CA) pour qu’elle le signe.
+\end{itemize}
+
+
+\paragraph{Le serveur}, fichier \verb?00-serveursecu.py? est très simple d'utilisation. Il suffit de configurer l'emplacement de sa clef privée, de son certificat et du certificat de la CA. Cette configuration se trouve ligne 9 à 11
+
+\begin{lstlisting}[style=commande]
+certServeur="./certificat/serverIot_30.crt"
+keyServeur="./certificat/serverIot_30.key"                                                  
+certCA="./certificat/caIot.crt"
+\end{lstlisting}
+
+Une fois la configuration effectuée, il suffit de le lancer le programme python, \textbf{Attention en mode sudo}. Le programme se met alors en attente. 
+
+
+\paragraph{Le client}, fichier \verb?1-clientEthernetSecu.py? se configure de manière similaire. Il suffit de donner l'emplacement de sa clef privée, de son certificat et du certificat de la CA après avoir configurer l'IP du serveur, le port d'écoute du serveur et le nom que vous voulez donner au client (ligne 9 à 16).	
+\begin{lstlisting}[style=commande]
+# Configuration réseau
+server_url = "192.168.1.30" 
+server_port = 443
+device_id = "deviceTestEthernet"
+ 
+# Chemins vers les certificats
+ca_cert_path = "./certificat/caIot.crt"
+client_cert_path = "./certificat/clientIot.crt"
+client_key_path = "./certificat/clientIot.key"
+
+\end{lstlisting}
+
+Durant l'exécution, il est possible de constater différentes informations relatifs au client et au serveur
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/httpsServeurClient}
+\end{center}
+
+\paragraph{Pour aller plus loin}, il est intéressant de vérifier si l'authentification du client et/ou du serveur est réellement fonctionnel. Pour cela, il suffit de créer des certificats signés par une autre autorité de certification (grâce au script \verb?geneCertificat.sh?). 
+
+Par exemple, si le client utilise un certificat signé par une CA "pirate", le serveur n'accepte pas la connexion, comme montré ci-dessous.
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/certPirate}
+\end{center}
+
+\subsection{HTTPs avec TLS v1.2}
+
+Jusqu'à présent, le client et le serveur utilisaient une connexion TLS v1.3. Sur le dépôt vous avez à disposition une branche nommée \verb?clientTls1.2?
+
+\begin{lstlisting}[style=commande]
+$ git branch 
+  clientTls1.2
+* main
+  testTls1.2
+\end{lstlisting}
+
+En vous plaçant sur cette branche,
+\begin{lstlisting}[style=commande]
+$ git switch clientTls1.2 
+M	01-https/00-serveursecu.py
+M	01-https/certificat/geneCertificat.sh
+Basculement sur la branche 'clientTls1.2'
+Votre branche est à jour avec 'origin/clientTls.
+\end{lstlisting}
+vous allez imposer l'utilisation de \textbf{TLS v1.2} au client. De la manière dont le serveur est configuré, il va être accepter la connexion et donc utliser Tls v1.2. Cette version est normalement obsolète. Mais, pour des manipulations, elle a l'avantage de procéder des 'problèmes'. Par exemple, les certificats sont transmis en claire. 
+Vous pouvez le faire observer par les élèves comme montrer ci-dessous.
+
+\begin{center}
+\includegraphics[scale=0.6	]{./ressource/tls1-2_Cert}
+\end{center}
+
+Ce type d'attaque s'appelle : \textbf{downgrade attack}
+
+\begin{encadre}{downgrade attack.}
+ou attaque de rétrogradation, vise à contraindre un système  lors d'une négociation de connexion sécurisée d'utiliser une version plus ancienne présentant des failles potentielles (comme TLS, SSL, ou SSH), afin de les exploiter.
+\end{encadre}
+
+
+
+\paragraph{Une autre branche} nommée \textbf{testTls1.2} impose au serveur d'utiliser le Tls v1.2 (branche non utilisé dans cette activité).
+
+\section{La sécurité des clefs}
+
+Les clefs privées doivent être stockées de manière sécurisée. Voici quelques bonnes pratiques à suivre :
+
+\begin{itemize}
+\itemE Stocker la clef dans un répertoire sécurisé tel que \verb?/etc/ssl/private/?.
+\itemE Appliquer des droits d'accès stricts :
+        \begin{lstlisting}[style=commande]
+			chmod 600 server.key
+			chown root:root server.key
+        \end{lstlisting}
+\itemE  Limiter l'exposition :
+        \begin{itemize}
+            \item[+] Ne jamais versionner la clef dans un dépôt Git.
+            \item[+] Ne jamais transférer la clef en clair (par mail, FTP, etc.).
+            \item[+] Ne pas partager le fichier ou le disque contenant la clef avec d’autres processus ou utilisateurs.
+        \end{itemize}
+\end{itemize}
+
+Dans le cas de clefs très sensibles, il est possible de : 
+    \begin{itemize}
+         \item[+] \textbf{Protéger par mot de passe} : chiffrer la clef privée avec un mot de passe à l’aide d’\texttt{openssl}, pour empêcher son utilisation sans autorisation.
+        \item[+] \textbf{Les stocker dans des zones mémoires sécurisées } : HSM (Hardware Security Module) 	ou TPM (Trusted Platform Modules)
+	\end{itemize}
+
+\paragraph{Dans le cas de clefs dans des environnement de type docker}
+
+Dans un système utilisant des conteneurs (comme Docker), la gestion des clefs privées doit suivre des principes spécifiques afin d'éviter les fuites ou compromissions. Voici les bonnes pratiques :
+
+\begin{itemize}
+        \itemE L’image Docker doit rester générique et ne contenir aucune donnée sensible.
+        \itemE Les  clefs doivent être injectées au moment de l'exécution, pas au moment de la construction.
+        \itemE Utiliser des volumes montés pour injecter la clef au  moment de l'exécution.
+        \itemE Donner les bonnes permissions au volume :
+  \begin{lstlisting}[style=commande]
+chmod 600 /chemin/local/vers/cles/server.key
+\end{lstlisting}
+		\itemE Monter la clef en lecture seule si possible : \verb?:ro? 
+ \end{itemize}
+
+Pour des environnements sensibles utiliser, des "secret manger (Exemple : HashiCorp Vault, Docker Secrets, Kubernetes Secrets)
+\end{document}
