@@ -30,6 +30,7 @@ jobs:
           ls -la
           pwd
           ./compilationL.sh
+          ls -la
       
       - name: Upload artifact E
         uses: actions/upload-artifact@v4
