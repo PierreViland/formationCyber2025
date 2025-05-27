@@ -26,6 +26,7 @@ jobs:
       - name: Compile LaTeX document
         run: |
           cd act01-installationEnvironnement
+          chmod +x compilationL.sh
           ls -la
           pwd
           ./compilationL.sh
