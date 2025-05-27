@@ -1,5 +1,5 @@
-#!/bin/bash
-
+ #!/bin/bash
+echo "Debut script"
 NOM_TEX=$(basename "$PWD")
 current_dir=$(pwd)
 parent_dir=$(dirname "$current_dir")
