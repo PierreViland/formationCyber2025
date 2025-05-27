@@ -28,7 +28,7 @@ jobs:
           cd act01-installationEnvironnement
           ls -la
           pwd
-          #./compilationL.sh
+          ./compilationL.sh
       
       - name: Upload artifact E
         uses: actions/upload-artifact@v4
