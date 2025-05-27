@@ -1,0 +1,54 @@
+name: Build LaTeX Document
+
+on:
+  push:
+    paths:
+      - '**.tex'
+      - '**.sty'
+      - '**.bib'
+      - '.github/workflows/**'  # Ajouté : surveille les fichiers YAML de workflow
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: [self-hosted, lblRunnerPV]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      #- name: Install LaTeX
+      #  run: |
+      #    sudo apt-get update
+      #    sudo apt-get install -y texlive-full
+
+      - name: Compile LaTeX document
+        run: |
+          cd act01-installationEnvironnement
+          ./compilationL.sh
+      
+      - name: Upload artifact E
+        uses: actions/upload-artifact@v4
+        with:
+          name: act01-installationEnvironnement_E
+          path: act01-installationEnvironnement_E.pdf
+      
+      - name: Upload artifact P
+        uses: actions/upload-artifact@v4
+        with:
+          name: act01-installationEnvironnement_P
+          path: act01-installationEnvironnement_P.pdf
+       
+  copy:
+    needs: build
+    runs-on: [self-hosted, lblRunnerPV]
+  
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docLatex-pdf
+          path: ~/testpdf
+  
+      - name: Vérifier que le fichier est bien copié
+        run: ls -l ~/testpdf
