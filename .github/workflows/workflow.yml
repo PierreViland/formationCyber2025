@@ -6,6 +6,7 @@ on:
       - '**.tex'
       - '**.sty'
       - '**.bib'
+      - '**.sh'
       - '.github/workflows/**'  # Ajouté : surveille les fichiers YAML de workflow
   workflow_dispatch:
 
