@@ -36,13 +36,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: act01-installationEnvironnement_E
-          path: act01-installationEnvironnement_E.pdf
+          path: ./act01-installationEnvironnement/act01-installationEnvironnement_E.pdf
       
       - name: Upload artifact P
         uses: actions/upload-artifact@v4
         with:
           name: act01-installationEnvironnement_P
-          path: act01-installationEnvironnement_P.pdf
+          path: ./act01-installationEnvironnement/act01-installationEnvironnement_P.pdf
        
   copy:
     needs: build
