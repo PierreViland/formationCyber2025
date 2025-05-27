@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, lblRunnerPV]
+    runs-on: [self-hosted, lblCyber]
 
     steps:
       - name: Checkout repository
@@ -41,7 +41,7 @@ jobs:
        
   copy:
     needs: build
-    runs-on: [self-hosted, lblRunnerPV]
+    runs-on: [self-hosted, lblCyber]
   
     steps:
       - name: Download artifact
