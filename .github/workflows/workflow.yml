@@ -25,6 +25,8 @@ jobs:
       - name: Compile LaTeX document
         run: |
           cd act01-installationEnvironnement
+          ll
+          pwd
           ./compilationL.sh
       
       - name: Upload artifact E
