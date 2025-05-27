@@ -1,0 +1,94 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.1.1 Chrome/132.0.6834.210 Electron/34.3.3 Safari/537.36" version="26.1.1">
+  <diagram name="Page-1" id="5pegUGzBkxTatFUZJCeD">
+    <mxGraphModel dx="838" dy="526" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-4" value="FW Pfsense" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="220" y="190" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-6" value="Interface WAN" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="270" y="250" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-7" value="Interface LAN" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="260" y="160" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-11" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="250" y="110" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-8" value="" style="endArrow=none;html=1;rounded=0;" parent="qy5jtCKpWgy2IZuLILKW-11" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint y="30" as="sourcePoint" />
+            <mxPoint x="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-10" value="" style="endArrow=none;html=1;rounded=0;" parent="qy5jtCKpWgy2IZuLILKW-11" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint as="sourcePoint" />
+            <mxPoint x="30" y="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-12" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="qy5jtCKpWgy2IZuLILKW-4" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="280" as="sourcePoint" />
+            <mxPoint x="265" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-13" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="qy5jtCKpWgy2IZuLILKW-4" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="280" as="sourcePoint" />
+            <mxPoint x="265" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-1" value="Réseau Salle/&lt;br&gt;Internet" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="210" y="280" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-16" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Installation&amp;nbsp;&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="210" y="60" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-17" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Exploitation&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="475" y="60" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-18" value="FW Pfsense" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="485" y="185" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-19" value="Interface WAN" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="535" y="245" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-20" value="Interface LAN" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="525" y="155" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-21" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="515" y="280" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-22" value="" style="endArrow=none;html=1;rounded=0;" parent="qy5jtCKpWgy2IZuLILKW-21" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint y="30" as="sourcePoint" />
+            <mxPoint x="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-23" value="" style="endArrow=none;html=1;rounded=0;" parent="qy5jtCKpWgy2IZuLILKW-21" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint as="sourcePoint" />
+            <mxPoint x="30" y="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-24" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="qy5jtCKpWgy2IZuLILKW-18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="655" y="275" as="sourcePoint" />
+            <mxPoint x="530" y="135" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-25" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="qy5jtCKpWgy2IZuLILKW-18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="655" y="275" as="sourcePoint" />
+            <mxPoint x="530" y="285" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qy5jtCKpWgy2IZuLILKW-26" value="Réseau Salle/&lt;br&gt;Internet" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="475" y="80" width="110" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
