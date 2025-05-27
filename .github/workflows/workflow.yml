@@ -49,11 +49,15 @@ jobs:
     runs-on: [self-hosted, lblCyber]
   
     steps:
-      - name: Download artifact
+      - name: DowninstallP
         uses: actions/download-artifact@v4
         with:
-          name: docLatex-pdf
+          name: act01-installationEnvironnement_P
           path: ~/testpdf
-  
+      - name: DowninstallE
+        uses: actions/download-artifact@v4
+        with:    
+          name: act01-installationEnvironnement_E
+          path: ~/testpdf
       - name: Vérifier que le fichier est bien copié
         run: ls -l ~/testpdf
