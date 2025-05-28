@@ -19,8 +19,8 @@
 \newcommand{\lycee}{Lycée Brocéliande}
 \newcommand{\classSeq}{CIEL }
 \newcommand{\matiereSeq}{IR}      
-%\newcommand{\numSeq}{08}
-%\newcommand{\numAct}{01}
+\newcommand{\numSeq}{08}
+\newcommand{\numAct}{01}
 \newcommand{\objSeance}{Comprendre le principe de SNMP et le mettre en place avec Prometheus}
 
 \newcommand{\moySeq}{\begin{itemize}	
@@ -177,7 +177,7 @@
   \PROFfalse
   \newenvironment{corr}{\begingroup \color{white}}{\normalcolor \endgroup}
 \fi
-%\PROFtrue
+\PROFtrue
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -333,7 +333,10 @@ Les messages échangés incluent :
 \end{itemize}
 
 \section{Zabbix}
-Des outils dédiés existent comme \textbf{Zabbix} permettant de gérer les agent SNMP. Il existent plusieurs manière de l'installer dont une via des containers présent dans le répertoire nommé \verb?00-zabbix-docker?.
+Des outils dédiés existent comme \textbf{Zabbix} permettant de gérer les agent SNMP. Il existent plusieurs manière de l'installer dont une via des containers présent sur le dépot : 
+\begin{itemize}
+\itemE \href{https://github.com/akmalovaa/zabbix-docker}{https://github.com/akmalovaa/zabbix-docker}
+\end{itemize}
 
 \begin{center}
 \includegraphics[scale=0.4]{./ressource/zabbix.png}

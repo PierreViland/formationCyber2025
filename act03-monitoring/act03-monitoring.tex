@@ -19,8 +19,8 @@
 \newcommand{\lycee}{Lycée Brocéliande}
 \newcommand{\classSeq}{CIEL }
 \newcommand{\matiereSeq}{IR}      
-%\newcommand{\numSeq}{Cyber}
-%\newcommand{\numAct}{03}
+\newcommand{\numSeq}{Cyber}
+\newcommand{\numAct}{03}
 \newcommand{\objSeance}{Mettre en place des outils de monitoring}
 
 \newcommand{\moySeq}{\begin{itemize}	
@@ -1118,7 +1118,7 @@ $ sudo docker compose ps
 \end{lstlisting} 
 
 
-\subsubsection{Changement de branches et execution}
+\subsubsection{Changement de branches}
 
 Etant un chic type, je vous fourni la configuration de notre système avec un reverse proxy. 
 Pour cela, il suffit de changer de branche
@@ -1132,9 +1132,237 @@ Switched to branch 'secureMonitoring'
 Your branch is up to date with 'origin/secureMonitoring'.
 \end{lstlisting} 
 
-Le répertoire \textbf{03-reverse/} est apparau. Il contient le fichier \verb?docker-compose.yml ? relatif aux reverse Proxy. 
+Le répertoire \textbf{03-reverse/} est apparu. Il contient le fichier \verb?docker-compose.yml ? relatif au reverse Proxy. 
+
+\subsubsection{Configuration}
+
+\paragraph{01-StackMonitoring}
+
+Ce paragraphe montre les modification de containers prometheus \textit{"pour passer en HTTPS"}
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/etapeStackMonitoring.png}
+\end{center}
+
+Il est nécessaire de préciser au container prometheus que l'url extérieur a changer et qu'il y aura un préfixe pour la redirection de port. les lignes suivantes doivent être modifiées (surtout) l'IP : 
+
+\begin{lstlisting}[style = commande]
+ services:                                                                                                                                                                                 
+   prometheus:
+     image: prom/prometheus:latest
+     container_name: prometheus
+     #ports:                     #A enelver pour que l'on ne voit plus le port HTTP (derriere le reverse proxy)
+     #  - "9090:9090"
+     volumes:
+       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+       - ./alerts.yml:/etc/prometheus/alerts.yml
+     command:
+       - "--config.file=/etc/prometheus/prometheus.yml" #Indique l'emplacement du fichier de conf
+       - '--web.route-prefix=/'                         #Indique le prefix de l'url de prometheus. A faire si reverse Proxy
+       - '--web.external-url=https://192.168.1.30:4433' #Url de point d'entree de prometheus. A faire si reverse Proxy 
+
+\end{lstlisting}
+
+Le reste de la \verb?stack monitoring? n'est pas à modifier sauf si vous voulez la sécurisée.
 
 
+\paragraph{02-exporterNginx}
+Ce paragraphe montre les modification de l'exporter nginx pour \textit{"pour passer en HTTPS"}
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/etapeExporter.png}
+\end{center}
+
+Dans le \textbf{docker-compose.yml},  il est nécessaire de commenter les lignes qui permette l'exposition du port du container vers l'extérieur.
+
+\begin{lstlisting}[style = commande]
+services:                                                                                                                                                                                     
+  # NGINX Prometheus Exporter
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.11.0
+    container_name: nginx_exporterPV
+    command:
+      - --nginx.scrape-uri=http://nginxPV:9114/nginx_status
+    #ports:   # A supprimer lorsque reverse proxy. On ne redirige pas le port sur l'hote
+    #  - "9113:9113"
+    networks:
+      - mynet
+\end{lstlisting}
+
+
+Il faut bien veiller à avoir en fin de fichier le partage du réseau avec les autres containers 
+
+\begin{lstlisting}[style = commande]
+networks:
+  mynet:
+    external: true  # Indique que le reseau existe deja
+    name: 00-serveurlemp_mynet # Nom explicite du reseau existant
+\end{lstlisting}
+
+\paragraph{03-reverse}
+Ce paragraphe montre la création d'un reverse proxy pour faire l'interface entre les éléments du réseau containerisé \verb? 00-serveurlemp_mynet? et "le monde extétrieur.
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/etapeReverse.png}
+\end{center}
+
+Le reverse proxy est basé sur un serveur Nginx (une autre instance de celui dédié aux pages web)
+
+Dans le répertoire \textbf{03-reverse},trois fichiers sont présents et doivent être configurés en fonction des besoins. Il permettent de faire la redirection automatique entre les requête HTTPS avec des 
+
+\begin{itemize}
+\itemE \verb?docker-compose.yml?
+\end{itemize}
+Ce fichier "lance" un container Nginx en exposant les ports 8008 (http) et 4433 (https) sur le réseau extérieur ce seront ces ports qui seront utilisés pour accéder de manière sécurisé au métrique du serveur web.
+
+
+\begin{lstlisting}[style = commande]
+ 5     ports:
+ 6       - "8008:8008"
+ 7       - "4433:4433"
+\end{lstlisting}
+
+De plus, ce container partage avec l'hote de répertoire contant respectivement, 
+\begin{itemize}
+\item[ ] 
+\begin{itemize}
+\item[+] le fichier de configuration du reverse proxy 
+\item[+] la clefs et le certificat du reverse proxy
+\end{itemize}
+\end{itemize}
+
+\begin{lstlisting}[style = commande]
+  8     volumes:
+  9       - ./nginx.conf/nginx.conf:/etc/nginx/nginx.conf:ro
+ 10       - ./cert/:/etc/nginx/certs/:ro
+\end{lstlisting}
+
+
+Il faut bien veiller à avoir en fin de fichier le partage du réseau avec les autres containers 
+
+\begin{lstlisting}[style = commande]
+networks:
+  mynet:
+    external: true  # Indique que le reseau existe deja
+    name: 00-serveurlemp_mynet # Nom explicite du reseau existant
+\end{lstlisting}
+
+
+
+\begin{center}
+ \rule{0.75\linewidth}{1pt}
+ \end{center}
+
+
+\begin{itemize}
+\itemE \verb?./cert/geneCertClef.sh?
+\end{itemize}
+Ce fichier génère un certificats et une clef pour le reverse proxy.
+
+Dans le fichier présent sur le dépôt, la CA est celle utilisé pour le HTTPS du serveur WEB de la précédente activité.	(ligne 4 -5)
+
+\begin{lstlisting}[style = commande]
+  1 #!/bin/bash                                                                                                                                                                               
+  2 
+  3 # Definition des fichiers
+  4 CA_KEY="../../../../../00-serveurLemp/openSSL/ca.key"   #Clef privee du CA
+  5 CA_CERT="../../../../../00-serveurLemp/openSSL/ca.crt"  #Certificat du CA
+
+\end{lstlisting}
+
+Si vous souhaitez générer une nouvelle CA les lignes 22 et 25 doivent être décommentée.
+
+\begin{lstlisting}[style = commande]
+#Ligne commenter car reutilisation d'une CA existante
+ 20 # Creation de la CA SI VOUS VOULEZ UN NOUVEAU CA => Decommente
+ 21 #echo "Creation de la cle privee de la CA..."
+ 22 #openssl genrsa -out $CA_KEY 2048
+ 23 
+ 24 #echo "Creation du certificat auto-signe de la CA..."
+ 25 #openssl req -x509 -new -key $CA_KEY -sha256 -days 3650 -out $CA_CERT -subj "/CN=$CA_CN"
+\end{lstlisting}
+
+Le noms du certificat et de la clef générés sont définis respectivement ligne 9 et 7
+
+\begin{lstlisting}[style=commande]
+  7 SERVER_KEY="reverseProxy.key"  #Clef privee du serveur
+  8 SERVER_CSR="reverseProxy.csr"  #Certificat du serveur en attente de signature Certificate Signing Request
+  9 SERVER_CERT="reverseProxy.crt" #Certificat du serveur
+ 10 SERVER_EXT="reverseProxy.ext"  #Contient des options pour la generation du certificat serveur (pas utilise apres)
+\end{lstlisting}
+
+
+
+\begin{center}
+ \rule{0.75\linewidth}{1pt}
+ \end{center}
+
+\begin{itemize}
+\itemE \verb?./nginx.conf/nginx.conf/?
+\end{itemize}
+
+Ce fichier permet de configurer \textbf{nginx} pour qu'il fonctionne en reverse proxy.
+
+\begin{itemize}
+\item[ ] 
+\begin{itemize}
+\item[+] On retrouve le certificat et la clef pour les connexions HTTPS
+\end{itemize}
+\end{itemize}
+\begin{lstlisting}[style=commande]
+ 12         ssl_certificate /etc/nginx/certs/reverseProxy.crt;
+ 13         ssl_certificate_key /etc/nginx/certs/reverseProxy.key;
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[ ] 
+\begin{itemize}
+\item[+] Pour chaque service HTTP que l'on souhaite protéger, on va retrouver une structure comme ci-dessous : 
+\end{itemize}
+\end{itemize}
+\begin{lstlisting}[style=commande]
+ 22         location /nginx-metrics/ {
+ 23             proxy_pass http://nginx_exporterPV:9113/;
+ 24             proxy_set_header Host $host;
+ 25             proxy_set_header X-Real-IP $remote_addr;
+ 26             proxy_redirect off;
+ 27         }
+\end{lstlisting}
+Ces lignes définissent une route \verb?/nginx-metrics/? à mettre dans l'URL qui redirige les requêtes vers le container \verb?nginx_exporterPV? écoutant sur le port 9113 (exporter de mon service web). Il faut bien veiller à avoir tous les containers sur le même réseau containerisé.
+
+\subsubsection{Lancement}
+
+Il est maintenant nécessaire de lancer l'intégralité des containers. Pour cela, il faut se placer dans chacun des répertoires 
+\begin{itemize}
+\itemE \verb?01-stackMonitoring?
+\itemE \verb?02-exporterNginx?
+\itemE \verb?03-reverse?
+\end{itemize}
+et exécuter la commande qui permet de construire et lancer les containers 
+
+\begin{lstlisting}[style=commande]
+docker compose up -d
+\end{lstlisting}
+
+Si tous fonctionne vous devez avoir accès a la page suivante 
+
+\begin{center}
+\includegraphics[scale=0.6]{./ressource/finalPromHTTPS}
+\end{center}
+
+
+
+\section{Suite et conclusion}
+
+Nous avons vu : 
+\begin{itemize}
+\itemE Le monitoring de service via a prometheus
+\itemE La sécurisation de ces échanges via un reverse proxy 
+\end{itemize}
+
+Pour aller plus loin, il serait possible de : 
+\begin{itemize}
+\itemE Finir de sécurisé l'intégralité des services
+\itemE Monitorer d'autres services (exemple apache)
+\end{itemize}
 
 
 \end{document}

@@ -21,12 +21,14 @@ fi
 
 CHEMIN_TEX="$PWD/${NOM_TEX}.tex"
 
-# Génération du fichier professeur
-pdflatex -job-name="${NOM_TEX}" "\def\PourProf{0} \def\numSeq{${SEQ_DIR:3:2}} \def\numAct{${NOM_TEX:3:2}} \input{$CHEMIN_TEX}"
+# Génération du fichier professeur \def\numSeq{${SEQ_DIR:3:2}} \def\numAct{${NOM_TEX:3:2}} 
+pdflatex -job-name="${NOM_TEX}" "\def\PourProf{0} \input{$CHEMIN_TEX}"
+pdflatex -job-name="${NOM_TEX}" "\def\PourProf{0} \input{$CHEMIN_TEX}"
 mv "${NOM_TEX}.pdf" "${NOM_TEX}_P.pdf"
 
 # Génération du fichier élève
-pdflatex -job-name="${NOM_TEX}_E" "\def\numSeq{${SEQ_DIR:3:2}} \def\numAct{${NOM_TEX:3:2}} \input{$CHEMIN_TEX}"
+pdflatex -job-name="${NOM_TEX}_E" "\input{$CHEMIN_TEX}"
+pdflatex -job-name="${NOM_TEX}_E" "\input{$CHEMIN_TEX}"
 mv "${NOM_TEX}.pdf" "${NOM_TEX}_E.pdf"
 
 # Suppression des fichiers auxiliaires générés par LaTeX
