@@ -16,7 +16,7 @@
 \newcommand{\itemE}{\item[$\bullet$]}
 
 \newcommand{\titreSeq}{Installation de l'environnement}
-\newcommand{\lycee}{Academie rennes}
+\newcommand{\lycee}{Académie rennes}
 \newcommand{\classSeq}{CIEL }
 \newcommand{\matiereSeq}{IR}      
 \newcommand{\numSeq}{Cyber}
@@ -257,6 +257,57 @@
 \end{tabular}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Dépot}
+
+\begin{minipage}{0.65\linewidth}
+Pour les besoins de la formation, les dépôts GiHub présent dans le tableau ci-dessous vont être utilisés.
+\end{minipage}
+\begin{minipage}{0.34\linewidth}
+\begin{center}
+\includegraphics[scale=0.25]{./ressource/logoGit.jpeg}
+\end{center}
+\end{minipage}
+
+
+
+
+\begin{encadre}{GitHub }
+Plateforme web de gestion de code source qui permet d'héberger, collaborer et versionner des projets via Git. Elle est très efficace pour le travail en équipe et pour à l’intégration continue.
+\end{encadre}
+
+\footnotesize
+\begin{tabular}{|>{\raggedright\arraybackslash}p{6cm}|>{\raggedright\arraybackslash}p{8cm}|}
+\hline
+\rowcolor{vert_capet} \textbf{Description} & \textbf{URL GitHub} \\
+\hline
+Simple serveur HTTP Iot python& \url{https://github.com/PierreViland/serveurSimpleIot.git} \\
+
+
+\hline
+Serveur LEMP et LAMP HTTP/HTTPS& \url{https://github.com/PierreViland/00-serveurLemp.git} \\
+\hline
+Exemple fishing avec certificat Let's encrypt& \url{https://github.com/PierreViland/httpsPhishingExemple.git} \\
+\hline
+
+\hline
+Mise en place d'une "monitoring stack" & \url{https://github.com/PierreViland/monitoringPV.git} \\
+\hline
+\hline
+Analyse de log & Mise en ligne bientôt\\
+\hline
+\hline
+Attaque et protection Wifi & Mise en ligne bientôt \\
+\hline
+\hline
+Source latex des documents de la formation (+ workflow pour déploiement sur site web) & \url{https://github.com/PierreViland/formationCyber2025.git} \\
+\hline
+
+
+\end{tabular}
+
+\normalsize
+
+
 \section{Système}
 
 Pour les besoins de la formation, le système suivant va être exploité  
@@ -271,12 +322,6 @@ avec :
 \itemE \verb?Serveur supervision? : contient des outils de collecte et d'analyse de données. Pour simplifier la mise en place, la machine Kali ou le serveur Ubuntu pourra être utilisée pour la supervision.
 \itemE \verb?Pfsense (FW & CA)? : Pare-feu permettant faisant fonction de autorité de certification
 \end{itemize}
-
-Installation 20h32
-
-20h46
-Penser ? retirer le disque virtuel
-
 
 \paragraph{Remarque :} il aurait été plus judicieux de mettre le serveur dans un DMZ mais ce n'est pas le sujet de l'activité.  
 
@@ -327,15 +372,14 @@ Cela va permettre de :
 pviland@serveurCyber:git clone https://github.com/PierreViland/00-serveurLemp.git
 \end{lstlisting}
 	
-\begin{minipage}{0.6\linewidth}
-GitHub est une plateforme en ligne permettant d’héberger, de gérer et de collaborer sur du code en utilisant Git. Elle facilite le versionnage, les revues de code, et le travail collaboratif via des dépôts publics ou privés.
-\end{minipage}	
-\begin{minipage}{0.39\linewidth}
-\begin{center}
-\includegraphics[scale=0.25]{./ressource/logoGit.jpeg}
-\end{center}
-\end{minipage}
-	
+\end{enumerate}
+
+
+\paragraph{Vérification de l'accès au dépôt et fonctionnement des containers}
+
+\begin{enumerate}[resume]
+
+
 \item Se placer dans le répertoire \verb?~/00-serveurLemp? et dans la branche main du dépôt git, créer et lancer les containers \footnote{Un document nommé commande CIEL v00-resumeCommandeCIEL\_P.pdf est présent en ressource }. 
 
 
@@ -353,10 +397,12 @@ pviland@serveurCyber:~/00-serveurLemp$ sudo docker compose up -d
 \item Sur une machine de votre choix et le navigateur de votre choix, vérifier sir le site est opérationnel. ATTENTION : il n'est pas encore sécurisé.
 
 \begin{center}
-\includegraphics[scale=0.7]{./ressource/exServeurNonsecur.png}
+\includegraphics[scale=0.5]{./ressource/exServeurNonsecur.png}
 \end{center}
 
 \end{enumerate}
+
+\paragraph{Si vous avez accès au site, vous avez un environnement de travail opérationnel}
 
 \section{Pfsense}
 
