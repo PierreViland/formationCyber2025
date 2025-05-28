@@ -11,6 +11,9 @@ on:
     #   - '.github/workflows/**'
   workflow_dispatch:
 
+env:
+  CHEMIN_PDF: "~/00-orgaFormation/webFormation/src/docpdf"
+
 jobs:
   build:
     runs-on: [self-hosted, lblCyber]
@@ -71,15 +74,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.base }}_P
-          path: ~/testpdf/${{ matrix.base }}
+          path: ${CHEMIN_PDF}/${{ matrix.base }}
 
       - name: Download artifact E
         uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.base }}_E
-          path: ~/testpdf/${{ matrix.base }}
+          path: ${CHEMIN_PDF}/${{ matrix.base }}
 
       - name: Vérifier que les fichiers sont bien copiés
         run: |
           echo "Contenu de ~/testpdf/${{ matrix.base }} :"
-          ls -l ~/testpdf/${{ matrix.base }}
+          ls -l ${CHEMIN_PDF}/${{ matrix.base }}
