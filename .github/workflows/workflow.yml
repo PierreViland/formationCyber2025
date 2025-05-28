@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  CHEMIN_PDF: "~/00-orgaFormation/webFormation/src/docpdf"
+  CHEMIN_PDF: "/home/pviland/00-orgaFormation/webFormation/src/docpdf"
 
 jobs:
   build:
