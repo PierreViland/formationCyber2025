@@ -28,6 +28,9 @@ jobs:
             base: act03-monitoring
           - folder: act04-SNMP
             base: act04-SNMP
+          - folder: act05-gestionLog
+            base: act05-gestionLog
+
 
     steps:
       - name: Checkout repository
@@ -68,6 +71,8 @@ jobs:
             base: act03-monitoring
           - folder: act04-SNMP
             base: act04-SNMP
+          - folder: act05-gestionLog
+            base: act05-gestionLog
 
     steps:
       - name: Download artifact P
