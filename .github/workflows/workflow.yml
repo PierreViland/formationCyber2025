@@ -152,7 +152,7 @@ jobs:
           ls -l "$CHEMIN_PDF/wifi/${{ matrix.base }}"
       - name: Copier le répertoire ressource_eleve
         run: |
-          SRC_DIR="${{ matrix.folder }}/ressource_élève"
+          SRC_DIR="${{ matrix.folder }}/ressource_eleve"
           DEST_DIR="$CHEMIN_PDF/wifi/${{ matrix.base }}/ressource_eleve"
           
           if [ -d "$SRC_DIR" ]; then
