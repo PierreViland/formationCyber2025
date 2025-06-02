@@ -149,7 +149,7 @@ jobs:
       - name: Vérifier que les fichiers sont bien copiés
         run: |
           echo "Contenu de $CHEMIN_PDF/wifi/${{ matrix.base }} :"
-          ls -l "$CHEMIN_PDF/${{ matrix.base }}"
+          ls -l "$CHEMIN_PDF/wifi/${{ matrix.base }}"
       - name: Copier le répertoire ressource_eleve
         run: |
           SRC_DIR="${{ matrix.folder }}/ressource_élève"
