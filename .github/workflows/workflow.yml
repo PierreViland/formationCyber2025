@@ -150,15 +150,18 @@ jobs:
         run: |
           echo "Contenu de $CHEMIN_PDF/wifi/${{ matrix.base }} :"
           ls -l "$CHEMIN_PDF/wifi/${{ matrix.base }}"
-      - name: Copier le répertoire ressource_eleve
+      - name: Zipper et copier le répertoire ressource_eleve
         run: |
           SRC_DIR="${{ matrix.folder }}/ressource_eleve"
-          DEST_DIR="$CHEMIN_PDF/wifi/${{ matrix.base }}/ressource_eleve"
+          DEST_DIR="$CHEMIN_PDF/wifi/${{ matrix.base }}"
+          ZIP_NAME="ressource_eleve.zip"
           
           if [ -d "$SRC_DIR" ]; then
-            echo "Copie de $SRC_DIR vers $DEST_DIR"
+            echo "Compression de $SRC_DIR"
             mkdir -p "$DEST_DIR"
-            cp -r "$SRC_DIR/"* "$DEST_DIR"
+            zip -r "$DEST_DIR/$ZIP_NAME" "$SRC_DIR"
+            echo "Fichier zip copié dans $DEST_DIR/$ZIP_NAME"
           else
-            echo "Le répertoire $SRC_DIR n'existe pas, rien à copier."
+            echo "Le répertoire $SRC_DIR n'existe pas, rien à compresser."
           fi
+
