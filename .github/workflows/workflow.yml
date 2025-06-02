@@ -92,7 +92,33 @@ jobs:
             base: act04-SNMP
           - folder: act05-gestionLog
             base: act05-gestionLog
-            
+
+    steps:
+      - name: Download artifact P
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.base }}_P
+          path: ${{ env.CHEMIN_PDF }}/${{ matrix.base }}
+
+      - name: Download artifact E
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.base }}_E
+          path: ${{ env.CHEMIN_PDF }}/${{ matrix.base }}
+
+      - name: Vérifier que les fichiers sont bien copiés
+        run: |
+          echo "Contenu de $CHEMIN_PDF/${{ matrix.base }} :"
+          ls -l "$CHEMIN_PDF/${{ matrix.base }}"
+
+
+copyWifi:
+    needs: build
+    runs-on: [self-hosted, lblCyber]
+    strategy:
+      matrix:
+        include:
+          
           - folder: act06-Wifi/_SeqIntro-ZenithCiel
             base: _SeqIntro-ZenithCiel
       
@@ -112,15 +138,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.base }}_P
-          path: ${{ env.CHEMIN_PDF }}/${{ matrix.base }}
+          path: ${{ env.CHEMIN_PDF }}/wifi/${{ matrix.base }}
 
       - name: Download artifact E
         uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.base }}_E
-          path: ${{ env.CHEMIN_PDF }}/${{ matrix.base }}
+          path: ${{ env.CHEMIN_PDF }}/wifi/${{ matrix.base }}
 
       - name: Vérifier que les fichiers sont bien copiés
         run: |
-          echo "Contenu de $CHEMIN_PDF/${{ matrix.base }} :"
+          echo "Contenu de $CHEMIN_PDF/wifi/${{ matrix.base }} :"
           ls -l "$CHEMIN_PDF/${{ matrix.base }}"
