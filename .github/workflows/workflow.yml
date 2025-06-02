@@ -30,8 +30,20 @@ jobs:
             base: act04-SNMP
           - folder: act05-gestionLog
             base: act05-gestionLog
+          - folder : act06-Wifi/_SeqIntro-ZenithCiel/
+            base: _SeqIntro-ZenithCiel//_SeqIntro-ZenithCiel/
           - folder : act06-Wifi/act00-EBIOS_Riskmanager
             base: act00-EBIOS_Riskmanager/act00-EBIOS_Riskmanager
+            
+          - folder : act06-Wifi/act01-attaqueWifi          
+            base: act01-attaqueWifi/act01-attaqueWifi
+            
+
+          - folder : act06-Wifi/act02-authentificationDevice
+            base: act02-authentificationDevice/act02-authentificationDevice
+            
+          - folder : act06-Wifi/act03-dumpDevice
+            base: act03-dumpDevice/act03-dumpDevice
 
 
     steps:
