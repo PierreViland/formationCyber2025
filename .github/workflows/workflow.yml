@@ -59,6 +59,10 @@ jobs:
           pwd
           ./compilationL.sh
           ls -la
+      - name: Lister les fichiers PDF générés
+        run: |
+          echo "Liste des fichiers PDF dans ${{ matrix.folder }} :"
+          find ${{ matrix.folder }} -name '*.pdf'
 
       - name: Upload artifact E
         uses: actions/upload-artifact@v4
