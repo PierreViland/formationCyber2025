@@ -1,0 +1,736 @@
+\documentclass[french, 12pt]{article}%
+
+\usepackage[utf8]{inputenc}  
+\usepackage[francais]{babel}
+\usepackage{appendix}
+\usepackage{pdfpages} 
+\usepackage{eurosym}
+\usepackage{enumitem}
+%\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\itemE}{\item[$\bullet$]}
+\newcommand{\titreSeq}{Authentification des devices}
+\newcommand{\lycee}{Lycée Brocéliande}
+\newcommand{\classSeq}{CIEL }
+\newcommand{\matiereSeq}{IR}      
+%\newcommand{\numSeq}{08}
+%\newcommand{\numAct}{02}
+\newcommand{\objSeance}{Comment assurer l'authentification des devices}
+
+\newcommand{\moySeq}{\begin{itemize}	
+\itemE Esp32
+\itemE IDE de programmation ESP32
+\itemE Machine windows
+\itemE Virtual Machine
+\end{itemize}}
+
+\newcommand{\compSeq}{\begin{itemize}
+\item  
+\end{itemize}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%Algo
+\usepackage[linesnumbered, french]{algorithm2e}
+\SetKwFor{For}{Pour}{faire}{fin}
+\SetKwFor{While}{Tant que}{faire}{fin}%
+\SetKw{KwTo}{à}
+\SetKw{KwPas}{par pas de}
+\SetKw{KwRet}{Retourne}
+\SetKwProg{Fn}{Fonction }{ arguments }{fin}
+\SetKwRepeat{Repeat}{Répéter}{jusqu'à}%
+\SetKwIF{If}{ElseIf}{Else}{Si}{alors}{Sinon si}{Sinon}{Fin}
+
+\usepackage{listings} %%%%Présenration code source
+\lstset{language=C++,
+    %numbers=left,
+   %stepnumber=1,
+    showstringspaces=false,
+    tabsize=1,
+    breaklines=true,
+    breakatwhitespace=false,
+    basicstyle=\footnotesize,
+    keywordstyle=\color{blue}\footnotesize,
+    stringstyle=\color{red}\footnotesize,
+    commentstyle=\color{magenta}\footnotesize,
+    morecomment=[l][\color{magenta}]{\#}
+    }
+\lstdefinestyle{commande}{
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  %numbers=left,
+  %numberstyle=\tiny\color{gray},
+  numbersep=5pt,
+  breaklines=true,
+  frame=single,
+  backgroundcolor=\color{lightgray!10}
+  %captionpos=b,
+  %caption=\lstname  
+}
+%\usepackage[T1]{fontenc}
+
+
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in 
+
+
+\linespread{1.1} 
+\usepackage{amsmath}%
+\usepackage{amsfonts}%
+\usepackage{amssymb}%
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage{enumitem}
+
+%\usepackage[T1]{fontenc}    
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage{array}
+\usepackage{mwe}
+%-------------------------------------------
+\newtheorem{theorem}{Theorem}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+
+
+
+\usepackage{xcolor}
+
+\usepackage{colortbl}
+\setlength{\doublerulesep}{\arrayrulewidth}
+%-------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{tikz, xcolor, lipsum}
+\makeatletter
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+
+\tikzset{titre_bleu_snir/.style =
+	{draw=vert_capet, line width=1.5pt, fill=white,
+	rectangle, rounded corners, right,minimum height=2em}}
+\newcommand{\titreencadre}{Titre}
+\makeatletter
+\mdfdefinestyle{encadrestyle}{%
+	linewidth=1.5pt,roundcorner=5pt,linecolor=vert_capet,
+	apptotikzsetting={\tikzset{mdfbackground/.append style ={%
+		fill=white}}},
+	frametitlefont=\bfseries,
+	singleextra={%
+		\node[titre_bleu_snir,xshift=2em] at (P-|O) %
+			{~\mdf@frametitlefont{\titreencadre}\hbox{~}};},
+	firstextra={%
+		\node[titre_bleu_snir,xshift=2em] at (P-|O) %
+		{~\mdf@frametitlefont{\titreencadre}\hbox{~}};},
+	}
+\mdfdefinestyle{encadresanstitrestyle}{%
+	linewidth=1.5pt,roundcorner=5pt,linecolor=vert_capet
+	apptotikzsetting={\tikzset{mdfbackground/.append style ={%
+		fill=yellow!20}}},
+	}
+
+\newenvironment{encadre}[1]{\renewcommand{\titreencadre}{#1}
+	\begin{mdframed}[style=encadrestyle]
+	\vspace{0.5\baselineskip}
+	}{%
+	\end{mdframed}}
+
+\newenvironment{encadresanstitre}{
+	\begin{mdframed}[style=encadresanstitrestyle]
+	}{%
+	\end{mdframed}}
+\makeatother
+\usepackage{colortbl}
+\definecolor{vert_capet}{RGB}{191,255,191}	
+\definecolor{bleu_snir}{RGB}{191,255,191} %%{101,191,179}	
+\setlength{\doublerulesep}{\arrayrulewidth}
+%-------------------------------------------
+\usepackage{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newif\ifPROF
+
+%\def\PourProf{0}
+\ifdefined\PourProf
+  \PROFtrue
+  \newenvironment{corr}{\begingroup \color{red}}{\normalcolor \endgroup}
+\else
+  \PROFfalse
+  \newenvironment{corr}{\begingroup \color{white}}{\normalcolor \endgroup}
+\fi
+%\PROFtrue
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%Note et pied de page
+\usepackage{fancybox}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.5cm,bottom=2cm,headheight=2cm]{geometry}
+\pagestyle{fancy}
+\fancyhead[R]{\includegraphics[scale=0.3]{logo_CIEL.png}}
+\fancyhead[C]{Prénom}
+\fancyhead[L]{Nom}
+\fancyfoot[C]{Page \thepage/\pageref{LastPage}}
+\fancyfoot[L]{\classSeq ~\matiereSeq}
+\fancyfoot[R]{Seq \numSeq  ~ Act \numAct}
+\renewcommand{\headrulewidth}{1pt}
+%%%Note et pied de page 
+
+
+
+\begin{document}
+
+\title{\titreSeq\\
+ \includegraphics[scale=0.5]{logo_CIEL.png}\\
+}
+\author{\lycee}
+\date{}%\today}
+%\maketitle
+
+\noindent\begin{tabular}{!{\vrule width 1.5pt}m{0.7\linewidth}!{\vrule width 1.5pt}m{0.2\linewidth}!{\vrule width 1.5pt}}
+\hline\hline
+\cellcolor{bleu_snir}
+\begin{center}
+	\Large\textbf{\titreSeq}  
+\end{center}
+  & 
+
+\begin{minipage}{1.0\linewidth}
+  \vspace*{0.1cm} 
+\centering\includegraphics[scale=0.2]{logo_lycee.jpg}
+
+{\tiny\today}
+  \vspace*{0.1cm} 
+\end{minipage}\\ \hline\hline
+
+\multicolumn{2}{!{\vrule width 1.5pt}l!{\vrule width 1.5pt}}{
+\begin{minipage}{14cm}
+\vspace*{0.1cm} 
+\textbf{Objectif} : \objSeance
+\vspace*{0.1cm} 
+\end{minipage}} \\ \hline\hline
+
+\multicolumn{2}{!{\vrule width 1.5pt}l!{\vrule width 1.5pt}}{
+\begin{minipage}{14cm}
+\vspace*{0.1cm} 
+\textbf{Moyens} : 
+\moySeq
+\vspace*{0.1cm} 
+\end{minipage}} \\ \hline\hline
+%
+%\multicolumn{2}{!{\vrule width 1.5pt}l!{\vrule width 1.5pt}}{
+%\begin{minipage}{14cm}
+%\vspace*{0.1cm}
+%\tiny
+%Compétences attendues :
+%\compSeq
+%\vspace*{0.1cm}
+%\end{minipage}}
+%\normalsize \\ \hline\hline
+\end{tabular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{0.25cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  DEBUT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Contexte}
+
+Précédemment, dans la salle de concert ZenithCiel, vous avez mis en avant un vulnérabilité : 
+\begin{itemize}
+\itemE Des personnes mal intentionnée pouvaient usurper l'identité d'un capteur et donc envoyer des informations erronées au serveur
+\end{itemize}
+
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/topologIeWifiEntreprise.png}
+\end{center}
+
+Durant cette activité, vous allez étudier une solution d'authentification et de confidentialité des capteurs (que l'on appelle couramment device) et du serveur grâce à des \textbf{certificat TLS}
+
+\section{Les certificats TLS}
+Les certificats TLS permettent de garantir 3 principes de sécurité \footnote{section inspirée de https://aymericlagier.com/2021/04/07/les-certificats-tls/} : 
+\begin{itemize}
+\itemE L'authentification
+\itemE La confidentialité
+\itemE L'intégrité
+\end{itemize}
+
+\subsection{Base d'un certificat}
+
+La base des certificat repose sur la cryptographie asymétrique (Ex RSA) avec la génération d'une clef publique et d'une clef privée
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/clefPubliquePrive}
+\end{center}
+
+ 
+\paragraph{Pour rappel, la clef public} permet de 
+\begin{itemize}
+\itemE Chiffrer un message
+\itemE Vérifier la signature d’un message signé par la clé privée
+\end{itemize}
+
+\paragraph{La clef privée} permet de 
+\begin{itemize}
+\itemE Déchiffrer un message chiffré avec la clé publique
+\itemE Signer un message
+\end{itemize}
+
+\subsection{Composition d'un certificat}
+Un certificat TLS est composé 
+
+\begin{itemize}
+\itemE d'une clé publique
+\itemE d'un ensemble d'attributs relatifs au certificat lui même (ex : date d'expiration), au site web (ex : DNS associés au certificat), à l'autorité de certification émettrice du certificat, etc.
+\end{itemize}
+
+Cette ensemble est alors \textbf{signé} par \textbf{une autorité de certification}.La signature assure l’intégrité des éléments composant le certificat.
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/certifcatDessin}
+\end{center}
+
+\paragraph{Exemple certificat Toutatice}
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/certifcatToutatice.png}
+\end{center}
+
+\subsection{Autorité de certification}
+Comme évoqué ci-dessus, un certificat est un ensemble d’informations (clé publique + attributs) signé par la clé privée d’une autorité de certification.
+
+\begin{encadre}{Autorité de certification (ou CA)}
+Entité de confiance qui émet et gère des certificats numériques permettant de vérifier l'identité des parties dans des communications sécurisées. Ces certificats assurent l'authenticité et la fiabilité des échanges.
+\end{encadre}
+
+En réalité, il n'existe pas une autorité de certification mais une hiérarchie d'autorités de certification pour segmenter la distribution de certificats. Ainsi, en cas de compromission d'une des autorités intermédiaires, grâce à cette séparation, seuls les certificats émis par cette autorité ne sont plus dignes de confiance et doivent être révoqués puis renouvellés.
+
+Voici, quelques autorités de certification connues : 
+\begin{itemize}
+\itemE DigiCert
+\itemE GlobalSign
+\itemE Let's Encrypt (gratuit mais limité au service web et avec une mauvaise réputation)
+\end{itemize}
+
+La CA de Toutatice dans l'exemple au-dessus est  \textbf{GEANT OV RSA CA 4}. C'est une CA fournissant des certificas pour les institutions de recherche et d'enseignement européen .
+
+\vspace{0.5cm}
+
+Il est aussi tout a fait possible de créer sa propre \textbf{CA}. Il faudra dans ce cas, importer le certificat racine de notre CA. 
+
+\ifPROF
+Exporter le certificat racine au format .crt :
+
+Assurez-vous que le fichier my-ca.crt est accessible.
+Ouvrir les paramètres de certificats dans Firefox :
+
+Allez dans :
+Menu → Paramètres → Confidentialité et sécurité → Section Certificats → Cliquez sur Afficher les certificats.
+Importer votre certificat racine :
+
+Dans l'onglet Autorités, cliquez sur Importer et sélectionnez le fichier my-ca.crt.
+Lors de l'importation, cochez les cases pour faire confiance à cette CA pour :
+Identifier les sites web.
+Identifier les utilisateurs (si nécessaire).
+\fi
+
+\paragraph{Les certificats auto-signé} sont utilisés lors de phase de développement. Ces certificats, pouvant être générés facilement sur un poste de développement avec des outils comme openssl, ne sont signés par aucune autorité de certification.
+
+Cette absence d’autorité de certification de confiance implique une facilité de falsification. Ne jamais faire confiance à un certificat auto-signé que vous n’avez pas vous même créé.
+
+
+\subsection{Utilisation des certificats}
+
+Dans un cas normal, 
+\begin{enumerate}
+\item Le site web acquiert un certificat auprès d’une autorité de certification
+\item Lorsque l’utilisateur tente d’accèder au site web légitime, il récupère le certificat du site web
+\item \item Il vérifie sa date de validité, la signature du certificat et enfin que son autorité racine est bien reconnue comme étant de confiance
+\item Si tout est correct, le client a authentifié le serveur web, la communication sécurisée peut être établie et les échanges peuvent commencer.
+\end{enumerate}
+
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/certifcatUtilisation}
+\end{center}
+
+
+
+\subsection{Format des certificats : X.509}
+
+\textbf{X.509} est le standard international le plus courant utilisé pour définir le format des certificats numériques. Il contient plusieurs champs importants, notamment :
+\begin{itemize}
+\itemE \textbf{Version} : La version du standard X.509 (généralement version 3).
+\itemE \textbf{Numéro de série} : Identifiant unique du certificat, attribué par l'autorité de certification (CA).
+\itemE \textbf{Algorithme de signature} : Algorithme utilisé pour signer le certificat (par exemple, SHA-256).
+\itemE \textbf{Émetteur} : Nom de l'autorité de certification qui a émis le certificat.
+\itemE \textbf{Sujet} : Nom de l'entité à laquelle le certificat est attribué (nom du serveur, utilisateur, etc.).
+\itemE \textbf{Clé publique} : La clé publique associée à l'entité.
+\itemE \textbf{Période de validité} : Date de début et de fin de la validité du certificat.
+\itemE \textbf{Extensions (Version 3)} : Champs facultatifs, comme les noms alternatifs du sujet (SAN), les restrictions d'usage du certificat, etc.
+
+\end{itemize}
+
+X.509 est la norme principale pour les certificats numériques grâce à sa robustesse et son adoption massive, mais des alternatives existent pour des besoins spécifiques ou des contextes différent : \textbf{PGP}, \textbf{SPKI}, \textbf{JWT} ou encore \textbf{WebAuthn}. 
+
+
+\paragraph{X509 PEM} est un format de fichier utilisé pour stocker des certificats numériques conformes au standard X.509. Ces fichiers sont encodés en Base64 et entourés d'en-têtes spécifiques pour permettre un transport et une lecture faciles par les systèmes et les outils logiciels.
+
+
+\begin{lstlisting}[style=commande]
+-----BEGIN CERTIFICATE-----
+MIIEWTCCA0GgAwIBAgIBAjANBgkqhkiG9w0BAQsFADBbMRQwEgYDVQQDEwtpbnRl
+.....
+.....
+OkXQfq7Z8HgmS6jr+X89Dp6mM9VTZlUhFY9vcW/8uwT5kioZMdFVpGBVzLtnEtiR
+RCHkSSsYHz6dtpUAvw==
+-----END CERTIFICATE-----
+\end{lstlisting}  
+
+D'autres types de fichiers PEM peuvent avoir des en-têtes différents, comme :
+\begin{itemize}
+\itemE Pour une clé privée, 
+\end{itemize} 
+\begin{lstlisting}[style=commande]
+-----BEGIN PRIVATE KEY-----
+\end{lstlisting}
+\begin{itemize}
+\itemE Pour une demande de signature de certificat (CSR),
+\end{itemize}
+\begin{lstlisting}[style=commande]
+-----BEGIN CERTIFICATE REQUEST-----
+\end{lstlisting}
+
+\paragraph{Des outils existent pour pouvoir lire les certificats} 
+\begin{itemize}
+\itemE Sous Windows avec \textit{Gestionnaire de certificats Windows} ou \textit{Certmgr.msc} 
+\itemE Sous Linux : \textit{Openssl} avec la commande
+\end{itemize} 
+
+\begin{lstlisting}[style=commande]
+openssl x509 -in certificat.crt -text -nout
+\end{lstlisting}
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/exCertificat}
+\end{center}
+
+\section{Création de certificats}
+
+Il existe plusieurs possibilités pour créer un certificat et le faire signer. Vous allez voir deux solutions
+\begin{itemize}
+\itemE Avec \textbf{Pfsense}
+\itemE Avec \textbf{openssl}
+\end{itemize} 
+
+\paragraph{Cette partie à juste pour objectif de vous montrer la démarche}. Pour l'instant, vous ne devez pas générer les certificats.
+
+\subsection{pfSense}
+
+\begin{minipage}{0.6\linewidth}
+\textbf{pfSense} est un système d'exploitation open source ayant pour but la mise en place de routeur/pare-feu basé sur le système d'exploitation FreeBSD. Vous l'avez déjà utilisé dans les activités sur le pare-feu. Il n'est pas nécessaire de revenir sur son installation; 
+\end{minipage}
+\begin{minipage}{0.36\linewidth}
+\begin{center}
+\includegraphics[scale=0.3]{./ressource/fpsenseLogo}
+\end{center}
+\end{minipage}
+
+\paragraph{Pour rappel}, pour vous connecter sur pfsense, allez sur l'interface web en utilisant l'adresse IP du LAN. Les identifiants sont 
+\begin{itemize}
+\itemE Login : \textit{admin}
+\itemE Mot de passe : \textit{pfsense} (ou \textit{choupette} si le disque virtuelle vient de PV)
+\end{itemize}
+
+\subsubsection{pfSense : Créer votre CA}
+Après s'être connecter à l'interface web : 
+
+\begin{enumerate}
+\item Aller dans System $>$ Certificates $>$ Authorities
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/caPfsense}
+\end{center}
+
+\item Cliquez sur \textbf{Add} pour créer une nouvelle CA avec la configuration suivante
+
+\end{enumerate}
+\begin{itemize}
+\itemE \textbf{Descriptive Name} : Donner un nom descriptif à votre CA (ex. "Mon-CA").
+\itemE \textbf{Method} : Choisir Create an Internal Certificate Authority.
+\itemE \textbf{Key Length} : Par défaut, utiliser 2048 bits ou plus.
+\itemE \textbf{Digest Algorithm} : Utiliser SHA-256.
+\itemE \textbf{Distinguished Name} : Remplir les champs comme le pays, l'organisation, le nom commun (Common Name) de votre CA.
+\end{itemize}
+
+Après avoir cliquer sur \textbf{Save}, vous devez voir apparaître le CA dans la liste
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/CADescriptif}
+\end{center}
+
+\subsubsection{pfSense : Créations de certificats signés}
+
+Pour créer un certificat signé, il faut bien sûr avoir un CA à disposition et respecter les informations suivantes
+
+
+\begin{enumerate}
+\item Aller dans System $>$ Certificates $>$ Certificates
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/certificatPfsense}
+\end{center}
+
+\item Cliquer sur \textbf{Add} pour la création d'un nouveau certificat avec la configuration suivante
+\end{enumerate}
+
+\begin{itemize}
+\itemE \textbf{Method} : Choisir Create an Internal Certificate.
+\itemE \textbf{Descriptive Name} : Donner un nom explicite à ce certificat.
+\itemE \textbf{Certificate Authority} : Sélectionnr la CA que vous avez créée dans la liste déroulante.
+\itemE \textbf{Key Length} : Par défaut, utilisez 2048 bits ou plus.
+\itemE \textbf{Digest Algorithm} : SHA-256 recommandé.
+
+\itemE \textbf{Distinguished Name} : le nom ou l'adresse IP de l'utilisateur ou du serveur
+\itemE \textbf{Common Name (CN)} : Utilisez le nom de domaine ou l'adresse IP du site (ex. site.exemple.com ou 192.168.1.1).
+\itemE \textbf{Certificate Type} : sélectionner
+	\begin{itemize}
+	\item[+] Server Certificate pour un site web.
+	\item[+] User Certificate pour une authentification utilisateur.
+	\end{itemize}
+
+\end{itemize}
+
+Après avoir cliquer sur \textbf{Save}, vous devez voir apparaître le CA dans la liste
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/certificatExemple}
+\end{center}
+
+
+\subsection{Openssl}
+
+\begin{encadre}{OpenSSL}
+Bibliothèque open-source puissante qui implémente les protocoles cryptographiques TLS/SSL pour sécuriser les communications sur Internet. Elle fournit également des outils en ligne de commande permettant de gérer des clés, certificats, chiffrements, et bien plus, pour garantir la sécurité des données.
+\end{encadre}
+
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/logoOpenSSL}
+\end{center}
+
+\subsubsection{Openssl : Créer votre CA}
+\begin{enumerate}
+\item Sous une distribution linux type ubuntu, créer une clé privée RSA pour la CA : 
+\end{enumerate}
+
+\begin{lstlisting}[style=commande]
+openssl genrsa -out ca.key 2048
+\end{lstlisting}
+avec
+\begin{itemize}
+\itemE \verb?ca.key? : la clé privée de la CA
+\itemE \verb?2024? : la taille de la clé en bits (à augmenter plus de sécurité)
+\end{itemize}
+
+
+\begin{enumerate}[resume]
+\item Créer un certificat auto-signé pour la CA
+\end{enumerate}
+\begin{lstlisting}[style=commande]
+openssl req -x509 -new -nodes -key ca.key -sha256 -days 3650 -out ca.crt
+\end{lstlisting}
+avec 
+
+\begin{itemize}
+\itemE \verb?-x509? : Indique qu'il s'agit d'un certificat auto-signé.
+\itemE \verb?ca.key? : Utilise la clé privée créée à l'étape précédente.
+\itemE \verb?3650? : Durée de validité du certificat en jours (10 ans ici).
+\itemE Répondre aux questions du \verb?Distinguished Name?
+\end{itemize}
+
+
+\vspace{0.5cm}
+La CA est alors constituée de
+\begin{itemize}
+\itemE \verb?ca.key? : la clé privée de la CA de chiffrement
+\itemE \verb?ca.crt? : le certificat auto-signé de la CA 
+\end{itemize}
+
+
+\subsubsection{ Openssl : créations de certificats signés}
+
+\begin{enumerate}
+\item  Générer une clé privée pour le certificat
+\end{enumerate}
+\begin{lstlisting}[style=commande]
+openssl genrsa -out clef.key 2048
+\end{lstlisting}
+avec 
+\begin{itemize}
+\itemE \verb?clef.key? : Clé privée pour le certificat
+\end{itemize}
+
+\begin{enumerate}[resume]
+\item Créer une demande de signature de certificat (CSR). IL faudra répondre au question du \verb?Distinguished Name?
+\end{enumerate}
+\begin{lstlisting}[style=commande]
+openssl req -new -key clef.key -out certificatNonSigne.csr
+\end{lstlisting}
+avec 
+\begin{itemize}
+\itemE \verb?certificatNonSigne.csr? : Demande de signature. 
+\end{itemize}
+
+
+\begin{enumerate}[resume]
+\item Signer la CSR avec votre CA
+\end{enumerate}
+\begin{lstlisting}[style=commande]
+openssl x509 -req -in certificatNonSigne.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out certificatSigne.crt -days 365 -sha256
+\end{lstlisting}
+avec 
+\begin{itemize}
+\itemE \verb?certificatNonSigne.csr? : certificat non signé
+\itemE \verb?ca.crt? : certificat de la CA
+\itemE \verb?ca.key? : clé privée de la CA
+\itemE \verb?certificatSigne.crt? : certificat signé
+\end{itemize}
+
+\paragraph{L'ensemble des fichiers } généré est 
+\begin{itemize}
+\itemE \verb?ca.crt? : certificat de la CA
+\itemE \verb?ca.key? : clé privée de la CA
+\itemE \verb?certificatSigne.crt? : certificat signé
+\itemE \verb?clef.key? :clé privée liée au certificat
+\end{itemize}
+
+
+\section{Technicien SOC : mise en place}
+
+\begin{minipage}{0.55\linewidth}
+En tant que technicien SOC, pour empêcher la falsification des données, vous allez mettre en place un système d'authentification mutuelle entre le serveur, votre capteurs et votre CA ainsi que le chiffrement des données
+\end{minipage}
+\begin{minipage}{0.44\linewidth}
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/cyberHro.png}
+\end{center}
+\end{minipage}
+
+L'objectif est de voir si la solution fonctionne et si elle est sécurisée. Vous devez surtout fournir au technicien de la salle ZenithCIEL
+\begin{itemize}
+\item[$\Rightarrow$] Une procédure de génération des certificats et d'installation du système détaillées. Les modifications dans le code source du device et du serveur devront être expliquées et justifiées
+\item[$\Rightarrow$] Une fiche recette détaillée avec des captures de trames pour mettre en avant la sécurité. Cette fiche recette doit montrer des authentifications réussies ainsi que des authentifications échouées, avec des captures de trames à l'appui.
+
+\end{itemize}
+
+\paragraph{Documents à disposition fournis par le responsable SOC} présent  dans le répertoire \verb?ressource_eleve/00-temperatureaAuthent?: 
+\begin{itemize}
+\itemE \verb?01-serveurauthClient.py? : serveur avec une partie de la mise en place de l'authentification
+\itemE \verb?01-deviceAuthentifie? : élément de programme esp32 de la mise en place de l'authentification
+\end{itemize}
+
+
+\begin{enumerate}
+\item Mettre en place l'environnement 
+\item Réaliser des tests pertinents pour voir si l'attaque précédente est encore envisageable. 
+	\begin{itemize}
+	\itemE Récupération et analyse des données en mode moniteur
+	\itemE Changement de certificat et/ou d'autorité de certification
+	\itemE ... 
+	\end{itemize}
+\end{enumerate}
+
+\paragraph{A rendre}
+\begin{itemize}
+\itemE Fiche recette comprenant entre autre la vérification des certificats via openssl.
+\end{itemize}
+
+
+\ifPROF
+\color{red}
+\section{Elément de correction}
+
+
+Pour vérifier la signature : 
+\begin{lstlisting}[style=commande]
+openssl verify -CAfile CAPV.crt devicePV.crt
+\end{lstlisting}
+
+openssl x509 -in devicePV.crt -noout -modulus | openssl md5
+openssl rsa -in clientPV.key -noout -modulus | openssl md5
+
+
+\paragraph{Pour les tests}, 
+\begin{itemize}
+\itemE Visualiser les données chiffrées 
+\itemE Utiliser d'autres certificats
+\end{itemize}
+
+\normalcolor
+\fi
+
+
+\section{Conclusion}
+
+\begin{minipage}{0.65\linewidth}
+Les \textbf{certificats} jouent un rôle clé en garantissant l'authenticité des site web consulté et en établissant une connexion chiffrée. Vous avez tous l'habitude avec le fameux \textbf{HTTPS}. 
+
+Il est, comme vous avez pu le voir, très intéressant de pouvoir authentifier les clients. Tout cela protège les données des client contre les interceptions malveillantes et l'usurpation "d'identité" notamment sur les réseaux publics ou peu sécurisés.
+
+\paragraph{Le pirate} va-t-il capituler? 
+\end{minipage}
+\begin{minipage}{0.25\linewidth}
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/logoHacker.png}
+\end{center}
+\end{minipage}
+
+
+\subsection{Allez plus loin}
+
+Malgré le chiffrement, il est possible d'obtenir sur Wireshark, les messages en claire \textbf{si vous avez les clefs de chiffrement}.
+
+Pour cela, vous devez modifier le serveur pour qu'ils sauvegardent les clefs de sessions dans un fichiers : 
+\begin{lstlisting}[style=commande, language=Python]
+import os
+
+# Configurer l'exportation des cles de session pour Wireshark
+os.environ['SSLKEYLOGFILE'] = './ssl_keys.log'
+
+\end{lstlisting}
+
+Puis en entrée de la méthode \verb?do_POST?
+\begin{lstlisting}[style=commande, language=Python]
+logger.info("Reception d'une requete POST de %s", self.client_address)
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length)
+\end{lstlisting}
+
+Tout cela es présenté \verb?01-serveurauthClient_avec_clef.py?
+
+\begin{enumerate}
+\item Mettre en place le nouveau serveur
+\item Configurer Wireshark pour utiliser les clés
+	\begin{itemize}
+	\itemE Allez dans Edit $>$ Preferences > Protocols > TLS.
+	\itemE Dans le champ (Pre)-Master-Secret log filename, spécifiez le chemin de votre fichier ssl\_keys.log.
+	\end{itemize}
+\item Après avoir valider, visualiser les trames décodés
+\end{enumerate}
+
+\paragraph{C'est fonctionnalité} peut-être très pratique durant les phases de debug.
+
+\end{document}
