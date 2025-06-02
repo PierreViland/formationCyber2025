@@ -150,3 +150,15 @@ jobs:
         run: |
           echo "Contenu de $CHEMIN_PDF/wifi/${{ matrix.base }} :"
           ls -l "$CHEMIN_PDF/${{ matrix.base }}"
+      - name: Copier le répertoire ressource_élève
+        run: |
+          SRC_DIR="${{ matrix.folder }}/ressource_élève"
+          DEST_DIR="$CHEMIN_PDF/wifi/${{ matrix.base }}/ressource_élève"
+          
+          if [ -d "$SRC_DIR" ]; then
+            echo "Copie de $SRC_DIR vers $DEST_DIR"
+            mkdir -p "$DEST_DIR"
+            cp -r "$SRC_DIR/"* "$DEST_DIR"
+          else
+            echo "Le répertoire $SRC_DIR n'existe pas, rien à copier."
+          fi
