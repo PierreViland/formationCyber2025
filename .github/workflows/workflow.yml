@@ -112,7 +112,11 @@ jobs:
           ls -l "$CHEMIN_PDF/${{ matrix.base }}"
 
 
+<<<<<<< HEAD
   copyWifi:
+=======
+copy:
+>>>>>>> 281aa98f22b5153aa97f062a2f37d37ca9d60822
     needs: build
     runs-on: [self-hosted, lblCyber]
     strategy:
