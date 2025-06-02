@@ -30,6 +30,8 @@ jobs:
             base: act04-SNMP
           - folder: act05-gestionLog
             base: act05-gestionLog
+          - folder : act06-Wifi/act00-EBIOS_Riskmanager
+            base: act00-EBIOS_Riskmanager
 
 
     steps:
