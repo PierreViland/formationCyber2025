@@ -112,11 +112,7 @@ jobs:
           ls -l "$CHEMIN_PDF/${{ matrix.base }}"
 
 
-<<<<<<< HEAD
   copyWifi:
-=======
-copy:
->>>>>>> 281aa98f22b5153aa97f062a2f37d37ca9d60822
     needs: build
     runs-on: [self-hosted, lblCyber]
     strategy:
@@ -153,4 +149,19 @@ copy:
       - name: Vérifier que les fichiers sont bien copiés
         run: |
           echo "Contenu de $CHEMIN_PDF/wifi/${{ matrix.base }} :"
-          ls -l "$CHEMIN_PDF/${{ matrix.base }}"
+          ls -l "$CHEMIN_PDF/wifi/${{ matrix.base }}"
+      - name: Zipper et copier le répertoire ressource_eleve
+        run: |
+          SRC_DIR="${{ matrix.folder }}/ressource_eleve"
+          DEST_DIR="$CHEMIN_PDF/wifi/${{ matrix.base }}"
+          ZIP_NAME="ressource_eleve.zip"
+          
+          if [ -d "$SRC_DIR" ]; then
+            echo "Compression de $SRC_DIR"
+            mkdir -p "$DEST_DIR"
+            zip -r "$DEST_DIR/$ZIP_NAME" "$SRC_DIR"
+            echo "Fichier zip copié dans $DEST_DIR/$ZIP_NAME"
+          else
+            echo "Le répertoire $SRC_DIR n'existe pas, rien à compresser."
+          fi
+
