@@ -1,0 +1,66 @@
+#version de docker compose
+version: '3.8'
+# Services que le veut lancer
+services:
+
+  # Service nomme nginx
+  nginx:
+    #L'image que je veux recupérer
+    image: nginx:1.18
+    #nom du container
+    container_name: nginxPV
+    #redirection de ports :: port hote : port container
+    ports:
+      - 80:80
+    #répertoires partages :: repertoire hote : repertoire container 
+    volumes:
+      - ./src:/var/www/php
+      - ./.docker/nginx/conf.d/default.d:/etc/nginx/conf.d/default.conf
+    #configuration du repertoire de travail  
+    working_dir: /var/www/php
+    #A quel(s) autre(s) service nginx dépend
+    depends_on:
+      - php
+
+  # PHP Service
+  php:
+    image: test_php
+    container_name: phpPV
+    working_dir: /var/www/php
+    volumes:
+      - ./src:/var/www/php
+    depends_on:
+      mysql:
+        condition: service_healthy
+  # MySQL Service
+  mysql:
+    image: mysql/mysql-server:8.0
+    container_name: mysqlPV
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'      
+    ports:
+            - 3306:3306
+    
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 5s
+      retries: 10
+   
+   # PhpMyAdmin Service
+  phpmyadmin:
+    image:  phpmyadmin/phpmyadmin:5
+    container_name: phpmyadminPV
+    ports : 
+        - 8080:80
+    environment:
+      PMA_HOST: mysql
+    depends_on : 
+        mysql: 
+            condition: service_healthy
+            
+            
+# Volumes
+volumes:
+   mysqldata:
+    driver: local

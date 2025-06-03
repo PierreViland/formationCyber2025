@@ -1,0 +1,20 @@
+#version de docker compose
+version: '3.8'
+# Services que le veut lancer
+services:
+
+  # Service nomme nginx
+  nginx:
+    #L'image que je veux recuperer
+    image: nginx:1.18
+    #nom du container
+    container_name: nginxPVseul
+    #redirection de port
+    ports:
+      - 80:80
+    #repertoires partages
+    volumes:
+      - ./src:/var/www/html
+      - ./.docker/nginx/conf.d/default.d:/etc/nginx/conf.d/default.conf
+    #configuration du repertoire de travail  
+    working_dir: /var/www/html

@@ -48,6 +48,8 @@ jobs:
 
           - folder: 00-RessourceOrga/r00-git_presentation
             base: r00-git_presentation 
+          - folder: 00-RessourceOrga/r01-dockerPresentation
+            base: r01-dockerPresentation
 
 
     steps:
@@ -179,7 +181,9 @@ jobs:
           
           - folder: 00-RessourceOrga/r00-git_presentation
             base: r00-git_presentation 
-      
+          - folder: 00-RessourceOrga/r01-dockerPresentation
+            base: r01-dockerPresentation  
+
     steps:
       - name: Download artifact P
         uses: actions/download-artifact@v4
