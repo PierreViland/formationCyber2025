@@ -2,7 +2,7 @@ name: Build LaTeX Document
 
 on:
   push:
-    # Active ceci pour limiter aux fichiers .tex, .sty, etc.
+    # Décommenter si tu veux déclencher automatiquement sur modification de fichiers LaTeX
     # paths:
     #   - '**.tex'
     #   - '**.sty'
@@ -15,20 +15,37 @@ env:
   CHEMIN_PDF: "/home/pviland/00-orgaFormation/webFormation/src/docpdf"
 
 jobs:
-  build_and_copy:
-    runs-on: [self-hosted,CyberII]
+  build:
+    runs-on: [self-hosted, lblCyber]
     strategy:
       matrix:
         include:
-        
+          - folder: act01-installationEnvironnement
+            base: act01-installationEnvironnement
+          - folder: act02-https
+            base: act02-https
+          - folder: act03-monitoring
+            base: act03-monitoring
+          - folder: act04-SNMP
+            base: act04-SNMP
+          - folder: act05-gestionLog
+            base: act05-gestionLog
+            
+          - folder: act06-Wifi/_SeqIntro-ZenithCiel
+            base: _SeqIntro-ZenithCiel
+      
+          - folder: act06-Wifi/act00-EBIOS_Riskmanager
+            base: act00-EBIOS_Riskmanager
+      
+          - folder: act06-Wifi/act01-attaqueWifi
+            base: act01-attaqueWifi
+      
+          - folder: act06-Wifi/act02-authentificationDevice
+            base: act02-authentificationDevice
+      
+          - folder: act06-Wifi/act03-dumpDevice
+            base: act03-dumpDevice
 
-          - folder: 00-RessourceOrga/r00-git_presentation
-            base: r00-git_presentation
-            target: 00-RessourceOrga
-
-          - folder: 00-RessourceOrga/r01-dockerPresentation
-            base: r01-dockerPresentation
-            target: 00-RessourceOrga
 
     steps:
       - name: Checkout repository
@@ -36,30 +53,115 @@ jobs:
 
       - name: Compile LaTeX document
         run: |
-          cd "${{ matrix.folder }}"
+          cd ${{ matrix.folder }}
           chmod +x compilationL.sh
+          ls -la
+          pwd
           ./compilationL.sh
-
-      - name: Copier les PDF générés
+          ls -la
+      - name: Lister les fichiers PDF générés
         run: |
-          DEST="$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
-          mkdir -p "$DEST"
-          cp "${{ matrix.folder }}/${{ matrix.base }}_E.pdf" "$DEST/" || echo "PDF E manquant"
-          cp "${{ matrix.folder }}/${{ matrix.base }}_P.pdf" "$DEST/" || echo "PDF P manquant"
+          echo "Liste des fichiers PDF dans ${{ matrix.folder }} :"
+          find ${{ matrix.folder }} -name '*.pdf'
 
-      #- name: Zipper et copier le répertoire ressource_eleve (si présent)
-      #  run: |
-      #    SRC_DIR="${{ matrix.folder }}/ressource_eleve"
-      #    DEST_DIR="$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
-      #    ZIP_NAME="ressource_eleve.zip"
-      #    if [ -d "$SRC_DIR" ]; then
-      #      mkdir -p "$DEST_DIR"
-      #      zip -r "$DEST_DIR/$ZIP_NAME" "$SRC_DIR"
-      #    else
-      #      echo "Pas de répertoire ressource_eleve à zipper."
-      #    fi
+      - name: Upload artifact E
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.base }}_E
+          path: ./${{ matrix.folder }}/${{ matrix.base }}_E.pdf
 
-      #- name: Vérification finale
-      #  run: |
-      #    echo "Contenu final de $CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }} :"
-      #    ls -l "$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
+      - name: Upload artifact P
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.base }}_P
+          path: ./${{ matrix.folder }}/${{ matrix.base }}_P.pdf
+
+  copy:
+    needs: build
+    runs-on: [self-hosted, lblCyber]
+    strategy:
+      matrix:
+        include:
+          - folder: act01-installationEnvironnement
+            base: act01-installationEnvironnement
+          - folder: act02-https
+            base: act02-https
+          - folder: act03-monitoring
+            base: act03-monitoring
+          - folder: act04-SNMP
+            base: act04-SNMP
+          - folder: act05-gestionLog
+            base: act05-gestionLog
+
+    steps:
+      - name: Download artifact P
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.base }}_P
+          path: ${{ env.CHEMIN_PDF }}/${{ matrix.base }}
+
+      - name: Download artifact E
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.base }}_E
+          path: ${{ env.CHEMIN_PDF }}/${{ matrix.base }}
+
+      - name: Vérifier que les fichiers sont bien copiés
+        run: |
+          echo "Contenu de $CHEMIN_PDF/${{ matrix.base }} :"
+          ls -l "$CHEMIN_PDF/${{ matrix.base }}"
+
+
+  copyWifi:
+    needs: build
+    runs-on: [self-hosted, lblCyber]
+    strategy:
+      matrix:
+        include:
+          
+          - folder: act06-Wifi/_SeqIntro-ZenithCiel
+            base: _SeqIntro-ZenithCiel
+      
+          - folder: act06-Wifi/act00-EBIOS_Riskmanager
+            base: act00-EBIOS_Riskmanager
+      
+          - folder: act06-Wifi/act01-attaqueWifi
+            base: act01-attaqueWifi
+      
+          - folder: act06-Wifi/act02-authentificationDevice
+            base: act02-authentificationDevice
+      
+          - folder: act06-Wifi/act03-dumpDevice
+            base: act03-dumpDevice
+    steps:
+      - name: Download artifact P
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.base }}_P
+          path: ${{ env.CHEMIN_PDF }}/wifi/${{ matrix.base }}
+
+      - name: Download artifact E
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.base }}_E
+          path: ${{ env.CHEMIN_PDF }}/wifi/${{ matrix.base }}
+
+      - name: Vérifier que les fichiers sont bien copiés
+        run: |
+          echo "Contenu de $CHEMIN_PDF/wifi/${{ matrix.base }} :"
+          ls -l "$CHEMIN_PDF/wifi/${{ matrix.base }}"
+      - name: Zipper et copier le répertoire ressource_eleve
+        run: |
+          SRC_DIR="${{ matrix.folder }}/ressource_eleve"
+          DEST_DIR="$CHEMIN_PDF/wifi/${{ matrix.base }}"
+          ZIP_NAME="ressource_eleve.zip"
+          
+          if [ -d "$SRC_DIR" ]; then
+            echo "Compression de $SRC_DIR"
+            mkdir -p "$DEST_DIR"
+            zip -r "$DEST_DIR/$ZIP_NAME" "$SRC_DIR"
+            echo "Fichier zip copié dans $DEST_DIR/$ZIP_NAME"
+          else
+            echo "Le répertoire $SRC_DIR n'existe pas, rien à compresser."
+          fi
+
