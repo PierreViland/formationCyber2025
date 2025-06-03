@@ -20,45 +20,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - folder: act01-installationEnvironnement
-            base: act01-installationEnvironnement
-            target: racine
-
-          - folder: act02-https
-            base: act02-https
-            target: racine
-
-          - folder: act03-monitoring
-            base: act03-monitoring
-            target: racine
-
-          - folder: act04-SNMP
-            base: act04-SNMP
-            target: racine
-
-          - folder: act05-gestionLog
-            base: act05-gestionLog
-            target: racine
-
-          - folder: act06-Wifi/_SeqIntro-ZenithCiel
-            base: _SeqIntro-ZenithCiel
-            target: wifi
-
-          - folder: act06-Wifi/act00-EBIOS_Riskmanager
-            base: act00-EBIOS_Riskmanager
-            target: wifi
-
-          - folder: act06-Wifi/act01-attaqueWifi
-            base: act01-attaqueWifi
-            target: wifi
-
-          - folder: act06-Wifi/act02-authentificationDevice
-            base: act02-authentificationDevice
-            target: wifi
-
-          - folder: act06-Wifi/act03-dumpDevice
-            base: act03-dumpDevice
-            target: wifi
+        
 
           - folder: 00-RessourceOrga/r00-git_presentation
             base: r00-git_presentation
