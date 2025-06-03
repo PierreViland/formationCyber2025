@@ -20,15 +20,16 @@ jobs:
     strategy:
       matrix:
         include:
-        
-
-          - folder: 00-RessourceOrga/r00-git_presentation
-            base: r00-git_presentation
-            target: 00-RessourceOrga
-
-          - folder: 00-RessourceOrga/r01-dockerPresentation
-            base: r01-dockerPresentation
-            target: 00-RessourceOrga
+          - folder: act01-installationEnvironnement
+            base: act01-installationEnvironnement
+          - folder: act02-https
+            base: act02-https
+          - folder: act03-monitoring
+            base: act03-monitoring
+          - folder: act04-SNMP
+            base: act04-SNMP
+          - folder: act05-gestionLog
+            base: act05-gestionLog
 
     steps:
       - name: Checkout repository
