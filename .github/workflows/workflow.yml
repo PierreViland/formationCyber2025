@@ -20,17 +20,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - folder: act01-installationEnvironnement
-            base: act01-installationEnvironnement
-            target: racine
-
-          - folder: act02-https
-            base: act02-https
-            target: racine
-
-          - folder: act03-monitoring
-            base: act03-monitoring
-            target: racine
+        
 
           - folder: 00-RessourceOrga/r00-git_presentation
             base: r00-git_presentation
