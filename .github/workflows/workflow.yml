@@ -85,19 +85,19 @@ jobs:
           cp "${{ matrix.folder }}/${{ matrix.base }}_E.pdf" "$DEST/" || echo "PDF E manquant"
           cp "${{ matrix.folder }}/${{ matrix.base }}_P.pdf" "$DEST/" || echo "PDF P manquant"
 
-      - name: Zipper et copier le répertoire ressource_eleve (si présent)
-        run: |
-          SRC_DIR="${{ matrix.folder }}/ressource_eleve"
-          DEST_DIR="$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
-          ZIP_NAME="ressource_eleve.zip"
-          if [ -d "$SRC_DIR" ]; then
-            mkdir -p "$DEST_DIR"
-            zip -r "$DEST_DIR/$ZIP_NAME" "$SRC_DIR"
-          else
-            echo "Pas de répertoire ressource_eleve à zipper."
-          fi
+      #- name: Zipper et copier le répertoire ressource_eleve (si présent)
+      #  run: |
+      #    SRC_DIR="${{ matrix.folder }}/ressource_eleve"
+      #    DEST_DIR="$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
+      #    ZIP_NAME="ressource_eleve.zip"
+      #    if [ -d "$SRC_DIR" ]; then
+      #      mkdir -p "$DEST_DIR"
+      #      zip -r "$DEST_DIR/$ZIP_NAME" "$SRC_DIR"
+      #    else
+      #      echo "Pas de répertoire ressource_eleve à zipper."
+      #    fi
 
-      - name: Vérification finale
-        run: |
-          echo "Contenu final de $CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }} :"
-          ls -l "$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
+      #- name: Vérification finale
+      #  run: |
+      #    echo "Contenu final de $CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }} :"
+      #    ls -l "$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
