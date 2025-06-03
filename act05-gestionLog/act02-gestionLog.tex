@@ -285,10 +285,6 @@ La centralisation des logs est très importante pour la supervision des système
 
 \end{itemize}
 
-
-\paragraph{Objectif } : Dans cette exemple notre premier objectif va être d'analyser les log de Nginx pour identifier le nombre de GET et de POST effectue par minute. 
-
-
 \section{Principe générale}
 De la même manière que pour Prometheus, la centralisation des logs va être mise en place à l'aide de 3 containers 
 \begin{itemize}
@@ -334,20 +330,19 @@ Already on 'main'
 Your branch is up to date with 'origin/main'.
 \end{lstlisting}
 
-\itemE La commande pour l'ensemble des containers lié à notre service Web (Nginx, SQL,...) est : 
+\itemE La commande pour l'ensemble l'ensemble des containers est : 
 \begin{lstlisting}[style=commande]
 $ sudo docker compose up -d
 \end{lstlisting}
+
+
 \end{itemize} 
-
-Vous devez dans un navigateur web avoir accès au site web. 
-
 
 \section{Mise en place de Promtail}
 
 L'ensemble des éléments de configuration de la centralisation des logs est présente sur \textbf{ le même dépôt que Prometheus} 
 \begin{itemize}
-\itemE \url{https://github.com/PierreViland/monitoringPV.git}
+\itemE \url{https://github.com/PierreViland/reverseProxyMonitoringPV.git}
 \end{itemize}
 
 Le lancement d'un container Promtail doit se faire sur chaque serveur. Les lignes du fichier \verb?docker-compose.yml? sont les suivantes : 
@@ -523,8 +518,7 @@ server:
 
 \section{Grafana}
 
-\paragraph{Connexion avec loki} \ 
-
+\paragraph{Connexion avec loki}
 \textbf{Grafana}, outil déjà utilisé va permette de visualiser les logs. la première étape de de créer \textbf{une connexion de Grafana a Loki}. 
 
 \begin{center}
@@ -533,7 +527,7 @@ server:
 Dans le cas détaillé dans l'image ci-dessous, les logs sont récupérés via un container loki installé sur la machine \verb?192.168.1.30? en écoute sur le port \verb?3100?.
 
 
-\paragraph{Explorer}\ 
+\paragraph{Explorer}
 
 
 L'onglet Explore est une interface qui permet de consulter et analyser les logs en temps réel. Il est par exemple très facile de lister les log correspondant à une méthode GET ou une méthode POST. 
@@ -542,19 +536,12 @@ L'onglet Explore est une interface qui permet de consulter et analyser les logs 
 \end{center}
 
 
-Le langage utilisé est le \textbf{LogQL}
-
-\begin{encadre}{LogQL}
-LogQL (Log Query Language) est un langage inspiré de PromQL (utilisé par Prometheus), mais adapté aux logs.
-\end{encadre}
-
-
-\paragraph{Modification du dashbord} \  
-
-Il est aussi possible de rajouter dans un dashbord le nombre de connexion GET (ou POST par minute) : 
+\paragraph{Modification du dashbord}
+Il est aussi possible de rajouter dans un dashbord le nombre de connexion GET (ou POST) par minute : 
 \begin{lstlisting}[style=commande]
 sum(count_over_time({job="nginx", method="GET"}[1m]))
 \end{lstlisting}
+
 \begin{center}
 \includegraphics[scale=0.5]{./ressource/grafanaNombre_delelement.png}
 \end{center}
@@ -576,6 +563,51 @@ Pour rappel les codes d'erreurs sont :
 \item Trouver une erreur 404
 \item Visualiser la sur grafana
 \item la contabilisé pour 
+\end{enumerate}\section{Conter le nombre d'erreurs}
+
+L'avantage du service déployé est de fournir l'état de santé du système et du serveur. Il peut être intéressant d'avoir une vision détaillée de notre service web avec par exemple le nombre de code d'erreur HTTP. 
+
+Pour rappel les codes d'erreurs sont : 
+
+\begin{itemize}
+\itemE \textbf{2xx} : succès
+\itemE \textbf{4xx} : erreurs côté client (ex. 404 page non trouvé)
+\itemE \textbf{5xx} : erreurs serveur à surveiller en priorité (ex. 500, 502, 504)
+\end{itemize}
+
+
+\subsection{Erreur 404}
+\begin{enumerate}
+\item Générer des erreurs 404
+\item Visualiser la sur grafana
+\item la contabilisé pour 
 \end{enumerate}
+
+\ifPROF
+\color{red}
+Essayer d'accéder à une page qui n'est pas référencé \verb.indexX.html?
+
+Dans l'explorer, tester : 
+
+\begin{lstlisting}[style=commande]
+{container="nginxPV"} |= "HTTP" |~ " 404 "
+\end{lstlisting}
+
+et enfin dans un dashbord : 
+
+
+	
+\begin{lstlisting}[style=commande]
+(count_over_time({container="nginxPV"} |= "HTTP" |~ " 404 "[1m]))
+\end{lstlisting}
+
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/grafanaErreur404}
+\end{center}
+\normalcolor
+\fi
+\subsection{Erreur 5xx}
+
+Idem a faire avec l'erreur 5xx qui est très sérieux car c'est un erreur interne serveur
 
 \end{document}
