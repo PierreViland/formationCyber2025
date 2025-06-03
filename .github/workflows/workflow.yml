@@ -16,7 +16,7 @@ env:
 
 jobs:
   build_and_copy:
-    runs-on: [self-hosted, lblCyber]
+    runs-on: [self-hosted,CyberII]
     strategy:
       matrix:
         include:
