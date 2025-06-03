@@ -16,20 +16,57 @@ env:
 
 jobs:
   build_and_copy:
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, lblCyber]
     strategy:
       matrix:
         include:
           - folder: act01-installationEnvironnement
             base: act01-installationEnvironnement
+            target: racine
+
           - folder: act02-https
             base: act02-https
+            target: racine
+
           - folder: act03-monitoring
             base: act03-monitoring
+            target: racine
+
           - folder: act04-SNMP
             base: act04-SNMP
+            target: racine
+
           - folder: act05-gestionLog
             base: act05-gestionLog
+            target: racine
+
+          - folder: act06-Wifi/_SeqIntro-ZenithCiel
+            base: _SeqIntro-ZenithCiel
+            target: wifi
+
+          - folder: act06-Wifi/act00-EBIOS_Riskmanager
+            base: act00-EBIOS_Riskmanager
+            target: wifi
+
+          - folder: act06-Wifi/act01-attaqueWifi
+            base: act01-attaqueWifi
+            target: wifi
+
+          - folder: act06-Wifi/act02-authentificationDevice
+            base: act02-authentificationDevice
+            target: wifi
+
+          - folder: act06-Wifi/act03-dumpDevice
+            base: act03-dumpDevice
+            target: wifi
+
+          - folder: 00-RessourceOrga/r00-git_presentation
+            base: r00-git_presentation
+            target: 00-RessourceOrga
+
+          - folder: 00-RessourceOrga/r01-dockerPresentation
+            base: r01-dockerPresentation
+            target: 00-RessourceOrga
 
     steps:
       - name: Checkout repository
@@ -40,25 +77,27 @@ jobs:
           cd "${{ matrix.folder }}"
           chmod +x compilationL.sh
           ./compilationL.sh
+
       - name: Copier les PDF générés
         run: |
           DEST="$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
           mkdir -p "$DEST"
           cp "${{ matrix.folder }}/${{ matrix.base }}_E.pdf" "$DEST/" || echo "PDF E manquant"
           cp "${{ matrix.folder }}/${{ matrix.base }}_P.pdf" "$DEST/" || echo "PDF P manquant"
-      #- name: Zipper et copier le répertoire ressource_eleve (si présent)
-      #  run: |
-      #    SRC_DIR="${{ matrix.folder }}/ressource_eleve"
-      #    DEST_DIR="$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
-      #    ZIP_NAME="ressource_eleve.zip"
-      #    if [ -d "$SRC_DIR" ]; then
-      #      mkdir -p "$DEST_DIR"
-      #      zip -r "$DEST_DIR/$ZIP_NAME" "$SRC_DIR"
-      #    else
-      #      echo "Pas de répertoire ressource_eleve à zipper."
-      #    fi
 
-      #- name: Vérification finale
-      #  run: |
-      #    echo "Contenu final de $CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }} :"
-      #    ls -l "$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
+      - name: Zipper et copier le répertoire ressource_eleve (si présent)
+        run: |
+          SRC_DIR="${{ matrix.folder }}/ressource_eleve"
+          DEST_DIR="$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
+          ZIP_NAME="ressource_eleve.zip"
+          if [ -d "$SRC_DIR" ]; then
+            mkdir -p "$DEST_DIR"
+            zip -r "$DEST_DIR/$ZIP_NAME" "$SRC_DIR"
+          else
+            echo "Pas de répertoire ressource_eleve à zipper."
+          fi
+
+      - name: Vérification finale
+        run: |
+          echo "Contenu final de $CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }} :"
+          ls -l "$CHEMIN_PDF/${{ matrix.target }}/${{ matrix.base }}"
