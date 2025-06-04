@@ -13,12 +13,12 @@
 \newcommand{\lycee}{Lycée de Brocéliande}
 \newcommand{\classSeq}{SNIR1 }
 \newcommand{\matiereSeq}{IR}      
-\newcommand{\numSeq}{00}
+\newcommand{\numSeq}{Cyber}
 \newcommand{\numAct}{01}
 \newcommand{\objSeance}{Apprendre à utiliser des containers}
 
 \newcommand{\moySeq}{\begin{itemize}	
-\itemE \ 
+\itemE Machine avec OS Linux ou Windows
 \end{itemize}}
 
 \newcommand{\compSeq}{\begin{itemize}
@@ -190,7 +190,7 @@
 \fancyhead[L]{Nom}
 \fancyfoot[C]{Page \thepage/\pageref{LastPage}}
 \fancyfoot[L]{\classSeq ~\matiereSeq}
-\fancyfoot[R]{Seq \numSeq  ~ Act \numAct}
+\fancyfoot[R]{Formation \numSeq  ~ r \numAct}
 \renewcommand{\headrulewidth}{1pt}
 %%%Note et pied de page 
 
@@ -257,10 +257,12 @@
 \section{Objectif }
 
 Ce document a pour objectif de démystifier le principe des container docker avec la mise en place d'un serveur \textbf{Nginx} avec \textbf{Docker}. 
-\textbf{Vous trouverez en annexe \ref{lbl_CommandeUtiles} un ensemble de commandes utiles pour exploiter pleinement le containers.}
 
+\begin{encadre}{Commandes utiles}
+\textbf{Vous trouverez en annexe \ref{lbl_CommandeUtiles} un ensemble de commandes utiles pour exploiter pleinement le containers.}
+\end{encadre}
 \begin{center}
-\includegraphics[scale=0.7]{./ressource/schema_docker}
+\includegraphics[scale=0.6]{./ressource/schema_docker}
 \end{center}
 
 
@@ -278,6 +280,10 @@ Chaque conteneur partage le noyau de l'OS hôte cependant les binaires et les bi
   
 Un conteneur Docker est semblable à un ordinateur dans votre ordinateur. On peut aussi le voir comme un serveur distant.  On peut partager l’image d’un conteneur (une copie à un instant t, re-executable).  On peut donc diffuser des logiciels, ou des données via un conteneur dans une version fixe.  Ainsi à partir des mêmes sources répliquées, les autres utilisateurs obtiendront les mêmes résultats. 
 
+
+\begin{center}
+\includegraphics[scale=0.6]{./ressource/conteneur_vs_mv.png}
+\end{center}
 
 \paragraph{Architecture générale} Docker utilise une architecture client-serveur, qui implique les trois principaux composants.   
 \begin{itemize}
@@ -804,13 +810,7 @@ Pour exécuter le serveur Lemp, il faut compléter (et modifier) le fichier \ver
 %%%\href{https://tech.osteel.me/posts/docker-for-local-web-development-part-1-a-basic-lemp-stack}{Docker}
 
 
-\begin{enumerate}[resume]
-\item Vous devez produire
-	\begin{itemize}
-	\itemE Un document présentant les quelques commandes permettant de créer et lancer un ensemble de container de type LEMP. le fichier \verb?docker-compose.yml? ainsi que l'ensemble des répertoires et fichiers de configuration devra aussi être disponible. 	
-	\end{itemize}
 
-\end{enumerate}
 
 \appendix
 \newpage

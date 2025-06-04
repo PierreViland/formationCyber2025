@@ -19,7 +19,7 @@
 \newcommand{\lycee}{Lycée de Brocéliande}
 \newcommand{\classSeq}{CIEL2 }
 \newcommand{\matiereSeq}{IR}      
-\newcommand{\numSeq}{00}
+\newcommand{\numSeq}{Cyber}
 \newcommand{\numAct}{00}
 \newcommand{\objSeance}{Comprendre le mécanisme de GIT}
 
@@ -197,7 +197,7 @@
 \fancyhead[L]{Nom}
 \fancyfoot[C]{Page \thepage/\pageref{LastPage}}
 \fancyfoot[L]{\classSeq ~\matiereSeq}
-\fancyfoot[R]{Seq \numSeq  ~ r \numAct}
+\fancyfoot[R]{Formation \numSeq  ~ r \numAct}
 \renewcommand{\headrulewidth}{1pt}
 %%%Note et pied de page 
 
@@ -302,6 +302,8 @@ Lorsqu’on travaille avec Git, on suit les différentes étapes ci-dessous :
 \end{enumerate}
 
 
+\vspace{0.5cm}
+
 
 Git a trois grandes fonctionnalités :
 \begin{itemize}
@@ -389,7 +391,7 @@ git config --global user.email "votreMail@mail.com"
 \item Installer Git
 
 \begin{lstlisting}[style=commande]
-sudo apt-get install git 
+sudo apt install git 
 \end{lstlisting}
 
 
@@ -421,8 +423,10 @@ git config --global user.email "votreMail@mail.com"
 git clone addr_IP ou URL
 \end{lstlisting}
 
-Cette commande est très importante elle permet de récupérer l'intégralité du dépôt sur la machine local. 
+\textbf{Cette commande est très importante elle permet de récupérer l'intégralité du dépôt sur la machine local.}
 
+
+\vspace{0.5cm}
 
 \itemE git push envoie les modifications locales apportées à la branche principale associée.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -581,7 +585,7 @@ Ci-dessous un exemple d'arbre des commits.
 
 \section{Conclusion}
 
-Vous avez découvert le principale commande pour gérer les dépots GIT. Par la suite, vous verrez que c'est commandes peuvent être remplacées par des interfaces graphiques. 
+Vous avez découvert le principale commande pour gérer les dépots GIT. Il existe des outils avec interface graphiques (comme sous windows) mais qui restent moins efficace que les lignes de commandes.
 
 
 \end{document}
