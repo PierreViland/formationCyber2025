@@ -259,6 +259,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Dépot}
 
+Les énoncés sont présents sur : 
+\url{https://ciel-broceliande.myasustor.com/}
+avec
+\begin{itemize}
+\itemE Login : \verb?formationCyber?
+\itemE Mot de passe : \verb?acRennes!!2025?
+\end{itemize}
+
+
 \begin{minipage}{0.65\linewidth}
 Pour les besoins de la formation, les dépôts GiHub présent dans le tableau ci-dessous vont être utilisés.
 \end{minipage}
@@ -290,40 +299,55 @@ Exemple fishing avec certificat Let's encrypt& \url{https://github.com/PierreVil
 \hline
 
 \hline
-Mise en place d'une "monitoring stack" & \url{https://github.com/PierreViland/monitoringPV.git} \\
-\hline
-\hline
-Analyse de log & Mise en ligne bientôt\\
-\hline
-\hline
-Attaque et protection Wifi & Mise en ligne bientôt \\
-\hline
+Mise en place d'une "monitoring stack" + Analyse de log & \url{https://github.com/PierreViland/monitoringPV.git} \\
 \hline
 Source latex des documents de la formation (+ workflow pour déploiement sur site web) & \url{https://github.com/PierreViland/formationCyber2025.git} \\
 \hline
-
-
 \end{tabular}
 
 \normalsize
 
+\begin{minipage}{0.49\linewidth}
+\paragraph{Les ressources pour l'attaque et la protection Wifi} sont directement dans les répertoires \verb?ressource_eleve? correspondant à l'énoncé de l'activité. 
 
-\section{Système}
+\end{minipage}
+\begin{minipage}{0.49\linewidth}
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/ressourceEleve}
+\end{center}
+\end{minipage}
 
-Pour les besoins de la formation, le système suivant va être exploité  
+
+
+
+
+\section{Système} 
+
+Dans le cadre de la formation, nous allons reproduire les services et les éléments de la topologie réseau présentée ci-dessous, mais pas tous en même temps. Leur mise en place se fera progressivement, en fonction des activités.
 
 \begin{center}
 \includegraphics[scale=0.7]{./ressource/environnement.png}
 \end{center}
 avec : 
 \begin{itemize}
-\itemE \verb?Serveur ubuntu? : contient des sites de tests, accessible en http ou en https. 
-\itemE Les \verb?pirates? : Machine virtuelle avec Kali Linux.
-\itemE \verb?Serveur supervision? : contient des outils de collecte et d'analyse de données. Pour simplifier la mise en place, la machine Kali ou le serveur Ubuntu pourra être utilisée pour la supervision.
-\itemE \verb?Pfsense (FW & CA)? : Pare-feu permettant faisant fonction de autorité de certification
+\itemE \verb?Serveur Web? : contient des sites de tests, accessible en http ou en https. 
+\itemE Les \verb?pirates? : Machine simulant un pirate
+\itemE \verb?Serveur supervision? : Machine ayant des service pour la centralisation des logs et la supervision des appareils et des services. 
+\itemE \verb?SIEM? : Machine contenant un système de gestion des informations et des événements de sécurité (SIEM)
+\itemE \verb?FW & CA? : Pare-feu permettant faisant fonction de autorité de certification
 \end{itemize}
 
 \paragraph{Remarque :} il aurait été plus judicieux de mettre le serveur dans un DMZ mais ce n'est pas le sujet de l'activité.  
+
+
+\paragraph{Pour la majorité des activités proposées} les manipulations peuvent être réalisées sur n'importe quel système d'exploitation, à condition que les éléments suivants soient installés :
+\begin{itemize}
+  \itemE \textbf{Docker}
+  \itemE un \textbf{interpréteur Python}
+\end{itemize}
+
+Les sections ci-dessous présentent l’installation des environnements Ubuntu et pfSense, sur lesquels une partie des activités a été testée.
+
 
 \section{Serveur web sur Ubuntu}
 
@@ -361,7 +385,7 @@ Cela va permettre de :
 	\itemE Sniffer le trafic réseau entre l'hôte et une VM (par exemple avec Wireshark)
 	\end{itemize}
 
-\item L'adressage IP est statique et doit être demandé à votre enseignant.. Les identifiants administrateurs de cette VM sont : 
+\item L'adressage IP est statique. Elle vous sera donnée durant l'installation de vos machines. Les identifiants administrateurs de cette VM sont : 
 	\begin{itemize}
 	\itemE Login : \verb?pviland?
 	\itemE Mot de passe : \verb?choupette?
@@ -380,7 +404,7 @@ pviland@serveurCyber:git clone https://github.com/PierreViland/00-serveurLemp.gi
 \begin{enumerate}[resume]
 
 
-\item Se placer dans le répertoire \verb?~/00-serveurLemp? et dans la branche main du dépôt git, créer et lancer les containers \footnote{Un document nommé commande CIEL v00-resumeCommandeCIEL\_P.pdf est présent en ressource }. 
+\item Se placer dans le répertoire \verb?~/00-serveurLemp? et dans la branche main du dépôt git, créer et lancer les containers \footnote{Un document nommé \texttt{r01-dockerPresentation\_P.pdf}  est présent en ressource. IL présente le principe des docker et fourni les commandes de bases }. 
 
 
 \begin{lstlisting}[style=commande]
@@ -437,8 +461,8 @@ Ainsi, l'interface d'administration de Pfsense est accessible depuis votre LAN s
 
 Les identifiants sont  : 
 \begin{itemize}
-\itemE login : \verb?pviland?
-\itemE mot de passe : \verb?choupette?
+\itemE login : \verb?admin?
+\itemE mot de passe : \verb?pfsense?
 \end{itemize}
 
 
@@ -558,7 +582,7 @@ Pour l'installation de Pfsense, il suffit de suivre les directive ci-dessous :
 \includegraphics[scale=0.5]{./ressource/VM_network7.png}
 \end{center}
 
-Une fois l'installation terminée, la configuration du réseau va changer. Pour avoir le LAN connecté à Internet. Pour cela, il faut éteindre la machine et configurer les interfaces de la même manière que ci-dessous. 
+Une fois l'installation terminée, la configuration du réseau va changer. Pour avoir le LAN connecté à Internet, il faut éteindre la machine et configurer les interfaces de la même manière que ci-dessous. 
 
 \begin{center}
 \includegraphics[scale=0.7]{./ressource/VM_finReseau0}
