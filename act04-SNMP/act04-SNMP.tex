@@ -513,7 +513,8 @@ L'OID 1.3.6.1.4.1.41112.1.6.1.2.1.8.1 correspond au nombre de personnes connect√
 \ifPROF
 \color{red}
 \begin{lstlisting}[style=commande] 
-snmpwalk -v2c -c public 192.168.1.73 1.3.6.1.4.1.41112.1.6.1.2.1.8.1
+#snmpwalk -v2c -c public 192.168.1.73 1.3.6.1.4.1.41112.1.6.1.2.1.8.1
+snmpwalk -v2c -c public 192.168.1.31 1.3.6.1.4.1.41112.1.6.1.2.1.8.2
 \end{lstlisting}
 \normalcolor
 \fi
