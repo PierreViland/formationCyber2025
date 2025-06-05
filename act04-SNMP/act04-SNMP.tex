@@ -347,9 +347,33 @@ Des outils dédiés existent comme \textbf{Zabbix} permettant de gérer les agen
  \end{center}
 
 \begin{enumerate}
-\item Un agent SNMP est présent sur la borne Wifi, d'adresse : 192.168.1.73. Ajouter un host comme présenté ci-dessous. 
+\item Un agent SNMP est présent sur une borne Wifi Ubiquiti dans la salle. La première étape est de trouver l'adresse IP de cette borne. Pour information, le port utilisé par le protocle SNMP est le \textbf{161}. Proposer une démarche pour trouver cette adresse
+
 
 \end{enumerate}
+
+\ifPROF
+\color{red}
+Il faut utiliser la commande nmap sur le réseau et regarder si l'on obtient une ligne comme ci-dessous. (SNMP ouvert).
+\begin{lstlisting}[style=commande]
+nmap -p 161 192.168.1.0/24     
+
+Nmap scan report for NanoHD (192.168.1.122)
+Host is up (0.0032s latency).
+
+PORT    STATE SERVICE
+161/tcp open  snmp
+MAC Address: 78:45:58:FA:AD:2F (Ubiquiti Networks)
+
+\end{lstlisting}
+\normalcolor
+\fi
+
+
+\begin{enumerate}[resume]
+\item Ajouter un host comme présenté ci-dessous. 
+\end{enumerate}
+
 
 \begin{center}
  \rule{0.75\linewidth}{1pt}
@@ -363,7 +387,7 @@ Des outils dédiés existent comme \textbf{Zabbix} permettant de gérer les agen
  \rule{0.75\linewidth}{1pt}
  \end{center}
 
-\begin{enumerate}
+\begin{enumerate}[resume]
 \item Observer alors avec les outils de monitoring de Zabbix si la borne Wifi fonctionne correctement (j'espère). 
 \end{enumerate}
 
