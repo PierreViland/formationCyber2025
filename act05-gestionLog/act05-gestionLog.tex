@@ -24,9 +24,7 @@
 \newcommand{\objSeance}{Comment gérer les logs}
 
 \newcommand{\moySeq}{\begin{itemize}	
-\itemE VM Kali
 \itemE VM serveurCyber
-\itemE VM Pfsense
 \end{itemize}}
 
 
@@ -299,15 +297,20 @@ De la même manière que pour Prometheus, la centralisation des logs va être mi
 
 
 \section{Pré-requis}
-Pour effectuer le test de logs dans les meilleurs conditions, il est nécessaire de stopper les containers des tests précédents. Pour cela, soit vous allez dans \textbf{tous les répertoires} contenant vos \verb?docker-compsoe.yml? et vous taper la commande 
+Pour effectuer le test de logs dans les meilleurs conditions, il est nécessaire de stopper les containers des tests précédents. Pour cela, soit vous allez dans \textbf{tous les répertoires} contenant vos \verb?docker-composee.yml? et vous taper la commande 
 \begin{lstlisting}[style=commande]
 sudo docker compose down
 \end{lstlisting}
 
-Soit vous taper juste suivante/ Elle arrête tous les containers \textbf{Attention si vous en avez d'autres qui ne doivent pas être arrêtes}.
+\vspace*{0.5cm}
+
+Soit vous taper juste la commande suivante. Elle arrête tous les containers \textbf{Attention si vous en avez d'autres qui ne doivent pas être arrêtes}.
 \begin{lstlisting}[style=commande]
 sudo docker stop $(sudo docker ps -q)
 \end{lstlisting}
+
+
+\vspace*{0.5cm}
 
 Normalement la commande pour visualiser les container lancés ne retourne rien
 
@@ -323,6 +326,11 @@ Pour les tests, les logs des \textbf{services LEMP en HTTP} (non sécurisé) von
 Pour rappel : 
 \begin{itemize}
 \itemE L'URL du dépôt est  : \url{https://github.com/PierreViland/00-serveurLemp.git}
+
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/gitlamp}
+\end{center}
+
 \itemE La branche a utilisé est : \verb?main?
 \begin{lstlisting}[style=commande]
 $ git switch main
@@ -338,38 +346,57 @@ $ sudo docker compose up -d
 
 \end{itemize} 
 
-\section{Mise en place de Promtail}
+\section{Eléments utilisés}
 
-L'ensemble des éléments de configuration de la centralisation des logs est présente sur \textbf{ le même dépôt que Prometheus} 
+L'ensemble des éléments de configuration de la centralisation des logs est présent sur \textbf{ le même dépôt utilisé pour Prometheus} 
 \begin{itemize}
-\itemE \url{https://github.com/PierreViland/reverseProxyMonitoringPV.git}
+\itemE \url{https://github.com/PierreViland/monitoringPV}
+\itemE Avec le répertoire du dépôt \textbf{01-stackMonitoring} (déjà utilisé pour Prometheus)
 \end{itemize}
 
-Le lancement d'un container Promtail doit se faire sur chaque serveur. Les lignes du fichier \verb?docker-compose.yml? sont les suivantes : 
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/gitMonitoringPV}
+\end{center}
 
-\begin{lstlisting}[style=commande]
- 55   promtail:
- 56     image: grafana/promtail:latest
- 57     container_name: promtail
- 58     volumes:
- 59       - /var/log:/var/log
- 60       - /var/lib/docker/containers:/var/lib/docker/containers:ro        
- 61       - ./promtail-config.yaml:/etc/promtail/config.yaml
-\end{lstlisting}
-avec : 
+Les trois ficheirs entourés vont être utilisé pour la gestion des logs : 
 \begin{itemize}
-\itemE \verb? - /var/log:/var/log? : volume partagé contant les logs de la machines hôte. \textbf{A modifier sous windows}
-\itemE \verb? - /var/lib/docker/containers:/var/lib/docker/containers:ro   ? : volume partagé contenant les fichiers des containers
-\itemE \verb?- ./promtail-config.yaml:/etc/promtail/config.yaml?  : fichier de configuration de promtail
+\itemE \verb?docker-compose.yml? $\Rightarrow$ : Gestion et lancement des containers 
+\itemE \verb?loki-config.yml? $\Rightarrow$ : Configuration de loki
+\itemE \verb?promtail-config.yml? $\Rightarrow$  : Configuration de promtail
 \end{itemize}
 
 
 
-Le fichier de configuration de promtail se nomme \verb?promtail-config.yaml?. Il contient les éléments suivants qui peuvent être bien sûr modifier en fonction des besoins?
+%\begin{center}
+% \rule{0.5\linewidth}{1pt}
+% \end{center}
 
-\begin{lstlisting}[style=commande]
+ 
+ \section{Promtail}
+ \subsection{Structure du fichier de configuration}
+\textbf{Le fichier de configuration de promtail} se nomme \verb?promtail-config.yaml?. Il contient les éléments suivants qui peuvent être bien sûr modifier en fonction des besoins. 
 
-\end{lstlisting}
+\begin{center}
+\includegraphics[scale=0.45]{./ressource/promtailConf.drawio.png}
+\end{center}
+
+\paragraph{Vocabulaire }
+\begin{encadre}{Job dans Promtail}
+Configuration de collecte des logs depuis une source spécifique (comme un fichier, syslog, journal, etc.), incluant le chemin des fichiers et les labels associés.
+\end{encadre}
+
+\begin{encadre}{Piepline dans Promtail}
+Suite d'étapes de traitement (comme replace, json, regex, labeldrop) appliquées à chaque log pour l’extraire, le transformer ou enrichir les labels avant l’envoi à Loki.
+\end{encadre}
+
+
+\begin{encadre}{Label dans Promtail}
+Paire clé-valeur attachée aux logs, utilisée pour filtrer, regrouper et acheminer les logs vers Loki. Ces labels facilitent la recherche et l'organisation des journaux dans Loki.
+\end{encadre}
+
+
+\paragraph{Détails de la configuration général}\ 
+
 
 
 \begin{lstlisting}[style=commande]
@@ -396,16 +423,23 @@ Ensuite, il est précisé le nom du fichier utilisé pour suivre la position de 
 positions:
   filename: /tmp/positions.yaml
 \end{lstlisting}
-\textbf{A modifier sous Windows}
+
+\textbf{Attention à modifier sous Windows}
 
 
 
+\begin{center}
+ \rule{0.5\linewidth}{1pt}
+ \end{center}
+\paragraph{Configuration des jobs}\ 
 
-C'est ensuite que les différents \textbf{jobs} sont configuré permettant de dire à Promtail qu'elle logs nous devons récupérer. 
+C'est ensuite que les différents \textbf{jobs} sont configurés permettant de dire à Promtail quels logs nous devons récupérer; Dans notre cas : 
+\begin{itemize}
+\itemE Logs de la machine hôte (serveur ubuntu)
+\itemE Logs du container nginx
+\end{itemize}
 
-\begin{lstlisting}[style=commande]
-scrape_configs:
-\end{lstlisting}
+
 
 Dans cette exemple, le premier job récupère les logs du système hôte. \textbf{A modifier sous Windows}
 \begin{lstlisting}[style=commande]
@@ -439,57 +473,74 @@ La strucutre est similaire à la récupération des logs système :
 \itemE \verb?__path__ ? : chemin exact du fichier de logs du conteneur.
 \end{itemize}
 
+
+\begin{center}
+ \rule{0.5\linewidth}{1pt}
+ \end{center}
+\paragraph{Etage de pipeline}\ 
+
 La suite des lignes est toujours relative au job \verb?nginx_container?. On y retrouve les \textbf{pipeline\_stages} qui sont des étapes de traitements des logs avant d'envoyer à loki. 
 
 
 \begin{lstlisting}[style=commande]
-    pipeline_stages:    
-      - json:
-          expressions:
-            log: log 
+    pipeline_stages:
+  - json:
+      # Extraction du champ 'log' depuis la ligne de log en format JSON
+      expressions:
+        log: log
 
-      - regex:
-          expression: '"(?P<method>[A-Z]+)'
+  - regex:
+      # Extraction de la methode HTTP (ex: GET, POST) depuis la chaine entre guillemets
+      expression: '"(?P<method>[A-Z]+)'
 
+  - regex:
+      # Extraction de la date/heure au format specifique entre crochets dans 'log'
+      expression: '\[(?P<date>\d{2}\/[A-Za-z]{3}\/\d{4}:\d{2}:\d{2}:\d{2} [+\-]\d{4})\]'
+      source: log
+
+  - timestamp:
+      # Conversion de la date extraite en timestamp utilisable par Promtail
+      source: date
+      format: "02/Jan/2006:15:04:05 -0700"
+
+  - labels:
+      # Ajout du label 'method' pour filtrage et classification dans Loki
+      method:
 \end{lstlisting}
 
-La première étape consiste à récupérer la clef "log" de l'objet JSON. 
+
+Comme nous le verrons dans la suite du document, les labels permettent des rechercher efficacement dans \textbf{loki}. Attention, un nombre trop important d'éléments dans un label risque d'impacter les performances de loki. 
+
+
+
+\subsection{Le lancement d'un container Promtail}
+ doit se faire sur chaque serveur. Les lignes du fichier \verb?docker-compose.yml? sont les suivantes : 
+
 \begin{lstlisting}[style=commande]
-      - json:
-          expressions:
-            log: log 
+ 55   promtail:
+ 56     image: grafana/promtail:latest
+ 57     container_name: promtail
+ 58     volumes:
+ 59       - /var/log:/var/log
+ 60       - /var/lib/docker/containers:/var/lib/docker/containers:ro        
+ 61       - ./promtail-config.yaml:/etc/promtail/config.yaml
 \end{lstlisting}
-
-
-La 2e étape consiste à appliquer une expression régulière sur la chaine \verb?log? extraite précédemment. 
-\begin{lstlisting}[style=commande]
-- regex:
-    expression: '"(?P<method>[A-Z]+)'
-\end{lstlisting}
+avec : 
 \begin{itemize}
-\itemE Recherche \verb?"?
-\itemE Le texte capture sera accessible sous le nom method
-\itemE On doit retrouver une ou plusieurs majuscule dans le texte recherché. Li'dée est de trouver les méthode HTTPS, GET, POST,...
+\itemE \verb? - /var/log:/var/log? : volume partagé contant les logs de la machines hôte. \textbf{A modifier sous windows}
+\itemE \verb? - /var/lib/docker/containers:/var/lib/docker/containers:ro   ? : volume partagé contenant les fichiers des containers
+\itemE \verb?- ./promtail-config.yaml:/etc/promtail/config.yaml?  : fichier de configuration de promtail
 \end{itemize}
-Les IA type chatGPT sont très performantes pour générer des expressions régulières. Il ne faut pas s'en priver. Il est possible dans ce cas d'optimiser la recherche en remplaçant la regex par : 
-
-\verb?(P<method>GET|POST|PUT|DELETE|PATCH|OPTIONS|HEAD)? où l'on précise explicitement les méthodes HTTP. 
 
 
-
-La 3e étape prend la valeur extraite précédemment (\verb?method?) et l'ajoute comme label Loki.
-\begin{lstlisting}[style=commande]
-      - labels:
-          method:
-\end{lstlisting}
-
-
-
-Comme nous le verrons dans la suite du document, les labels permettent des rechercher efficacement dans \textbf{loki}. Attention cependant à ne pas trop en abuser sans quoi les performances de loki seront impactées. 
+%\begin{center}
+% \rule{0.5\linewidth}{1pt}
+% \end{center}
+% 
 
 \section{Mise en place de loki}
 
-Pou rappel, \textbf{Loki} permet la centralisation des données. Les lignes du \verb?docker-compose.yml? relatives à sont lancement sont : 
+Pou rappel, \textbf{Loki} permet la centralisation des données. Les lignes du \verb?docker-compose.yml? relatives à son lancement sont : 
 \begin{lstlisting}[style=commande]
  41   loki:
  42     image: grafana/loki:latest
@@ -518,13 +569,16 @@ server:
 
 \section{Grafana}
 
+
+
+
 \paragraph{Connexion avec loki}
-\textbf{Grafana}, outil déjà utilisé va permette de visualiser les logs. la première étape de de créer \textbf{une connexion de Grafana a Loki}. 
+\textbf{Grafana} (outil déjà utilisé) va permette de visualiser les logs. La première étape de de créer \textbf{une connexion de Grafana a Loki}. 
 
 \begin{center}
 \includegraphics[scale=0.7]{./ressource/grafanRef_loki}
 \end{center}
-Dans le cas détaillé dans l'image ci-dessous, les logs sont récupérés via un container loki installé sur la machine \verb?192.168.1.30? en écoute sur le port \verb?3100?.
+Dans le cas  ci-dessous, les logs sont récupérés via un container loki installé sur la machine \verb?192.168.1.30? en écoute sur le port \verb?3100?.
 
 
 \paragraph{Explorer}
@@ -547,41 +601,29 @@ sum(count_over_time({job="nginx", method="GET"}[1m]))
 \end{center}
 
 
-\section{Conter le nombre d'erreur}
+\section{A faire avec les élèves}
 
-L'avantage du service déployé est de fournir l'état de santé du système et du serveur. Il peut être intéressant d'avoir une vision détaillée de notre service web avec par exemple le nombre de code d'erreur HTTP. 
 
-Pour rappel les codes d'erreurs sont : 
+L'avantage du service déployé est de fournir l'état de santé du système et du serveur. Il peut être intéressant d'avoir une vision détaillée de notre service web avec par exemple le nombre de codes HTTP. 
+
+Pour rappel les codes sont : 
 
 \begin{itemize}
 \itemE \textbf{2xx} : succès
+\itemE \textbf{3xx} : Redirection
 \itemE \textbf{4xx} : erreurs côté client (ex. 404 page non trouvé)
 \itemE \textbf{5xx} : erreurs serveur à surveiller en priorité (ex. 500, 502, 504)
 \end{itemize}
+
+\subsection{Erreur 404}
 
 \begin{enumerate}
 \item Trouver une erreur 404
 \item Visualiser la sur grafana
-\item la contabilisé pour 
-\end{enumerate}\section{Conter le nombre d'erreurs}
-
-L'avantage du service déployé est de fournir l'état de santé du système et du serveur. Il peut être intéressant d'avoir une vision détaillée de notre service web avec par exemple le nombre de code d'erreur HTTP. 
-
-Pour rappel les codes d'erreurs sont : 
-
-\begin{itemize}
-\itemE \textbf{2xx} : succès
-\itemE \textbf{4xx} : erreurs côté client (ex. 404 page non trouvé)
-\itemE \textbf{5xx} : erreurs serveur à surveiller en priorité (ex. 500, 502, 504)
-\end{itemize}
-
-
-\subsection{Erreur 404}
-\begin{enumerate}
-\item Générer des erreurs 404
-\item Visualiser la sur grafana
-\item la contabilisé pour 
+\item Créer un dashboard sur Grafana qui permet de les visualiser. 
 \end{enumerate}
+
+
 
 \ifPROF
 \color{red}
@@ -609,5 +651,184 @@ et enfin dans un dashbord :
 \subsection{Erreur 5xx}
 
 Idem a faire avec l'erreur 5xx qui est très sérieux car c'est un erreur interne serveur
+
+\ifPROF
+\color{red}
+Le principe est le même que précdement mais il faudra modifier le serveur pour créer une erreur 500. Par exemple : 
+
+\begin{itemize}
+\itemE retour forcé via configuration Nginx
+\end{itemize}
+
+\begin{lstlisting}[style=commande]
+location /error500 {
+    return 500;
+}
+\end{lstlisting}
+Puis, fais une requête sur /error500
+
+
+\begin{itemize}
+\itemE  Erreur 502 : Bad Gateway
+\end{itemize}
+Configure Nginx pour faire du reverse proxy vers un service qui n’existe pas ou qui ne tourne pas.
+
+\begin{lstlisting}[style=commande]
+location /error502 {
+    proxy_pass http://localhost:9999;  # Port non utilisé volontairement
+}
+\end{lstlisting}
+
+\normalcolor
+\fi
+
+\newpage
+\section{Exemple réel}
+
+Le système suivant a été mise en place. 
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/topoReseau.drawio.png}
+\end{center}
+
+Le serveur bleu d'adresse 192.168.1.32 est accessible 
+\begin{itemize}
+\itemE via l'url https://ciel-broceliande.myasustor.com/
+\itemE via le serveur VPN présent dans la salle d'adresse 192.168.1.31. Des fichiers openvnp de configuration peuvent être fournis.
+\end{itemize}
+Il fournit 
+\begin{itemize}
+\itemE Un service web accessible en local et à l'extérieur 
+\itemE Un service de monitoring accessible uniquement depuis le LAN
+\end{itemize}
+
+\vspace{0.25cm}
+Pour se connecter à grafana, il faut dans un navigateur web utilisé l'URL suivant  
+\begin{itemize}
+\itemE \url{http://192.168.1.30:3000}
+\end{itemize}
+
+
+\vspace{0.25cm}
+Les identifiants (peut sécurisé) : 
+\begin{itemize}
+\itemE login : \verb?admin?
+\itemE mot de passe : \verb?acRennes!!2025?
+\end{itemize}
+
+\paragraph{Le dashboard} de monitoring du service web est le suivant : (il est amené à évolué en fonction des besoins
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/exempleRelle.drawio.png}
+\end{center}
+
+\subsection{Détails pour une IP Donnée}
+Ce champs permet d'afficher tous les logs correspondant à une IP donnée. La commande logQL correspondante : 
+
+\begin{lstlisting}[style=commande]
+{container="nginxSecu"}
+| regexp `(?P<ip>\d{1,3}(?:\.\d{1,3}){3})`
+|= "$var_ip"
+\end{lstlisting}
+
+\paragraph{Avantage }
+\begin{itemize}
+\itemE Permet de regarder les logs d'une adresse IP suspecte
+\end{itemize}
+
+\subsection{Détails pour un code HTTP}
+
+Ce champs permet de visualiser tous les logs correspondant à un code HTTP
+
+\begin{lstlisting}[style=commande]
+{container="nginxSecu", code=~"$var_code"}
+\end{lstlisting}
+
+\subsection{Nombre d'occurrence de code HTTP}
+
+Ce champs montre le nombre d'occurrences des différents code HTTP par tranche de 12h
+
+\begin{lstlisting}[style=commande]
+sum by (code) (
+  count_over_time({container="nginxSecu", code=~".+"}[1d])
+)
+\end{lstlisting}
+
+
+\subsection{Nombre de requêtes pour chaque adresse IP}
+
+Ce champs montre le nombre de requête pour chaque adresse ip par jour.
+
+\begin{lstlisting}[style=commande]
+sum by (ip) (
+  count_over_time(
+    {container="nginxSecu"}
+    | regexp `(?P<ip>\d{1,3}(?:\.\d{1,3}){3})`
+    | ip != ""
+    | label_format ip="{{.ip}}"
+  [1d])
+)
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+Il est possible de limiter au 10 IP les plus actives
+
+\begin{lstlisting}[style=commande]
+topk(10,
+  sum by(ip) (
+    count_over_time(
+      {container="nginxSecu"} 
+        | regexp `(?P<ip>\d{1,3}(?:\.\d{1,3}){3})`
+      [1d]
+    )  ) )
+\end{lstlisting}
+\subsection{Filtrage couplé}
+
+Il peut être intéressant d'effectuer un filtrage croisé pour voir les actions effectuée pas une adresse IP. 
+
+
+\begin{center}
+\includegraphics[scale=0.3]{./ressource/filtrageCroise}
+\end{center}
+
+Les 1re fenêtre permet de visualiser les logs filtré
+\begin{itemize}
+\itemE Pour une adresse IP
+\itemE Pour un code d'erreur particulier
+\end{itemize}
+
+Le requête logQL est la suivante 
+\begin{lstlisting}[style=commande]
+{container="nginxSecu", code=~"$var_code"}
+| regexp `(?P<ip>\d{1,3}(?:\.\d{1,3}){3})`
+| ip=~"$var_ip"
+\end{lstlisting}
+
+
+\paragraph{La 2e fenêtre} permet de visualiser pour une adresse IP le nombre de code HTTP par demi journée.
+
+\begin{lstlisting}[style=commande]
+sum by (code) (count_over_time(
+  {container="nginxSecu"}
+  | regexp `(?P<ip>\d{1,3}(?:\.\d{1,3}){3})`
+  | ip=~"$var_ip"
+  [1d]
+))
+\end{lstlisting}
+
+
+\subsection{Exemple d'activité}
+
+\begin{itemize}
+\itemE Les élèves ne mettent pas en place protmail mais loki et grafana sur leur machine
+\itemE Ensuite il analyse les logs réelles. 
+
+\itemE Ils en déduisent les mouvements et proposent des solutions (filtrage IP par exemple)
+\end{itemize}
+
+
+
+
 
 \end{document}
