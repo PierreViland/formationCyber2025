@@ -278,7 +278,7 @@ Un développeur peut spécifier les ressources dont il a besoin, le système d'e
 Plusieurs VM peuvent fonctionner sur le même matériel physique. En revanche, les conteneurs se trouvent installés sur un serveur physique et son système d'exploitation hôte, voir dans une VM.
 Chaque conteneur partage le noyau de l'OS hôte cependant les binaires et les bibliothèques nécessaires à l'exécution de ces applications lui sont spécifiques.
   
-Un conteneur Docker est semblable à un ordinateur dans votre ordinateur. On peut aussi le voir comme un serveur distant.  On peut partager l’image d’un conteneur (une copie à un instant t, re-executable).  On peut donc diffuser des logiciels, ou des données via un conteneur dans une version fixe.  Ainsi à partir des mêmes sources répliquées, les autres utilisateurs obtiendront les mêmes résultats. 
+On peut partager l’image d’un conteneur (une copie à un instant t, re-executable).  On peut donc diffuser des logiciels, ou des données via un conteneur dans une version fixe.  Ainsi à partir des mêmes sources répliquées, les autres utilisateurs obtiendront les mêmes résultats. 
 
 
 \begin{center}
@@ -288,7 +288,7 @@ Un conteneur Docker est semblable à un ordinateur dans votre ordinateur. On peu
 \paragraph{Architecture générale} Docker utilise une architecture client-serveur, qui implique les trois principaux composants.   
 \begin{itemize}
 \itemE le client Docker, 
-\itemE le démon Docker 
+\itemE le deamon Docker 
 \itemE le registre Docker (dockerhub par défaut).
 \end{itemize}
   

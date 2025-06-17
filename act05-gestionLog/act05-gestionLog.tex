@@ -358,7 +358,7 @@ L'ensemble des éléments de configuration de la centralisation des logs est pr�
 \includegraphics[scale=0.4]{./ressource/gitMonitoringPV}
 \end{center}
 
-Les trois ficheirs entourés vont être utilisé pour la gestion des logs : 
+Les trois fichiers entourés vont être utilisés pour la gestion des logs : 
 \begin{itemize}
 \itemE \verb?docker-compose.yml? $\Rightarrow$ : Gestion et lancement des containers 
 \itemE \verb?loki-config.yml? $\Rightarrow$ : Configuration de loki
@@ -433,7 +433,7 @@ positions:
  \end{center}
 \paragraph{Configuration des jobs}\ 
 
-C'est ensuite que les différents \textbf{jobs} sont configurés permettant de dire à Promtail quels logs nous devons récupérer; Dans notre cas : 
+C'est ensuite que les différents \textbf{jobs} sont configurés permettant de dire à Promtail quels logs nous devons récupérer. Dans notre cas : 
 \begin{itemize}
 \itemE Logs de la machine hôte (serveur ubuntu)
 \itemE Logs du container nginx
@@ -467,7 +467,7 @@ Ensuite, il est configuré la récupération des logs du container nginx  ayant 
 \end{lstlisting}
 La strucutre est similaire à la récupération des logs système : 
 \begin{itemize}
-\itemE \verb?target ? : représente le points de collecte.
+\itemE \verb?target ? : représente le point de collecte
 \itemE \verb?job: nginx? : nom du job (qui sera utilisé par loki)
 \itemE \verb?container: nginxPV ? : identifie le conteneurs 
 \itemE \verb?__path__ ? : chemin exact du fichier de logs du conteneur.
@@ -514,7 +514,7 @@ Comme nous le verrons dans la suite du document, les labels permettent des reche
 
 
 \subsection{Le lancement d'un container Promtail}
- doit se faire sur chaque serveur. Les lignes du fichier \verb?docker-compose.yml? sont les suivantes : 
+ Le lancement de \textbf{Promtail} doit se faire sur chaque serveur. Les lignes du fichier \verb?docker-compose.yml? sont les suivantes : 
 
 \begin{lstlisting}[style=commande]
  55   promtail:
@@ -702,14 +702,14 @@ Il fournit
 \itemE Un service de monitoring accessible uniquement depuis le LAN
 \end{itemize}
 
-\vspace{0.25cm}
+\vspace{0.5cm}
 Pour se connecter à grafana, il faut dans un navigateur web utilisé l'URL suivant  
 \begin{itemize}
 \itemE \url{http://192.168.1.30:3000}
 \end{itemize}
 
 
-\vspace{0.25cm}
+\vspace{0.5cm}
 Les identifiants (peut sécurisé) : 
 \begin{itemize}
 \itemE login : \verb?admin?
@@ -722,7 +722,7 @@ Les identifiants (peut sécurisé) :
 \includegraphics[scale=0.7]{./ressource/exempleRelle.drawio.png}
 \end{center}
 
-\subsection{Détails pour une IP Donnée}
+\subsection{Détails pour une IP donnée}
 Ce champs permet d'afficher tous les logs correspondant à une IP donnée. La commande logQL correspondante : 
 
 \begin{lstlisting}[style=commande]
@@ -785,14 +785,14 @@ topk(10,
 \end{lstlisting}
 \subsection{Filtrage couplé}
 
-Il peut être intéressant d'effectuer un filtrage croisé pour voir les actions effectuée pas une adresse IP. 
+Il peut être intéressant d'effectuer un filtrage croisé pour voir les actions effectuées pas une adresse IP. 
 
 
 \begin{center}
 \includegraphics[scale=0.3]{./ressource/filtrageCroise}
 \end{center}
 
-Les 1re fenêtre permet de visualiser les logs filtré
+\paragraph{La 1re fenêtre} permet de visualiser les logs filtrés
 \begin{itemize}
 \itemE Pour une adresse IP
 \itemE Pour un code d'erreur particulier
@@ -824,9 +824,71 @@ sum by (code) (count_over_time(
 \itemE Les élèves ne mettent pas en place protmail mais loki et grafana sur leur machine
 \itemE Ensuite il analyse les logs réelles. 
 
-\itemE Ils en déduisent les mouvements et proposent des solutions (filtrage IP par exemple)
+\itemE Ils en déduisent les mouvements suspects et proposent des solutions (filtrage IP par exemple)
 \end{itemize}
 
+
+\subsection{Shodan}
+
+La question est la suivante : \textbf{pourquoi le serveur est constamment scanné?} 
+
+\vspace{0.5cm
+}
+Il existe des moteurs de recherche de service Web, IoT tel que \textbf{Shodan, Censys, ZoomEye}, ... . Ils scannent l'ensemble d'Internet en continu pour cartographier les services exposés (ports ouverts, version exposée des services, etc.).
+Leur but est de construire des bases de données consultables. N'importe qui peut ensuite chercher des serveurs selon des critères (ex: port 22 ouvert, HTTP, version Apache, etc.).
+
+\paragraph{Des bots et des scanners automatisés } parcourent aussi constamment les plages IP publiques à la recherche de :
+\begin{itemize}
+\itemE Ports/services vulnérables (ex: SSH sans mot de passe, bases de données exposées, etc.).
+\itemE Logiciels obsolètes.
+\end{itemize}
+Ces bots peuvent être liés à des cybercriminels, chercheurs en sécurité, ou des outils comme Masscan, Nmap, etc.  Certains botnets infectent des machines et utilisent ces machines pour scanner Internet en permanence. Le but est d’identifier d'autres cibles à infecter ou exploiter.
+
+
+
+\paragraph{Quel résultat obtient on sur shodan avec l'adresse IP publique du serveur?}
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/shodan}
+\end{center}
+
+
+La liste des ports ouverts est fournie : 
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/shodanPortouvert}
+\end{center}
+
+\textbf{Ne jamais exposer le port 22}. Il a été exposé pour des tests et refermé rapidement.
+
+
+Il y a aussi la liste des vulnérabilités des services accessibles.
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/shodanVuln}
+\end{center}
+
+Attention, il y a des failles sur le sites web
+
+\paragraph{Activité avec les élèves } : Rechercher des informations sur ces failles et les exploiter
+
+
+\vspace{0.5cm}
+
+\paragraph{Censys} est un outil alternatif de recherche de services publics exposés sur Internet. Son principal avantage par rapport à \textit{Shodan} est la mise à disposition d'une API gratuite ( même si elle limite le nombre de requêtes). 
+
+Shodan propose une API plus complète (notamment en Python), mais celle-ci est uniquement accessible via un compte payant. 
+
+Les interfaces de ces deux outils permettent d'automatiser les recherches sur les bases de données de services exposés, et de déclencher des actions ou des requêtes supplémentaires selon les résultats obtenus.
+
+\textbf{Attention}~: l'utilisation automatisée de telles plateformes, bien que techniquement possible, peut se situer à la frontière de la légalité 
+
+\begin{itemize}
+     
+    \itemE \textbf{Accès à des systèmes tiers} : utiliser ces outils pour trouver et tenter d'accéder à des serveurs ou appareils qui ne vous appartiennent pas peut être illégal (accès non autorisé).
+    
+    \itemE \textbf{Données sensibles} : certaines informations exposées peuvent concerner des entreprises ou des particuliers. Leur utilisation ou diffusion peut enfreindre des lois comme le RGPD (protection des données personnelles).
+    
+    \itemE \textbf{Usage éthique} : ces outils doivent être utilisés pour des raisons légitimes comme la cybersécurité, l'audit de ses propres systèmes, ou la recherche académique, et non pour repérer des failles à exploiter.
+\end{itemize}
 
 
 

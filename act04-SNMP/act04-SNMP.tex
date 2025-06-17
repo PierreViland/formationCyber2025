@@ -303,7 +303,7 @@ iso.3.6.1.2.1.1.1.0 = STRING: "UAP-nanoHD 6.6.78.15404"
 Les messages échangés incluent :
 \begin{itemize}
     \itemE \textbf{GET} : Le gestionnaire interroge un agent pour obtenir une valeur d'un OID particulier
-    \item \textbf{GETBULK} : Cette commande permet au gestionnaire de récupérer plusieurs valeurs en une seule requête, ce qui est particulièrement utile pour obtenir des données à partir de table. Elle est plus efficace que de faire plusieurs requêtes GET pour obtenir des informations similaires.
+    \itemE \textbf{GETBULK} : Cette commande permet au gestionnaire de récupérer plusieurs valeurs en une seule requête, ce qui est particulièrement utile pour obtenir des données à partir de table. Elle est plus efficace que de faire plusieurs requêtes GET pour obtenir des informations similaires.
     \itemE \textbf{SET} : Le gestionnaire modifie une valeur sur un agent.
     \itemE \textbf{TRAP} : L’agent envoie une alerte au gestionnaire lorsqu’un événement se produit.
 \end{itemize}
@@ -333,10 +333,33 @@ Les messages échangés incluent :
 \end{itemize}
 
 \section{Zabbix}
+
+\subsection{Installation}
 Des outils dédiés existent comme \textbf{Zabbix} permettant de gérer les agent SNMP. Il existent plusieurs manière de l'installer dont une via des containers présent sur le dépot : 
 \begin{itemize}
 \itemE \href{https://github.com/akmalovaa/zabbix-docker}{https://github.com/akmalovaa/zabbix-docker}
 \end{itemize}
+
+
+Il suffit pour se connecter à \textbf{Zabbix} de suivre les instructions présents sur le \verb?README? du github.
+\begin{itemize}
+\itemE Lancement
+	\begin{itemize}
+	\item[+] \verb?sudo docker compose up -d?
+	\end{itemize} 
+\itemE URL d'accés : 
+	\begin{itemize}
+	\item[+] \verb?http://@IP:8080?
+	\end{itemize}
+\itemE Identifiants : 
+	\begin{itemize}
+	\item[+] Login : Admin
+	\item[+] Mot de passe : zabbix 
+	
+	\end{itemize}
+
+\end{itemize}
+
 
 \begin{center}
 \includegraphics[scale=0.4]{./ressource/zabbix.png}
@@ -345,6 +368,7 @@ Des outils dédiés existent comme \textbf{Zabbix} permettant de gérer les agen
 \begin{center}
  \rule{0.75\linewidth}{1pt}
  \end{center}
+\subsection{Création d'hôte et visualisation}
 
 \begin{enumerate}
 \item Un agent SNMP est présent sur une borne Wifi Ubiquiti dans la salle. La première étape est de trouver l'adresse IP de cette borne. Pour information, le port utilisé par le protocle SNMP est le \textbf{161}. Proposer une démarche pour trouver cette adresse
@@ -371,9 +395,15 @@ MAC Address: 78:45:58:FA:AD:2F (Ubiquiti Networks)
 
 
 \begin{enumerate}[resume]
-\item Ajouter un host comme présenté ci-dessous. 
+\item Ajouter un host comme présenté ci-dessous avec comme template
+\begin{itemize}
+\itemE  \verb?Ubiquiti AirOS by SNMP?
+\end{itemize} 
 \end{enumerate}
 
+\begin{encadre}{Template}
+Ensemble préconfiguré d’éléments de supervision (ex : es graphiques correspondant à des OID spécifiques) que l'on peut appliquer à plusieurs hôtes pour simplifier et standardiser la surveillance. Cela permet de déployer rapidement la supervision sur des systèmes similaires.
+\end{encadre}
 
 \begin{center}
  \rule{0.75\linewidth}{1pt}
@@ -388,7 +418,7 @@ MAC Address: 78:45:58:FA:AD:2F (Ubiquiti Networks)
  \end{center}
 
 \begin{enumerate}[resume]
-\item Observer alors avec les outils de monitoring de Zabbix si la borne Wifi fonctionne correctement (j'espère). 
+\item Observer alors avec les outils de monitoring de Zabbix si la borne Wifi fonctionne correctement (j'espère). Vous pouvez visualiser les graphiques correspondant aux données par défaut du template
 \end{enumerate}
 
 \begin{center}
@@ -405,7 +435,7 @@ MAC Address: 78:45:58:FA:AD:2F (Ubiquiti Networks)
  \end{center}
 
 \begin{enumerate}[resume]
-\item Avec Wireshark pouvez-vous observez les échanges? Est ce que cela peut convenir? Pourquoi? 
+\item Avec Wireshark, pouvez-vous observez les échanges? Est ce que cela peut convenir? Pourquoi? 
 \end{enumerate}
 
 \begin{center}
@@ -421,6 +451,34 @@ Chiffrement disponible : SNMPv3 introduit des mécanismes de sécurité avancés
 \normalcolor
 \fi
 
+
+\subsection{Nombre de personnes connectées}
+L'OID 1.3.6.1.4.1.41112.1.6.1.2.1.8.1 correspond au nombre de personnes connectées à la borne WIFI \textbf{UAP-nanoHD}
+
+\begin{enumerate}[resume]
+\item Avec la commande \verb?snmpwalk?, vérifier cette information. 
+\end{enumerate}
+
+\ifPROF
+\color{red}
+\begin{lstlisting}[style=commande] 
+snmpwalk -v2c -c public 192.168.1.31 1.3.6.1.4.1.41112.1.6.1.2.1.8.2
+\end{lstlisting}
+\normalcolor
+\fi
+
+\begin{enumerate}[resume]
+\item Créer un item supplémentaire pour pouvoir visualiser sous forme graphique le nombre de personnes connectées
+\end{enumerate}
+
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/itemWifi.drawio.png}
+\end{center}
+
+Le résultat attendu 
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/nbUserGraph}
+\end{center}
 \section{SNMP et prometheus}
 
 Il est possible d'utiliser notre \textbf{monitoring stack} pour surveiller des appareils utilisant le SNMB. Pour cela, il faut déjà s'assurer que le SNMP est opérationnel : 
@@ -526,12 +584,11 @@ Et en regardant les détails  (l'adresse mon serveur est 192.168.1.111 et le snm
 
 
 \section{A vous}
-L'OID 1.3.6.1.4.1.41112.1.6.1.2.1.8.1 correspond au nombre de personnes connectées à la borne WIFI \textbf{UAP-nanoHD}
+Pour rappel, l'OID 1.3.6.1.4.1.41112.1.6.1.2.1.8.1 correspond au nombre de personnes connectées à la borne WIFI \textbf{UAP-nanoHD}
 
 \begin{enumerate}
-\item Avec une commande appropriée, vérifier cette information. 
 \item Ajouter dans Prometheus cette métrique
-\item Dans Grafana, Visualiser cette métrique
+\item Dans Grafana, visualiser cette métrique
 \end{enumerate}
 
 \ifPROF

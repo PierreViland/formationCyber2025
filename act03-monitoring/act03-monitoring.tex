@@ -1143,7 +1143,7 @@ Ce paragraphe montre les modification de containers prometheus \textit{"pour pas
 \includegraphics[scale=0.5]{./ressource/etapeStackMonitoring.png}
 \end{center}
 
-Il est nécessaire de préciser au container prometheus que l'url extérieur a changer et qu'il y aura un préfixe pour la redirection de port. les lignes suivantes doivent être modifiées (surtout) l'IP : 
+Il est nécessaire de préciser au container prometheus que l'url extérieur a changé et qu'il y aura un préfixe pour la redirection de port. Les lignes suivantes doivent être modifiées (surtout) l'IP : 
 
 \begin{lstlisting}[style = commande]
  services:                                                                                                                                                                                 
@@ -1210,7 +1210,7 @@ Dans le répertoire \textbf{03-reverse},trois fichiers sont présents et doivent
 \begin{itemize}
 \itemE \verb?docker-compose.yml?
 \end{itemize}
-Ce fichier "lance" un container Nginx en exposant les ports 8008 (http) et 4433 (https) sur le réseau extérieur ce seront ces ports qui seront utilisés pour accéder de manière sécurisé au métrique du serveur web.
+Ce fichier "lance" un container Nginx en exposant les ports 8008 (http) et 4433 (https) sur le réseau extérieur. Ces ports seront utilisés pour accéder de manière sécurisé au métrique du serveur web.
 
 
 \begin{lstlisting}[style = commande]
@@ -1267,7 +1267,7 @@ Dans le fichier présent sur le dépôt, la CA est celle utilisé pour le HTTPS 
 
 \end{lstlisting}
 
-Si vous souhaitez générer une nouvelle CA les lignes 22 et 25 doivent être décommentée.
+Si vous souhaitez générer une nouvelle CA, les lignes 22 et 25 doivent être décommentées.
 
 \begin{lstlisting}[style = commande]
 #Ligne commenter car reutilisation d'une CA existante
@@ -1342,7 +1342,7 @@ et exécuter la commande qui permet de construire et lancer les containers
 docker compose up -d
 \end{lstlisting}
 
-Si tous fonctionne vous devez avoir accès a la page suivante 
+Si tout fonctionne vous devez avoir accès a la page suivante 
 
 \begin{center}
 \includegraphics[scale=0.6]{./ressource/finalPromHTTPS}
@@ -1357,6 +1357,8 @@ Nous avons vu :
 \itemE Le monitoring de service via a prometheus
 \itemE La sécurisation de ces échanges via un reverse proxy 
 \end{itemize}
+
+\vspace{0.5cm}
 
 Pour aller plus loin, il serait possible de : 
 \begin{itemize}

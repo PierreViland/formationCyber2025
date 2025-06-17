@@ -958,7 +958,7 @@ Une fois ouvert, il est possible l'observer la redirection permanente de http ve
   6     Redirect permanent / https:/192.168.1.30/
 \end{lstlisting}
 
-\textbf{Ligne 14 et 15}, il y a la déclaration du certificats et des clefs privée du serveur 
+\textbf{Ligne 14 et 15}, il y a la déclaration du certificats et de la clef privée du serveur 
 \begin{lstlisting}[style=commande]
  14     SSLCertificateFile /etc/ssl/server_30.crt
  15     SSLCertificateKeyFile /etc/ssl/server_30.key
@@ -1013,10 +1013,10 @@ Pour aplier à ces inconvénient, il est possible d'obtenir des certificats par 
 \itemE Avoir un nom de domaine et avoir accès au serveurs associés
 \itemE Choisir le type de certificat
 	\begin{itemize}
-	\item[$\Rightarrow$] Certificat DV (Domain Validation) : Valide uniquement la propriété du domaine. 
-	\item[$\Rightarrow$] Certificat OV (Organization Validation) : valide le nom de domaine mais aussi l'organisation/l'entreprise. Nécessite d'avoir des documents commerciaux
-	\item[$\Rightarrow$] Certificat EV (Extended Validation) : Validation complète (existance commerciale, légal et physique). S'affiche avec une bande verte dans certains navigateurs
-	\item[$\Rightarrow$] Certificat Wilcard : Sécurisé un nombre illimité de sous-domaine
+	\item[$\Rightarrow$] \textbf{Certificat DV} (Domain Validation) : Valide uniquement la propriété du domaine. 
+	\item[$\Rightarrow$] \textbf{Certificat OV} (Organization Validation) : valide le nom de domaine mais aussi l'organisation/l'entreprise. Nécessite d'avoir des documents commerciaux
+	\item[$\Rightarrow$] \textbf{Certificat EV} (Extended Validation) : Validation complète (existance commerciale, légal et physique). S'affiche avec une bande verte dans certains navigateurs
+	\item[$\Rightarrow$] \textbf{Certificat Wilcard} : Sécurisé un nombre illimité de sous-domaine
 	\end{itemize}
 \end{itemize}
 
@@ -1114,12 +1114,32 @@ certbot delete --cert-name votredomaine.com
 
 \subsection{Let's encrypt + HTTPS + Phising}
 
+
+\begin{minipage}[c]{0.6\linewidth}
+\textbf{La manipulation suivante est à la limite de la légalité. J'ai dû retirer le site web d'Internet à la suite d'un message reçu de la DSSI du rectorat de Rennes.}
+\end{minipage}
+\begin{minipage}[c]{0.4\linewidth}
+\begin{center}
+\includegraphics[scale=0.1]{./ressource/noOK}
+\end{center}
+\end{minipage}
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/mailRssi}
+\end{center}
+\textbf{Néanmoins, cette démarche reste techniquement intéressante et mérite d'être présentée et testé en local}
+
 \paragraph{Présentation}
+
 Vous recevez un mail provenant de l'académie vous invitant à répondre à une enquête.  Vous cliquez alors sur lien  :
 
 \begin{itemize}
-  \itemE \href{https://ciel-broceliande.myasustor.com}{Enquête satisfaction académique}
+  \itemE \href{https://ciel-broceliande.myasustor.commm}{Enquête satisfaction académique (site déactivé début juin)} 
 \end{itemize}
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/fauxSite}
+\end{center}
 
 Le navigateur ne signale aucun avertissement, car le site utilise le protocole HTTPS.  Pourtant, vous êtes sur un faux site.
 
@@ -1159,9 +1179,7 @@ wget -p -k -E -H -nd -P "./" -i url.txt
 \itemE Vous récupérez les login et mot de passe
 \end{itemize}
 
-\begin{center}
-\includegraphics[scale=0.5]{./ressource/fauxSite}
-\end{center}
+
 
 \paragraph{Mise en place}
 
@@ -1195,7 +1213,7 @@ Un exemple de mise en place de ce système est présent sur le dépôt :
 \itemE \href{https://github.com/PierreViland/serveurSimpleIot.git}{https://github.com/PierreViland/serveurSimpleIot}
 \end{itemize}
 
-\paragraph{Remarque préliminaire} : Ce dépôt contient des programmes client pour l’ESP32 ainsi que des programmes client en Python destinés à des machines standards. Ce code pourra être d'avantage exploité dans une séquence sur la sécurité des IoT plus particulièrement celle du Wifi.  
+\paragraph{Remarque préliminaire} : Ce dépôt contient des programmes client pour l’ESP32 ainsi que des programmes client en Python destinés à des machines standards. Ce code pourra être davantage exploité dans une séquence sur la sécurité des IoT plus particulièrement celle du Wifi.  
 
 \paragraph{Tests} \ 
 Pour réaliser les tests, il est nécessaire de stopper les containers précédemment créer.
@@ -1354,7 +1372,7 @@ ou attaque de rétrogradation, vise à contraindre un système  lors d'une négo
 
 
 
-\paragraph{Une autre branche} nommée \textbf{testTls1.2} impose au serveur d'utiliser le Tls v1.2 (branche non utilisé dans cette activité).
+%\paragraph{Une autre branche} nommée \textbf{testTls1.2} impose au serveur d'utiliser le Tls v1.2 (branche non utilisé dans cette activité).
 
 \section{La sécurité des clefs}
 
