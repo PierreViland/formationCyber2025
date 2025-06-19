@@ -14,8 +14,8 @@
 \newcommand{\lycee}{Lycée Brocéliande}
 \newcommand{\classSeq}{CIEL }
 \newcommand{\matiereSeq}{IR}      
-\newcommand{\numSeq}{08}
-\newcommand{\numAct}{01}
+\newcommand{\numSeq}{Cyber}
+\newcommand{\numAct}{Wifi-01}
 \newcommand{\objSeance}{Établir une topologie de tests}
 
 \newcommand{\moySeq}{\begin{itemize}	
@@ -184,7 +184,7 @@
 \fancyhead[L]{Nom}
 \fancyfoot[C]{Page \thepage/\pageref{LastPage}}
 \fancyfoot[L]{\classSeq ~\matiereSeq}
-\fancyfoot[R]{Seq \numSeq  ~ Act \numAct}
+\fancyfoot[R]{Foramation \numSeq  ~ Act \numAct}
 \renewcommand{\headrulewidth}{1pt}
 %%%Note et pied de page 
 
@@ -278,7 +278,7 @@ Pour simplifier l'étude, nous considérons que
 Vous allez être 7 groupes à successivement pirater et protéger les données envoyées par les capteurs. Chaque groupe possède : 
 \begin{itemize}
 \itemE Une carte Esp32 faisant office de capteur
-\itemE Un PC Windows faisant office de serveur
+\itemE Un PC Windows (ou potentiellement linux) faisant office de serveur
 \itemE Une VM Kali (avec un dongle Wifi) faisant office de pirate. 
 \end{itemize}
 
@@ -287,26 +287,26 @@ Vous allez être 7 groupes à successivement pirater et protéger les données e
 \end{center}
 
 
-Pour ne pas perturber les manipulations de vos voisins, vous allez cibler uniquement la carte \textbf{esp32} présente sur votre table.  Chaque carte-peut-être identifié par son adresse MAC (attention toutefois, elle peut être usurpées). 
+Pour ne pas perturber les manipulations de vos voisins, vous allez cibler uniquement la carte \textbf{esp32} présente sur votre table.  Chaque carte-peut-être identifié par son adresse MAC (attention toutefois, elle peut être usurpées). Nous verrons comment la récupérer.
 
-Pour la récupérer, vous allez devoir utiliser le code uploader dans l'esp32 le code \verb?00-recuperationAddrMac.ino? présent dans \verb?00-recuperationAddrMac?. 
-
-\begin{enumerate}
-%%\item A l'aide  la vidéo nommée \verb?VSCodeExplication.mp4? présente dans le même répertoire \verb?ressource_eleve?, uploader le programme
-\item En étudiant le retour de votre communication, Noter votre adresse MAC
-\end{enumerate}
-
-Dans le exemple l'adresse MAC utilisé sera : 
-\begin{lstlisting}[style=commande]
---- Quit: Ctrl+C | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
-Adresse MAC de l'ESP32 :
-C8:C9:A3:FC:B1:DC
-\end{lstlisting}
-
-\paragraph{Pour l'utilisation de VScode avec l'esp32}, toute l'aide est donnée ici: 
-\begin{itemize}
-\itemE \href{https://docs.platformio.org/en/latest/integration/ide/vscode.html}{https://docs.platformio.org/en/latest/integration/ide/vscode.html}
-\end{itemize}
+%Pour la récupérer, vous allez devoir utiliser le code uploader dans l'esp32 le code \verb?00-recuperationAddrMac.ino? présent dans \verb?00-recuperationAddrMac?. 
+%
+%\begin{enumerate}
+%%%\item A l'aide  la vidéo nommée \verb?VSCodeExplication.mp4? présente dans le même répertoire \verb?ressource_eleve?, uploader le programme
+%\item En étudiant le retour de votre communication, Noter votre adresse MAC
+%\end{enumerate}
+%
+%Dans le exemple l'adresse MAC utilisé sera : 
+%\begin{lstlisting}[style=commande]
+%--- Quit: Ctrl+C | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+%Adresse MAC de l'ESP32 :
+%C8:C9:A3:FC:B1:DC
+%\end{lstlisting}
+%
+%\paragraph{Pour l'utilisation de VScode avec l'esp32}, toute l'aide est donnée ici: 
+%\begin{itemize}
+%\itemE \href{https://docs.platformio.org/en/latest/integration/ide/vscode.html}{https://docs.platformio.org/en/latest/integration/ide/vscode.html}
+%\end{itemize}
 
 \newpage
 \section{Technicien SOC}
@@ -391,6 +391,7 @@ Technique qui consiste à rendre un code informatique le plus difficilement comp
 
 \paragraph{Il ne vous est pas demandé de dé-obfuscer le code source donné}. L'obfuscation du code est présente pour garder le suspense du mot de passe et des données envoyées. 
 
+\vspace{0.5cm}
 
 
 
@@ -409,13 +410,20 @@ Temperature : 53.33 C
 
 
 \begin{lstlisting}[style=commande]
-Connexion a salleCIEL
+Connexion a cielCyber
 
 Connecte au reseau Wi-Fi !
-Adresse IP de l ESP32 : 192.168.1.71
+Adresse IP de l'ESP32 : 192.168.1.17
+Adresse MAC de l'ESP32 :
+C8:C9:A3:FC:B1:DC
 Reponse du serveur : {"status": "OK"}
-Reponse du serveur : {"status": "OK"}
+
 \end{lstlisting}
+
+\begin{enumerate} [resume]
+\item Dans le moniteur série de l'interface Arduino, après le téléversement et le reset de la carte, vous pouvez observer l'adresse IP et l'adresse MAC de votre device. Notez dans un coin
+\end{enumerate}
+
 
 \begin{enumerate} [resume]
 \item A l'aide de Wireshark, sur le serveur (PC windows), Remplir le tableau suivant 
@@ -428,7 +436,7 @@ Reponse du serveur : {"status": "OK"}
 \begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
 \hline
 \rowcolor{vert_capet} Ip serveur & MAC serveur & IP device & MAC device \\ \hline
- 192.168.1.19  & 4C:0F:6E:6F:8F:DF & 192.168.1.71 & C8:C9:A3:FC:B1:DC\\ \hline 
+ 192.168.1.19  & 4C:0F:6E:6F:8F:DF & 192.168.1.17 & C8:C9:A3:FC:B1:DC\\ \hline 
 \end{tabular}
 \normalcolor
 \else
@@ -494,8 +502,17 @@ La démarche va être la suivante :
 \subsubsection{Configuration du Wifi dans Kali}
 
 \begin{enumerate}[resume]
+\item Dans la configuration de kali, vérifier que le contrôleur USB soit bien en 2.0 :
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/usbcontroller}
+\end{center}
 \item Brancher un dongle Wifi
+\item Lancer kali
 \item Dans Périphérique/USB, connecter le device à votre VM Kali.
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/usbConnexion}
+\end{center}
+
 \item En exécutant la commande \verb?ip a? dans un terminal, vous devez voir apparaître une interface WIFI \verb?wlan0mon?
 \end{enumerate}
 
@@ -627,7 +644,8 @@ Si le dongle Wifi fonctionne et que vous voyez apparaître les différents rése
 \end{enumerate}
 
 \begin{lstlisting}[style=commande]
-$ sudo airodump-ng -c CHANNEL wlan0mon -w NOMFICHIER.cap --bssid XX:XX:XX:XX:XX:XX
+& sudo iwconfig wlan0mon channel CHANNEL
+$ sudo airodump-ng -c CHANNEL wlan0mon -w NOMFICHIER --bssid XX:XX:XX:XX:XX:XX
 \end{lstlisting}
 où : 
 \begin{itemize}
@@ -641,7 +659,7 @@ où :
 
 \begin{lstlisting}[style=commande]
 
-$ sudo airodump-ng -c 10 wlan0mon -w WifiCapture.cap --bssid 78:45:58:FA:AD:30
+$ sudo airodump-ng -c 10 wlan0mon -w WifiCapture --bssid 78:45:58:FA:AD:30
 
 $ sudo aireplay-ng --deauth 1000 -a 78:45:58:FA:AD:30 -c C8:C9:A3:FC:B1:DC  wlan0mon
 \end{lstlisting}
@@ -650,7 +668,7 @@ $ sudo aireplay-ng --deauth 1000 -a 78:45:58:FA:AD:30 -c C8:C9:A3:FC:B1:DC  wlan
 \fi
 
 \begin{enumerate}[resume]
-\item Dans un autre terminal (c.f copie d'écran ci-dessous), forcer la déconnexion du device que vous voulez attaquer. Le device va alors tenté de se reconnecter. Le pirate peut alors capturer le handshak 
+\item Dans un autre terminal (c.f copie d'écran ci-dessous), forcer la déconnexion du device que vous voulez attaquer. Le device va alors tenté de se reconnecter. Le pirate peut alors capturer le handshake.
 \end{enumerate}
 
 \begin{lstlisting}[style=commande]
@@ -672,9 +690,9 @@ où :
 
 \paragraph{Arrêt de la capture}
 \begin{enumerate}[resume]
-\item Au bout de quelques dizaine de seconde, arrêter l'attaque : \verb?CTRL+C? dans le terminal de "capture" (celui de gauche dans la fenêtre ci-dessus). 
+\item Au bout de quelques dizaine de seconde, arrêter la dé authentification  : \verb?CTRL+C? dans le terminal de "capture" (celui de gauche dans la fenêtre ci-dessus). 
 
-L'attaque peut aussi être arrêtée lorsque le device s'est reconnecté au serveur et que les données de température sont envoyées de nouveau au serveur. Ci-dessous, vous pouvez observer coté device (dans VScode), la reconnexion du device au serveur.
+\item L'attaque peut aussi être arrêtée lorsque le device s'est reconnecté au serveur et que les données de température sont envoyées de nouveau au serveur. Vous pouvez attendre une trentaine de seconde pour s'assurer que de nouvelles données de température est été envoyée. Ci-dessous, vous pouvez observer coté device,  la reconnexion du device au serveur.
 \end{enumerate}
 
 \begin{center}
@@ -737,7 +755,13 @@ Si tout se passe bien, vous devez trouver la clef :
 \item Ouvrer votre fichier de capture avec Wireshark. 
 \end{enumerate}
 
-Normalement, vous ne pouvez pas tiré beaucoup d'informations des différentes trames. Normal car, les données sont chiffrées en AES. Mais c'est possible de les déchiffrer sous wireshark si : 
+Normalement, vous ne pouvez pas tirer beaucoup d'informations des différentes trames. Normal car, les données sont chiffrées en AES. 
+
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/capBrute}
+\end{center}
+
+Mais c'est possible de les déchiffrer sous wireshark si : 
 \begin{itemize}
 \itemE Vous avez dans votre capture un handshake
 \itemE Vous posséder la clef Wifi (mot de passe)
@@ -759,7 +783,7 @@ $\Rightarrow$ C'est la cas!!!!!
 
 \begin{enumerate}[resume]
 \item Chercher dans les trames, les informations envoyées par votre device (Utiliser les filtres avec le protocole).
-\itemE Quels types d'informations sont envoyé (typed e requête HTTP, données, ...)? Donner le plus de détails .
+\itemE Quels types d'informations sont envoyé (type de requête HTTP, données, ...)? Donner le plus de détails .
 \end{enumerate}
 
 \ifPROF
@@ -828,7 +852,12 @@ Vous allez maintenant exploiter toutes les données que vous avez récupérés, 
 
 \begin{enumerate}[label=\alph*.]
 \item S'assurer que le serveur est lancé. Section \ref{srvLance}
+\item Sur Kali, déconnecter le réseau filaire et connecter le réseau wifi (avec le dongle) grâce au mot de passe précédemment trouvé. (C.f. figure ci-dessous)
+
 \item Préparer les 3 scripts d'attaque sur Kali. Section \ref{prepaScript}
+
+\item \textit{Pour l'analyse de l'attaque il peut être intéressant coté serveur de lancer à ce moment un wireshark}
+
 \item Changer d'adresse MAC et IP. Section \ref{attaque}
 \item Envoyer des informations frauduleuses au serveur.  Section \ref{attaque}
 \item Visualiser l'attaque sur le serveur. Section \ref{attaque}
@@ -843,6 +872,9 @@ Vous allez maintenant exploiter toutes les données que vous avez récupérés, 
 \end{center}
 \end{minipage}
 
+\begin{center}
+\includegraphics[scale=0.7]{./ressource/wifiDebutFalsification}
+\end{center}
 
 \subsection{Serveur lancé}
 \label{srvLance}
@@ -868,8 +900,40 @@ Vous avez dans le répertoire \verb?02-falsificationTrame? 3 scripts :
 
 \begin{enumerate}[resume]
 \item Après avoir analyser les 3 scripts, \textbf{les configurer} pour les adapter à votre attaque (IP et MAC du serveur par exemple)
-\item Les copier sur la machine de votre attaquant (Kali). 
 \end{enumerate}
+
+\paragraph{Dans 00-changementAddr.sh} \ 
+\begin{lstlisting}[style=commande]
+# Variables
+INTERFACE="wlan0"         # Interface Wi-Fi
+NEW_IP="192.168.1.71"     # Nouvelle adresse IP
+NETMASK="255.255.255.0"   # Masque de sous-reseau
+GATEWAY="192.168.1.1"     # Passerelle par defaut
+MACDEVICE="C8:C9:A3:FC:B1:DC" # Adresse MAC cible
+\end{lstlisting}
+
+
+\paragraph{Dans 01-hackerDevice\_II.py}\ 
+\begin{lstlisting}[style=commande]
+# A MODIFER AU BESOIN
+server_ip = "192.168.1.19"
+server_port = 80# URL du serveur A MODIFIER 
+server_url = "http://"+server_ip+":"+str(server_port) +"/data"
+
+# Id du device A MODIFIER
+device_id = "ESP32-001"
+
+# Donnees a MODIFIER
+temperature = 2.52 # A modifier
+\end{lstlisting}
+
+
+\paragraph{00-changementAddr.sh} rien n'est à modifier.
+
+\begin{enumerate}[resume]
+\item Après avoir analyser les 3 scripts, \textbf{les configurer} pour les adapter à votre attaque (IP et MAC du serveur par exemple)
+\end{enumerate}
+
 
 \subsection{Attaques}
 \label{attaque}
@@ -1017,6 +1081,6 @@ Les modèles comme le Panda PAU06 ou l’EDUP EP-MS8551
 
 \section{Critère d'évaluation}
 \label{lblCritere}
-Vous devrez retourner une document de 1 page décrivant les différentes étapes et leur objectif . Un schéma ou des schéma peuvent être les bienvenus.
+Vous devrez retourner une document de 1 page décrivant les différentes étapes et leur objectif . Un schéma ou des schémas peuvent être les bienvenus.
 
 \end{document}
