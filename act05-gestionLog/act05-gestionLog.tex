@@ -21,7 +21,7 @@
 \newcommand{\matiereSeq}{IR}      
 \newcommand{\numSeq}{Cyber}
 \newcommand{\numAct}{05}
-\newcommand{\objSeance}{Comment gérer les logs}
+\newcommand{\objSeance}{Comment gérer les logs?}
 
 \newcommand{\moySeq}{\begin{itemize}	
 \itemE VM serveurCyber
@@ -40,7 +40,7 @@
 %%%%Algo
 \usepackage[linesnumbered, french]{algorithm2e}
 \SetKwFor{For}{Pour}{faire}{fin}
-\SetKwFor{While}{Tant que}{faire}{fin}%
+\SetKwFor{While}{Tant que}{faire}{fin}
 \SetKw{KwTo}{?}
 \SetKw{KwPas}{par pas de}
 \SetKw{KwRet}{Retourne}
@@ -82,7 +82,26 @@
              {ç}{{\c{c}}}1
              {✔}{{\checkmark}}1,
 }
-%\usepackage[T1]{fontenc}
+\lstdefinestyle{commandeW}{
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  %numbers=left,
+  %numberstyle=\tiny\color{gray},
+  numbersep=5pt,
+  breaklines=true,
+  frame=single,
+  backgroundcolor=\color{blue!10},
+  %captionpos=b,
+  %caption=\lstname   
+    extendedchars=true,
+    literate={é}{{\'e}}1
+             {è}{{\`e}}1
+             {à}{{\`a}}1
+             {ç}{{\c{c}}}1
+             {✔}{{\checkmark}}1,
+}
+
 
 \newcommand{\itemB}{\item[$\Box$]}
 % Margins
@@ -697,13 +716,13 @@ Le serveur bleu d'adresse 192.168.1.32 est accessible
 \itemE via le serveur VPN présent dans la salle d'adresse 192.168.1.31. Des fichiers openvnp de configuration peuvent être fournis.
 \end{itemize}
 Il fournit 
-\begin{itemize}
+\begin{itemize}	
 \itemE Un service web accessible en local et à l'extérieur 
-\itemE Un service de monitoring accessible uniquement depuis le LAN
+\itemE Un service de monitoring accessible \textbf{uniquement depuis le LAN}
 \end{itemize}
 
 \vspace{0.5cm}
-Pour se connecter à grafana, il faut dans un navigateur web utilisé l'URL suivant  
+Pour se connecter à grafana depuis le LAN, il faut dans un navigateur web utilisé l'URL suivant  
 \begin{itemize}
 \itemE \url{http://192.168.1.32:3000}
 \end{itemize}
@@ -716,7 +735,47 @@ Les identifiants (peut sécurisé) :
 \itemE mot de passe : \verb?acRennes!!2025?
 \end{itemize}
 
-\paragraph{Le dashboard} de monitoring du service web est le suivant : (il est amené à évolué en fonction des besoins
+\paragraph{Comment se connecter au LAN en VPN ?} \
+
+Un serveur OpenVPN basé sur certificats utilise des fichiers d'authentification (certificat, clé privée, CA) pour identifier le client. L'administrateur du VPN doit fournir aux clients, un fichier de configuration \textbf{.ovpn} contenant : 
+\begin{itemize}
+\itemE Les instruction de configuration (Algorithmes de chiffrement, adresse publique, ...)
+\itemE Le certificat du CA
+\itemE le certificat du client
+\itemE La clef publique du client 
+\end{itemize}
+Vous pouvez demander un fichier de configuration pour avoir accès au LAN. et ensuite : 
+
+\vspace{0.5cm}
+ 
+\begin{itemize}
+\itemE  Télécharge et installer un client openVPN : \url{https://openvpn.net/client/}
+\itemE  Connecter vous au client VPN comme ci-dessous. Attention : un mot de passe protège le fichier \textbf{.ovpn}.
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{./ressource/vpnImageWindows.png}
+\end{center}
+
+\begin{itemize}
+\itemE Il faut ensuite ajouter une nouvelle route pour pouvoir accéder au serveur de "monitoring"
+\end{itemize}
+
+Sous Windows :
+\begin{lstlisting}[style=commandeW]
+route add 192.168.1.32 mask 255.255.255.255 10.8.0.1
+\end{lstlisting}
+
+Sous Linux :
+\begin{lstlisting}[style=commande]
+sudo ip route add 192.168.1.32 via 10.8.0.2
+\end{lstlisting}
+
+
+Vous avez maintenant accès au serveur de monitoring.
+
+
+
+\paragraph{Le dashboard} de monitoring du service web, accessible \url{http://192.168.1.32:3000} après connexion est le suivant : (il est amené à évolué en fonction des besoins)
 
 \begin{center}
 \includegraphics[scale=0.7]{./ressource/exempleRelle.drawio.png}
@@ -866,7 +925,7 @@ Il y a aussi la liste des vulnérabilités des services accessibles.
 \includegraphics[scale=0.7]{./ressource/shodanVuln}
 \end{center}
 
-Attention, il y a des failles sur le sites web
+Attention, il y a des failles sur le site web
 
 \paragraph{Activité avec les élèves } : Rechercher des informations sur ces failles et les exploiter
 
