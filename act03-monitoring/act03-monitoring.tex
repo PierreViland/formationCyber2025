@@ -300,16 +300,16 @@ Vous voulez savoir si votre serveur HTTP dépasse un certain taux de requêtes p
 \includegraphics[scale=0.25]{./ressource/zabbix.png}
 \end{center}
 \end{minipage}
-
+\vspace{0.25cm}
  Il permet de suivre les performances des systèmes, des serveurs et des équipements réseau grâce à des agents ou à des mécanismes de récupération comme SNMP. 
-Comparé à Prometheus, Zabbix a une approche plus centralisé et traditionnelle ce qui le rend moins performant dans des environnements de micoservices et de conteneurs. Il sera étudié dans une prochaine activité.
+Comparé à Prometheus, Zabbix a une approche plus centralisé et traditionnelle ce qui le rend moins performant dans des environnements de \textbf{micoservices} et de conteneurs. Il sera étudié dans une prochaine activité.
 
 \begin{encadre}{Microservices}
 Architecture logicielle où une application est décomposée en plusieurs services indépendants responsable d'une fonctionnalité spécifique. Ces services communiquent généralement entre eux via des API et peuvent être développés, déployés, et mis à l'échelle de manière autonome.
 \end{encadre}
 
 \subsection{Loki}
-Loki est un agrégateur de journaux (logs) développé par Grafana Labs. Contrairement à d'autres solutions comme ELK, Loki est conçu pour être léger et efficace.
+Loki est un agrégateur de journaux (logs) développé par Grafana Labs. Contrairement à d'autres solutions comme ELK, Loki est conçu pour être léger et efficace. Une activité dédiée à loku vous est proposée.
 
 \paragraph{Utilité principale}
 \begin{itemize}
@@ -381,12 +381,12 @@ Vous pouvez créer un tableau de bord montrant :
 
     \begin{tabular}{|l|l|l|}
         \hline
-        \rowcolor{vert_capet}\textbf{Outil} & \textbf{Rôle Principal} & \textbf{Type de données gérées} \\
+        \rowcolor{vert_capet}\textbf{Outil} & \textbf{Rôle Principal} & \textbf{Type de données gérées} \\ 
         \hline
-        Prometheus & Surveillance des métriques (CPU, RAM, requêtes) & Séries temporelles \\
-        Loki       & Analyse des journaux                             & Journaux (logs)    \\
-        Tempo      & Suivi des requêtes dans les microservices       & Traces distribuées \\
-        Grafana    & Visualisation des données et tableaux de bord  & Toutes les sources compatibles \\
+        Prometheus & Surveillance des métriques (CPU, RAM, requêtes) & Séries temporelles \\ \hline
+        Loki       & Analyse des journaux                             & Journaux (logs)   \\ \hline
+        Tempo      & Suivi des requêtes dans les microservices       & Traces distribuées \\ \hline
+        Grafana    & Visualisation des données et tableaux de bord  & Toutes les sources compatibles \\ \hline
         \hline
     \end{tabular}
 \end{center}
@@ -499,7 +499,7 @@ URL (par exemple http://localhost:9113/metrics) à laquelle Prometheus accède p
 
 \subsection{Exemple simple : serveur de température}
 
-Dans une premier, vous allez exploiter \textbf{le serveur maison Iot}. L'objectif va être de récupérer des informations sur l'état du serveur tel que le nombre de connexion ou le temps moyen entre chaque connexion.  
+Dans une premier, vous allez exploiter \textbf{le serveur maison Iot}. L'objectif est de récupérer des informations sur l'état du serveur, telles que le nombre de connexions ou le temps moyen entre chaque connexion.
 
 En résumé, le système mise en place est le suivant
 
@@ -670,7 +670,7 @@ http_temps_reponse_count 47.0
 
 \subsection{Lancement de la monitoring stack}
 
-Nous allons maintenant lancer l'ensemble des service de monitoring. Pour rappel L'ensemble des fichiers relatifs à la "monitoring stack" est présent dans le répertoire \ \textbf{01-stackMonitoring} du dépôt  \href{https://github.com/PierreViland/monitoringPV.git}{https://github.com/PierreViland/monitoringPV.git}
+Nous allons maintenant lancer l'ensemble des services de monitoring. Pour rappel L'ensemble des fichiers relatifs à la "monitoring stack" est présent dans le répertoire \ \textbf{01-stackMonitoring} du dépôt  \href{https://github.com/PierreViland/monitoringPV.git}{https://github.com/PierreViland/monitoringPV.git}
 
 Pour lancer correctement la monitoring stack, Il est nécessaire de regarder si le fichier de de configuration de Prometheus nommé \verb?prometheus.yml? est correct :
 
@@ -705,7 +705,7 @@ avec
  \end{center}
 
 \begin{enumerate}[resume]
-\item Configurer le fichier \verb?prometheus.yml? pour que prometheus puisse récupérer vos données en modifiant les adresses IP et les port de vos cibles dans le fichier \verb?prometheus.yml?
+\item Configurer le fichier \verb?prometheus.yml? pour que prometheus puisse récupérer vos données en modifiant les adresses IP et les ports de vos cibles dans le fichier \verb?prometheus.yml?
 \begin{lstlisting}[style=commande]
   - targets: ['@IP:Port'] 
 \end{lstlisting} 
@@ -982,7 +982,7 @@ Vous avez scruté les métriques d'un serveur "maison".  Il est possible de scru
 \includegraphics[scale=0.7]{./ressource/schemaPrometheus-LEMP_Prometheuse.drawio.png}
 \end{center}
 
-Les différents fichier de configuration sont présent en ressource dans le répertoire : \verb?02-LEMP_monitoring+serveurPyhton?
+Les différents fichier de configuration sont présents en ressource dans le répertoire : \verb?02-LEMP_monitoring+serveurPyhton?
 
 
 \paragraph{Lancement des "exporters"}
@@ -993,7 +993,8 @@ Il faut commencer par créer deux containers correspondant aux deux exporter
 \end{itemize}
 
 
-Un fichier de \verb?docker-compose.yml? est présent dans le répertoire \verb?02-exporter?
+Un fichier de \verb?docker-compose.yml? est présent dans le répertoire \verb?02-exporter? du dépôt
+\url{https://github.com/PierreViland/monitoringPV}
 \begin{center}
 \includegraphics[scale=0.4]{./ressource/visuDockerExporter}
 \end{center}
@@ -1081,7 +1082,7 @@ Le schéma ci-dessous résume cette solution.
 
 \subsection{Mise en place}
 
-Dans cette partie nous allons mettre en place une communication sécurisée et déacitver la non sécurisé  entre 
+Dans cette partie nous allons mettre en place une communication sécurisée et déactiver la non sécurisé  entre 
 \begin{itemize}
 \itemE \verb?Prometheus? $\Leftrightarrow$ \verb?Exporter Nginx?
 \itemE \verb?Un client Web? $\Leftrightarrow$ \verb?Prometheus?

@@ -268,9 +268,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problème de sécurité}
-Dans le système précent qui a été mis en place, les échanges s'effectuent via le protocole http, et donc sont non sécurisé. Cela signifie que
+Dans le système précédent qui a été mis en place, les échanges s'effectuent via le protocole http, et donc sont non sécurisés. Cela signifie que
 \begin{itemize}
-\itemE les données échangées ne sont pas chiffrées, donc elles peuvent être lues ou interceptées par une personne malveillante. 
+\itemE Les données échangées ne sont pas chiffrées, donc elles peuvent être lues ou interceptées par une personne malveillante. 
 \itemE De plus, le site n’est pas certifié, ce qui veut dire qu'on ne peut pas vérifier l'identité du site, il pourrait donc s'agir d'un faux site se faisant passer pour un autre.
 \end{itemize} 
 
@@ -283,7 +283,7 @@ Votre machine hôte veut visualiser le contenu du page web de votre serveur.  Un
 
 Même si cette manipulation a déjà été effectuée, il est intéressant de la refaire afin de visualiser la différence entre une connexion en HTTP et en HTTPS.
 
-Voici un exemple de capture réalisée avec Wireshark sous Kali Linux. L’échange entre le client (192.168.1.130) et le serveur (192.168.1.30) y est clairement visible, ce qui souligne l'absence de chiffrement. 
+Voici un exemple de capture réalisée avec Wireshark sous Kali Linux. L’échange entre le client (192.168.1.134) et le serveur (192.168.1.82) y est clairement visible, ce qui souligne l'absence de chiffrement. 
 \begin{center}
 \includegraphics[scale=0.5]{./ressource/captureWireshark}
 \end{center}
@@ -552,6 +552,7 @@ Il faudra ensuite télécharger le certificat du serveur et sa clef privée (ic�
 
 
 \subsection{Importation certificat CA }
+\label{lbl_importCA}
 Votre certificat a été signé par une autorité de certification qui n'est pas connu. Il faut donc que vous l'importiez dans votre navigateur.
 
 \subsubsection{Sous firefox}
@@ -601,6 +602,10 @@ pviland@serveurCyber:~/00-serveurLemp$
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 \end{lstlisting}
 
+Le dépôt de travail (\url{https://github.com/PierreViland/00-serveurLemp}) contient plusieurs branches 
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/branchServeurLemp}
+\end{center}
 
 \begin{enumerate}[resume]
 \item Se placer dans la branche \verb?httpNginx_2? du dépôt
@@ -616,13 +621,15 @@ pviland@serveurCyber:~/00-serveurLemp$ git switch httpNginx_2
 Switched to branch 'httpNginx_2'
 \end{lstlisting}
 
+\vspace{0.5cm}
+
 \begin{enumerate}[resume]
-\item Depuis la machine hôte, copier la clef privée et le certificat du serveur dans le répertoire \verb?~/00-serveurLemp/ssl?
+\item Depuis la machine hôte, copier la clef privée et le certificat du serveur dans le répertoire \verb?~/00-serveurLemp/ssl? du serveur
 \end{enumerate}
 
 
 \begin{lstlisting}[style=commande]
-pierre@pierreUbuntu:~/Téléchargements/certificat_et_clef$  serveur_PV_30.crt serveur_PV_30.key pviland@192.168.1.30:~/00-serveurLemp/ssl
+$  scp serveur_PV_30.crt serveur_PV_30.key pviland@192.168.1.30:~/00-serveurLemp/ssl
 \end{lstlisting}
 
 \begin{enumerate}[resume]
@@ -643,7 +650,15 @@ drwxrwxr-x 9 pviland pviland 4096 mai    8 07:12 ../
 \end{lstlisting}
 
 \begin{enumerate}[resume]
-\item Après cette replacer dans le répertoire \verb?~/00-serveurLem?,  lancer alors les containers 
+\item Vérifier et modifier si besoins les chemins et nom du fichier de configuration de Nginx. Les éléments en rouge doivent correspondre au chemin et nom du certificat et de la clef privée.
+\end{enumerate}
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/modifFichierNginxHttps}
+\end{center}
+
+\begin{enumerate}[resume]
+\item Après cette replacer dans le répertoire \verb?~/00-serveurLemp?,  lancer alors les containers 
 \end{enumerate}
 
 \begin{lstlisting}[style=commande]
@@ -760,7 +775,9 @@ Puis ensuite, il faut se mettre sur la branche \verb?httpsApache ?
 git switch httpsApache 
 \end{lstlisting}
 
-\newpage
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/branchServeurLemp}
+\end{center}
 
 \subsection{Création de certificat avec Openssl}
 Cette section présente de manière générale les commandes à utiliser pour générer des certificats. Une solution plus pratique sera présentée dans la section \ref{lbl_script}.
@@ -851,7 +868,7 @@ avec
 \itemE \verb?ca.key? : clé privée de la CA
 \itemE \verb?certificatSigne.crt? : certificat signé
 \end{itemize}
-\paragraph{Remarque } :  Le \textbf{SAN} pour Subject Alternative Name permet de spécifier des noms supplémentaires ou des adresses IP pour lequel le certificat est valide. C'est devenu obligatoire pour la plus part des navigateur.  Nous verrons dans la section suivante la manière des les configurer.
+\paragraph{Remarque } :  Le \textbf{SAN} pour Subject Alternative Name permet de spécifier des noms supplémentaires ou des adresses IP pour lequel le certificat est valide. C'est devenu obligatoire pour la plus part des navigateurs.  Nous verrons dans la section suivante la manière des les configurer.
 
 
 \paragraph{L'ensemble des fichiers } généré est 
@@ -893,7 +910,7 @@ Pour utiliser ce script, les champs ci-dessous doivent être configurés :
  17 IP_SERVER="192.168.1.30"        #Adresse IP du serveur    
 \end{lstlisting}
 
-Les noms des fichiers relatifs au serveur finissent tous par \verb?_30? ce qui correspond au dernier octet de mon @ IP 
+Les noms des fichiers relatifs au serveur finissent tous par \verb?_30? ce qui correspond au dernier octet de mon @ IP utilisé pour les tests.
 
 
 \paragraph{Création ou non d'un CA}
@@ -916,7 +933,7 @@ Il suffit ensuite de lancer le script
 \begin{lstlisting}[style=commande]
 ./scriptGeneClef.sh 
 \end{lstlisting}
-Vous avez normalement à disposition (au minium les fichiers suivants 
+Vous avez normalement à disposition (au minium) les fichiers suivants 
 \begin{itemize}
 \itemE le certificat du CA (.crt)
 \itemE la clef privée du CA (.key)
@@ -950,7 +967,11 @@ Le montage des sources du site web se réalise de la même manière que précéd
 
 \paragraph{Configuration de Apache} via \verb?apache2_PV.conf? présent dans 
 
-\verb?./.docker/apache2/apache2PV.conf?
+\verb?./.docker/apache2/apache2PV.conf? (c.f. cide-ssous)
+
+\begin{center}
+\includegraphics[scale=0.5]{./ressource/apacheGitHttpsConf}
+\end{center}
 
 Une fois ouvert, il est possible l'observer la redirection permanente de http vers https  ligne 6.
 \begin{lstlisting}[style=commande]
@@ -958,13 +979,13 @@ Une fois ouvert, il est possible l'observer la redirection permanente de http ve
   6     Redirect permanent / https:/192.168.1.30/
 \end{lstlisting}
 
-\textbf{Ligne 14 et 15}, il y a la déclaration du certificats et de la clef privée du serveur 
+\textbf{Ligne 14 et 15}, il y a la déclaration du certificat et de la clef privée du serveur 
 \begin{lstlisting}[style=commande]
  14     SSLCertificateFile /etc/ssl/server_30.crt
  15     SSLCertificateKeyFile /etc/ssl/server_30.key
 \end{lstlisting}
 
-Le nom des fichiers \verb?server_30?, doit être adapté en fonction du certificat et de la clef générés dans la section \ref{lbl_script}. Le chemin, quant à lui, ne doit pas être modifié, sauf si vous avez changé la ligne 12 du fichier docker-compose.yml relative au montage du répertoire des certificats/clefs.
+Le nom des fichiers \verb?server_30?, doit être adapté en fonction du certificat et de la clef générés dans la section \ref{lbl_script}. Le chemin, quant à lui, ne doit pas être modifié, sauf si vous avez changé la ligne 12 du fichier \verb?docker-compose.yml? relative au montage du répertoire des certificats/clefs.
 
 
 \subsubsection{Lancement du service}
@@ -976,7 +997,7 @@ pviland@serveurCyber:~/00-serveurLemp$ sudo docker compose up -d
 
 
 \begin{itemize}
-\item[$\Rightarrow$] Il faut bien veiller à importer le CA dans votre navigateur pour avoir un site avec \textbf{Apache en https}
+\item[$\Rightarrow$] Il faut bien veiller à importer le CA dans votre navigateur pour avoir un site avec \textbf{Apache en https} comme montré dans la section \ref{lbl_importCA}.
 \end{itemize}
 
 
@@ -988,18 +1009,16 @@ En cliquant sur le cadenas à coté de l'URL, il est possible de voir les détai
 
 
 
-Normalement, si vous essayé, le navigateur retour une erreur bien connue..... Il faut importer le certificat du CA.
-
-
-
-\section{Certificat d'une CA officiel}
+\section{Certificat d'une CA officielle}
 
 \subsection{Autorités de certification publiques }
 Pour l'instant, seul les certificat signés par une CA personnelle ont été utilisé : 
 \begin{itemize}
 \itemE Notre CA personnel a signé nos propres certificats. 
-\itemE Nous devons installé manuellement le certificat du CA dans les navigateurs 
+\itemE Nous devons installé manuellement le certificat du CA dans les navigateurs.
 \end{itemize} 
+
+\vspace{0.5cm}
 
 Cette solution reste très utilisée et pratique dans des environnements privées et ou d'entreprises. Par contre, il y a deux inconvénients : 
 \begin{itemize}
@@ -1010,7 +1029,7 @@ Cette solution reste très utilisée et pratique dans des environnements privée
 
 Pour aplier à ces inconvénient, il est possible d'obtenir des certificats par une CA publique. Il faut pour cela :  
 \begin{itemize}
-\itemE Avoir un nom de domaine et avoir accès au serveurs associés
+\itemE Avoir un nom de domaine et avoir accès au serveur associé.
 \itemE Choisir le type de certificat
 	\begin{itemize}
 	\item[$\Rightarrow$] \textbf{Certificat DV} (Domain Validation) : Valide uniquement la propriété du domaine. 
@@ -1092,6 +1111,10 @@ Yv7DFlRl5iSlYnCslJG6v-HGu3GFzb7P457w6ZDOlRQ.7u6zb_yG6lp3U0INtsi6ELTfW2-htbSCy0EC
 \end{lstlisting}
 
 Cette sortie doit correspondre exactement à la valeur attendue affichée précédemment.
+
+
+\vspace{0.5cm}
+Si vous avez fini la demande de certificat, certboot a créé sur votre serveur une clef privée et un certificat de type \textbf{DV}.
 
 \paragraph{D'autres commandes} existent permettant d'administrer les certificats avec let's encrypt 
 \begin{itemize}
@@ -1198,7 +1221,7 @@ Jusqu'à présent, nous avons uniquement abordé la génération de certificats 
 
 Dans l'exemple ci-dessous des capteurs filaires et non filaires envoient des données par exemple la température à un serveur. Il faut que 
 \begin{itemize}
-\itemE Le serveur identifie les capteurs pour empêcher l'envoie de fausse information par un serveur pirate
+\itemE Le serveur identifie les capteurs pour empêcher l'envoie de fausses informations par un serveur pirate
 \itemE Le capteur s'assure d'envoyer leurs données au bon serveur
 \itemE Les données doivent être envoyer de manière confidentielle.
 \end{itemize}
@@ -1264,7 +1287,7 @@ Sur Wireshark, il est possible d'observer les échanges non chiffré de la commu
 L'ensemble des sources concernant la mise en place du https dans le cadre d'un serveur Iot est présent dans le répertoire \verb?01-https? Cette fois il faut \textbf{générer des certificats aussi bien pour le client que pour le serveur}.
 
 \vspace{0.5cm}
-Il est possible d'utiliser pfsense. Mais pour automa	tiser ces actions, il vous est proposé un script exploitant  \textbf{OpenSSL}. Il s'appelle \verb?geneCertificat.sh? et est présent dans le répertoire \verb?certificat?
+Il est possible d'utiliser pfsense. Mais pour automatiser ces actions, il vous est proposé un script exploitant  \textbf{OpenSSL}. Il s'appelle \verb?geneCertificat.sh? et est présent dans le répertoire \verb?certificat?
 
 De la même manière que pour le serveur apache, il faut le configurer (uniquement les lignes avec des commentaires): 
 
@@ -1366,7 +1389,7 @@ Vous pouvez le faire observer par les élèves comme montrer ci-dessous.
 
 Ce type d'attaque s'appelle : \textbf{downgrade attack}
 
-\begin{encadre}{downgrade attack.}
+\begin{encadre}{Downgrade attack.}
 ou attaque de rétrogradation, vise à contraindre un système  lors d'une négociation de connexion sécurisée d'utiliser une version plus ancienne présentant des failles potentielles (comme TLS, SSL, ou SSH), afin de les exploiter.
 \end{encadre}
 

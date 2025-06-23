@@ -289,7 +289,7 @@ Plateforme web de gestion de code source qui permet d'héberger, collaborer et v
 \hline
 \rowcolor{vert_capet} \textbf{Description} & \textbf{URL GitHub} \\
 \hline
-Simple serveur HTTP Iot+coe activité python& \url{https://github.com/PierreViland/serveurSimpleIot.git} \\
+Simple serveur HTTP Iot+ act Wifi& \url{https://github.com/PierreViland/serveurSimpleIot.git} \\
 
 
 \hline
@@ -391,6 +391,14 @@ Cela va permettre de :
 	\itemE Login : \verb?pviland?
 	\itemE Mot de passe : \verb?choupette?
 	\end{itemize}
+
+\item Il faut s'assurer que toute les containers sont stoppés et supprimés,  pour cela, il faut exécuter les commandes suivantes  : 
+\begin{lstlisting}[style=commande]
+root@serveurCyber:/home/pviland/monitoringPV/01-stackMonitoring# sudo su
+root@serveurCyber:/home/pviland/monitoringPV/01-stackMonitoring# docker stop $(docker ps -q) && docker rm $(docker ps -aq)
+
+\end{lstlisting}
+
 \item Dans le répertoire de votre choix cloner le dépôt contenant le serveur Web présent \href{https://github.com/PierreViland/00-serveurLemp.git}{https://github.com/PierreViland/00-serveurLemp.git}: 
 
 	\begin{lstlisting}[style=commande]
