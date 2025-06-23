@@ -67,7 +67,10 @@ jobs:
           - folder: 00-RessourceOrga/r01-dockerPresentation
             base: r01-dockerPresentation
             target: 00-RessourceOrganisation
-
+            
+          - folder: 00-RessourceOrga/p00-presentationAct
+            base: p00-presentationAct
+            target: 00-RessourceOrganisation
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
