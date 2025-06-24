@@ -96,6 +96,9 @@
 \usepackage{pict2e}
 \usepackage[]{xcolor}
 \usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{enumitem}
+\setlist[itemize]{label=\textbullet, nosep, leftmargin=*}
 
 \setlength{\unitlength}{1mm}
 
@@ -212,10 +215,11 @@ Environnement virtuel simulé qui permet s'entraîner à la cybersécurité à t
 \end{frame}
 
 
-\begin{frame}{Technologies proposées (par moi)}
+\begin{frame}{Activités proposées (par moi)}
 
 \begin{block}{HTTPS}
 \begin{itemize}
+\item Génération CA, certificats, ...
 \item Nginx
 \item Apache
 \item Exemple de fishing
@@ -274,26 +278,74 @@ Environnement virtuel simulé qui permet s'entraîner à la cybersécurité à t
 
 \end{frame}
 
+\begin{frame}{Les dépôts}
 
-\begin{frame}{Les dépôts }
-\footnotesize
-\begin{tabular}{|>{\raggedright\arraybackslash}p{5cm}|>{\raggedright\arraybackslash}p{6cm}|}
+\scriptsize % Plus lisible que \tiny
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3cm}|
+                >{\raggedright\arraybackslash}p{3.5cm}|
+                >{\raggedright\arraybackslash}p{4.5cm}|}
 \hline
-\rowcolor{vert_capet} \textbf{Description} & \textbf{URL GitHub} \\
+\rowcolor{vert_capet} \textbf{Activités} & \textbf{Description} & \textbf{URL GitHub} \\
 \hline
-Simple serveur HTTP Iot+act wifi& \url{https://github.com/PierreViland/serveurSimpleIot.git} \\
 
+\begin{minipage}{\linewidth}
+\vspace{0.2cm}
+\begin{itemize}
+  \item \texttt{act02-https}
+  \item \texttt{act03-monitoring}
+  \item \texttt{act04-SNMP\_P}
+  \item \texttt{02-wifi}
+\end{itemize}\vspace{0.2cm}
+\end{minipage}
+& Serveur temperature + client python\&ESP32 + falsification client
+& \url{https://github.com/PierreViland/serveurSimpleIot.git} \\
+\hline
 
+\begin{minipage}{\linewidth}
+\begin{itemize}
+  \item Toutes
+\end{itemize}
+\end{minipage}
+& Serveur LEMP et LAMP HTTP/HTTPS 
+& \url{https://github.com/PierreViland/00-serveurLemp.git} \\
 \hline
-Serveur LEMP et LAMP HTTP/HTTPS& \url{https://github.com/PierreViland/00-serveurLemp.git} \\
+
+\begin{minipage}{\linewidth}
+\begin{itemize}
+  \item \texttt{act02-https}
+\end{itemize}
+\end{minipage}
+& Exemple phishing avec certificat Let's Encrypt 
+& \url{https://github.com/PierreViland/httpsPhishingExemple.git} \\
 \hline
-Exemple fishing avec certificat Let's encrypt& \url{https://github.com/PierreViland/httpsPhishingExemple.git} \\
+
+\begin{minipage}{\linewidth}\vspace{0.2cm}
+\begin{itemize}
+  \item \texttt{act03-monitoring}
+  \item \texttt{act04-SNMP\_P}
+  \item \texttt{act05-gestionLog}
+\end{itemize}\vspace{0.2cm}
+\end{minipage}
+& Monitoring stack + Analyse de logs 
+& \url{https://github.com/PierreViland/monitoringPV.git} \\
 \hline
-Mise en place d'une "monitoring stack" + Analyse de log & \url{https://github.com/PierreViland/monitoringPV.git} \\
+
+\begin{minipage}{\linewidth}
+\begin{itemize}
+  \item \texttt{act04-SNMP\_P}
+\end{itemize}
+\end{minipage}
+& Zabbix 
+& \url{https://github.com/akmalovaa/zabbix-docker} \\
 \hline
-Zabbix & \url{https://github.com/akmalovaa/zabbix-docker} \\
-\hline
-Source latex des documents de la formation (+ workflow pour déploiement sur site web) & \url{https://github.com/PierreViland/formationCyber2025.git} \\
+
+\begin{minipage}{\linewidth}
+\begin{itemize}
+  \item Bonus
+\end{itemize}
+\end{minipage}
+& Source \LaTeX{} des documents + workflow de déploiement 
+& \url{https://github.com/PierreViland/formationCyber2025.git} \\
 \hline
 \end{tabular}
 
