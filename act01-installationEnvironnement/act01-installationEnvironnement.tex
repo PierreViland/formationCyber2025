@@ -432,8 +432,40 @@ Cela va permettre de :
 	\begin{itemize}
 	\itemE Sniffer le trafic réseau entre l'hôte et une VM (par exemple avec Wireshark)
 	\end{itemize}
+	
+Le nom de l'interface réseau ( dans l'image au-dessus \verb?Name wlo1?) dépend du nom de votre carte réseau.	
 
-\item L'adressage IP est statique. Elle vous sera donnée durant l'installation de vos machines. Les identifiants administrateurs de cette VM sont : 
+\item L'adressage IP est statique (possibilité de la mettre en dynamique. Elle vous sera donnée durant l'installation de vos machines. Pour la changer, il faut ouvrir le fichier \verb?00-installer-config.yaml? présent dans \verb?/etc/netplan:?
+	\begin{lstlisting}[style=commande]
+vi /etc/netplan/00-installer-config.yaml
+\end{lstlisting}
+Ensuite, effectuer les modifications souhaitées : 
+	\begin{lstlisting}[style=commande]
+network:
+  version: 2
+  renderer: networkd  
+  ethernets:
+    enp0s3:
+      dhcp4: no  
+      addresses:
+       - 192.168.1.30/24
+      routes:
+        - to: default
+          via: 192.168.1.1
+      nameservers:
+       addresses: [8.8.8.8, 1.1.1.1]
+
+\end{lstlisting}
+
+
+Il faut ensuite appliquer les modifications
+\begin{lstlisting}[style=commande]
+sudo netplan apply 
+\end{lstlisting}
+
+
+
+\item Les identifiants administrateurs de cette VM sont : 
 	\begin{itemize}
 	\itemE Login : \verb?pviland?
 	\itemE Mot de passe : \verb?choupette?
