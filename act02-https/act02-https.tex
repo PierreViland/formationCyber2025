@@ -271,19 +271,19 @@
 Dans le système précédent qui a été mis en place, les échanges s'effectuent via le protocole http, et donc sont non sécurisés. Cela signifie que
 \begin{itemize}
 \itemE Les données échangées ne sont pas chiffrées, donc elles peuvent être lues ou interceptées par une personne malveillante. 
-\itemE De plus, le site n’est pas certifié, ce qui veut dire qu'on ne peut pas vérifier l'identité du site, il pourrait donc s'agir d'un faux site se faisant passer pour un autre.
+\itemE De plus, le site n’est pas certifié, ce qui veut dire qu'on ne peut pas vérifier l'identité du site. Il pourrait donc s'agir d'un faux site se faisant passer pour un autre.
 \end{itemize} 
 
 \paragraph{Mise en pratique}
 
-Votre machine hôte veut visualiser le contenu du page web de votre serveur.  Un pirate se place sur le même réseau et à l'aide de Wireshark, il est capable de visualiser le trafic entre le client le serveur Ubuntu.
+Votre machine hôte veut visualiser le contenu de la page web de votre serveur.  Un pirate se place sur le même réseau et à l'aide de Wireshark, il est capable de visualiser le trafic entre le client le serveur Ubuntu.
 \begin{center}
 \includegraphics[scale=0.7]{./ressource/topReseau.png}
 \end{center}
 
 Même si cette manipulation a déjà été effectuée, il est intéressant de la refaire afin de visualiser la différence entre une connexion en HTTP et en HTTPS.
 
-Voici un exemple de capture réalisée avec Wireshark sous Kali Linux. L’échange entre le client (192.168.1.134) et le serveur (192.168.1.82) y est clairement visible, ce qui souligne l'absence de chiffrement. 
+Voici un exemple de capture réalisée avec Wireshark sous Kali Linux. L’échange entre le client (192.168.1.134) et le serveur (192.168.1.82) y est clairement visible, soulignant l'absence de chiffrement. 
 \begin{center}
 \includegraphics[scale=0.5]{./ressource/captureWireshark}
 \end{center}
@@ -299,7 +299,7 @@ Les certificats TLS permettent de garantir 3 principes de sécurité \footnote{s
 
 \subsection{Base d'un certificat}
 
-La base des certificat repose sur la cryptographie asymétrique (Ex RSA) avec la génération d'une clef publique et d'une clef privée
+La base des certificats repose sur la cryptographie asymétrique (ex: RSA) avec la génération d'une clef publique et d'une clef privée
 
 \begin{center}
 \includegraphics[scale=0.5]{./ressource/clefPubliquePrive}
@@ -326,7 +326,7 @@ Un certificat TLS est composé
 \itemE d'un ensemble d'attributs relatifs au certificat lui même (ex : date d'expiration), au site web (ex : DNS associés au certificat), à l'autorité de certification émettrice du certificat, etc.
 \end{itemize}
 
-Cette ensemble est alors \textbf{signé} par \textbf{une autorité de certification}.La signature assure l’intégrité des éléments composant le certificat.
+Cet ensemble est alors \textbf{signé} par \textbf{une autorité de certification}. La signature assure l’intégrité des éléments composant le certificat.
 
 \begin{center}
 \includegraphics[scale=0.7]{./ressource/certifcatDessin}
@@ -361,7 +361,7 @@ Il est aussi tout a fait possible de créer sa propre \textbf{CA}. Il faudra dan
 
 
 
-\paragraph{Les certificats auto-signé} sont utilisés lors de phase de développement. Ces certificats, pouvant être générés facilement sur un poste de développement avec des outils comme openssl, ne sont signés par aucune autorité de certification.
+\paragraph{Les certificats auto-signé} sont utilisés lors de phases de développement. Ces certificats, pouvant être générés facilement sur un poste de développement avec des outils comme openssl, ne sont signés par aucune autorité de certification.
 
 Cette absence d’autorité de certification de confiance implique une facilité de falsification. Ne jamais faire confiance à un certificat auto-signé que vous n’avez pas vous même créé.
 
@@ -371,8 +371,8 @@ Cette absence d’autorité de certification de confiance implique une facilité
 Dans un cas normal, 
 \begin{enumerate}
 \item Le site web acquiert un certificat d’une autorité de certification
-\item Lorsque l’utilisateur tente d’accèder au site web légitime, il récupère le certificat du site web
-\item Il vérifie sa date de validité, la signature du certificat et enfin que son autorité racine est bien reconnue comme étant de confiance
+\item Lorsque l'utilisateur tente d'accéder au site web légitime, il récupère le certificat du site web
+\item Il vérifie sa date de validité, la signature du certificat et regarde si son autorité racine est de confiance
 \item Si tout est correct, le client a authentifié le serveur web, la communication sécurisée peut être établie et les échanges peuvent commencer.
 \end{enumerate}
 
@@ -467,7 +467,7 @@ Vous allez mettre en place une solution \textbf{https} sur un nginx.  La gestion
 \end{itemize}
 
 \subsubsection{pfSense : Créer une CA}
-Après s'être connecter à l'interface web : 
+Après s'être connecté à l'interface web : 
 
 \begin{enumerate}
 \item Aller dans System $>$ Certificates $>$ Authorities
@@ -514,11 +514,11 @@ Pour créer un certificat signé, il faut bien sûr avoir un CA à disposition e
 \begin{itemize}
 \itemE \textbf{Method} : Choisir Create an Internal Certificate.
 \itemE \textbf{Descriptive Name} : Donner un nom explicite à ce certificat.
-\itemE \textbf{Certificate Authority} : Sélectionnr la CA que vous avez créée dans la liste déroulante.
+\itemE \textbf{Certificate Authority} : Sélectionner la CA que vous avez créée dans la liste déroulante.
 \itemE \textbf{Key Length} : Par défaut, utilisez 2048 bits ou plus.
 \itemE \textbf{Digest Algorithm} : SHA-256 recommandé.
 
-\itemE \textbf{Distinguished Name} : le nom ou l'adresse IP de l'utilisateur ou du serveur
+\itemE \textbf{Distinguished Name} : Le nom ou l'adresse IP de l'utilisateur ou du serveur
 \itemE \textbf{Common Name (CN)} : Utilisez le nom de domaine ou l'adresse IP du site (ex. site.exemple.com ou 192.168.1.1).
 \itemE \textbf{Alternative name} : permet de spécifier plusieurs noms de domaine (ou adresses IP) que le certificat doit sécuriser, en complément ou remplacement du \textbf{Common Name}
 \itemE \textbf{Certificate Type} : sélectionner
@@ -560,7 +560,7 @@ Votre certificat a été signé par une autorité de certification qui n'est pas
 \item Ouvrir les paramètres de certificats dans Firefox :
 \item Aller dans :
 Menu $\Rightarrow$ Paramètres  $\Rightarrow$  Confidentialité et sécurité  $\Rightarrow$ Section Certificats  $\Rightarrow$  Cliquez sur Afficher les certificats.  $\Rightarrow$ Importer votre certificat racine :
-\item Dans l'onglet Autorités, cliquer sur Importer et sélectionnez le  \textbf{certificat de votre CA}
+\item Dans l'onglet Autorités, cliquer sur Importer et sélectionner le  \textbf{certificat de votre CA}
 Lors de l'importation, cocher les cases pour faire confiance à cette CA pour :
 \begin{itemize}
 \itemE Identifier les sites web.

@@ -269,7 +269,7 @@ avec
 
 
 \begin{minipage}{0.65\linewidth}
-Pour les besoins de la formation, les dépôts GiHub présent dans le tableau ci-dessous vont être utilisés.
+Pour les besoins de la formation, les dépôts GitHub présentent dans le tableau ci-dessous vont être utilisés.
 \end{minipage}
 \begin{minipage}{0.34\linewidth}
 \begin{center}
@@ -281,7 +281,7 @@ Pour les besoins de la formation, les dépôts GiHub présent dans le tableau ci
 
 
 \begin{encadre}{GitHub }
-Plateforme web de gestion de code source qui permet d'héberger, collaborer et versionner des projets via Git. Elle est très efficace pour le travail en équipe et pour à l’intégration continue.
+Plateforme web de gestion de code source qui permet d'héberger, collaborer et versionner des projets via Git. Elle est très efficace pour le travail en équipe et pour l’intégration et le déploiement continus.
 \end{encadre}
 
 \footnotesize
@@ -355,7 +355,7 @@ Plateforme web de gestion de code source qui permet d'héberger, collaborer et v
 \normalsize
 
 \begin{minipage}{0.49\linewidth}
-\paragraph{Les ressources pour l'attaque et la protection Wifi} sont directement dans les répertoires \verb?ressource_eleve? correspondant à l'énoncé de l'activité. 
+\paragraph{Les ressources pour l'attaque et la protection Wifi} sont aussi déposé est dans les répertoires \verb?ressource_eleve? correspondant à l'énoncé de l'activité. 
 
 \end{minipage}
 \begin{minipage}{0.49\linewidth}
@@ -377,23 +377,23 @@ Dans le cadre de la formation, nous allons reproduire les services et les élém
 \end{center}
 avec : 
 \begin{itemize}
-\itemE \verb?Serveur Web? : contient des sites de tests, accessible en http ou en https. 
+\itemE \verb?Serveur Web? : contient des sites de tests, accessibles en http ou en https. 
 \itemE Les \verb?pirates? : Machine simulant un pirate
-\itemE \verb?Serveur supervision? : Machine ayant des service pour la centralisation des logs et la supervision des appareils et des services. 
+\itemE \verb?Serveur supervision? : Machine ayant des services pour la centralisation des logs et la supervision des appareils et des services. 
 \itemE \verb?SIEM? : Machine contenant un système de gestion des informations et des événements de sécurité (SIEM)
-\itemE \verb?FW & CA? : Pare-feu permettant faisant fonction de autorité de certification
+\itemE \verb?FW & CA? : Pare-feu faisant fonction d'autorité de certification (CA)
 \end{itemize}
 
-\paragraph{Remarque :} il aurait été plus judicieux de mettre le serveur dans un DMZ mais ce n'est pas le sujet de l'activité.  
+\paragraph{Remarque :} il aurait été plus judicieux de mettre le serveur dans une DMZ mais ce n'est pas le sujet de l'activité.  
 
 
-\paragraph{Pour la majorité des activités proposées} les manipulations peuvent être réalisées sur n'importe quel système d'exploitation, à condition que les éléments suivants soient installés :
+\paragraph{Pour la majorité des activités proposées}n les manipulations peuvent être réalisées sur n'importe quel système d'exploitation, à condition que les éléments suivants soient installés :
 \begin{itemize}
   \itemE \textbf{Docker}
   \itemE un \textbf{interpréteur Python}
 \end{itemize}
 
-Les sections ci-dessous présentent l’installation des environnements Ubuntu et pfSense, sur lesquels une partie des activités a été testée. Il n'est pas nécessaire d'utiliser le même type d'environnement. 
+Les sections ci-dessous présentent l’installation des environnements Ubuntu et pfSense, sur lesquels une partie des activités a été testée. Il n'est pas obligatoire d'utiliser le même type d'environnement. 
 
 
 
@@ -401,7 +401,7 @@ Les sections ci-dessous présentent l’installation des environnements Ubuntu e
 
 \
 \begin{minipage}{0.6\linewidth}
-Le serveur ubuntu est le basé sur la même VM que le serveur Cyber utilisé durant la précédente formation. Le disque de cette VM est présent dans les ressources et est nommé : \verb? ServeurCyber.vmdk? 
+Le serveur Ubuntu est basé sur la même VM que le serveur Cyber utilisé durant la précédente formation. Le disque de cette VM est présent dans les ressources et est nommé : \verb? ServeurCyber.vmdk? 
 
 \end{minipage}
 \begin{minipage}{0.39\linewidth}
@@ -423,7 +423,7 @@ Codename:	jammy
 
 
 \begin{enumerate}
-\item A partir de ce disque et avec Oracle Virtual box, créer une nouvelle machine virtuelle intégrée au LAN (Mode Bridge). Le configuration réseau doit être en \textbf{mode promiscuité,}
+\item A partir de ce disque et avec Oracle Virtual box, créer une nouvelle machine virtuelle intégrée au LAN (Mode Bridge). La configuration réseau doit être en \textbf{mode promiscuité}.
 
 \begin{center}
 \includegraphics[scale=0.4]{./ressource/modeProm.png}
@@ -433,9 +433,9 @@ Cela va permettre de :
 	\itemE Sniffer le trafic réseau entre l'hôte et une VM (par exemple avec Wireshark)
 	\end{itemize}
 	
-Le nom de l'interface réseau ( dans l'image au-dessus \verb?Name wlo1?) dépend du nom de votre carte réseau.	
+Le nom de l'interface réseau (dans l'image au-dessus \verb?Name wlo1?) dépend du nom de votre carte réseau.	
 
-\item L'adressage IP est statique (possibilité de la mettre en dynamique. Elle vous sera donnée durant l'installation de vos machines. Pour la changer, il faut ouvrir le fichier \verb?00-installer-config.yaml? présent dans \verb?/etc/netplan:?
+\item L'adressage IP est statique (possibilité de la mettre en dynamique). Elle vous sera donnée durant l'installation de vos machines. Pour la changer, il faut ouvrir le fichier \verb?00-installer-config.yaml? présent dans \verb?/etc/netplan:?
 	\begin{lstlisting}[style=commande]
 vi /etc/netplan/00-installer-config.yaml
 \end{lstlisting}
@@ -471,14 +471,14 @@ sudo netplan apply
 	\itemE Mot de passe : \verb?choupette?
 	\end{itemize}
 
-\item Il faut s'assurer que toute les containers sont stoppés et supprimés,  pour cela, il faut exécuter les commandes suivantes  : 
+\item Il faut s'assurer que tous les containers soient stoppés et supprimés,  pour cela, il faut exécuter les commandes suivantes  : 
 \begin{lstlisting}[style=commande]
 root@serveurCyber:/home/pviland/monitoringPV/01-stackMonitoring# sudo su
 root@serveurCyber:/home/pviland/monitoringPV/01-stackMonitoring# docker stop $(docker ps -q) && docker rm $(docker ps -aq)
 
 \end{lstlisting}
 
-\item Dans le répertoire de votre choix cloner le dépôt contenant le serveur Web présent \href{https://github.com/PierreViland/00-serveurLemp.git}{https://github.com/PierreViland/00-serveurLemp.git}: 
+\item Dans le répertoire de votre choix, cloner le dépôt contenant le serveur Web présent \href{https://github.com/PierreViland/00-serveurLemp.git}{https://github.com/PierreViland/00-serveurLemp.git}: 
 
 	\begin{lstlisting}[style=commande]
 pviland@serveurCyber:git clone https://github.com/PierreViland/00-serveurLemp.git
@@ -492,7 +492,7 @@ pviland@serveurCyber:git clone https://github.com/PierreViland/00-serveurLemp.gi
 \begin{enumerate}[resume]
 
 
-\item Se placer dans le répertoire \verb?~/00-serveurLemp? et dans la branche main du dépôt git, créer et lancer les containers \footnote{Un document nommé \texttt{r01-dockerPresentation\_P.pdf}  est présent en ressource. IL présente le principe des docker et fourni les commandes de bases }. 
+\item Se placer dans le répertoire \verb?~/00-serveurLemp? et dans la branche  \verb?main? du dépôt git, créer et lancer les containers \footnote{Un document nommé \texttt{r01-dockerPresentation\_P.pdf}  est présent en ressource. Il présente le principe des dockers et donne les commandes de base}. 
 
 
 \begin{lstlisting}[style=commande]
@@ -506,7 +506,7 @@ pviland@serveurCyber:~/00-serveurLemp$ sudo docker compose up -d
   Container nginxPV             Started 4.9s
 \end{lstlisting}
 
-\item Sur une machine de votre choix et le navigateur de votre choix, vérifier sir le site est opérationnel. ATTENTION : il n'est pas encore sécurisé.
+\item Sur une machine de votre choix et le navigateur de votre choix, vérifier si le site est opérationnel. ATTENTION : il n'est pas encore sécurisé.
 
 \begin{center}
 \includegraphics[scale=0.5]{./ressource/exServeurNonsecur.png}
@@ -524,23 +524,23 @@ Pfsense est un système d'exploitation basé sur FreeBsd conçu principalement p
 \includegraphics[scale=0.4]{./ressource/pfsenseLogo}
 \end{center}
 
-En plus des fonctionnalités attendu par un pare-feu (filtrage, VPN, NAT, IDS/IPS, portail captif, ...), il peut permettre gérer de manière très simple les certificats. La version de pfsense utilisé est : 
+En plus des fonctionnalités attendus par un pare-feu (filtrage, VPN, NAT, IDS/IPS, portail captif, ...), il peut permettre de gérer de manière très simple les certificats. La version de pfsense utilisée est : 
 \begin{center}
 \includegraphics[scale=0.7]{./ressource/versionPfsense}
 \end{center}
 
 
-\paragraph{L'installation d'une machine virtuelle Pfsense} est détaillé en annexe \ref{lbl_pfsense}.  Pfsense ne sera pas utilisé comme pare-feu mais comme \textbf{autorité de certification}.  Ainsi, une subtilité dans l'installation est exploitée. Il n'est en effet pas nécessaire d'avoir les deux interfaces réseau opérationnelles en même temps. 
+\paragraph{L'installation d'une machine virtuelle Pfsense} est détaillée en annexe \ref{lbl_pfsense}.  Pfsense ne sera pas utilisé comme pare-feu mais comme \textbf{autorité de certification}.  Ainsi, une subtilité dans l'installation est exploitée. Il n'est en effet pas nécessaire d'avoir les deux interfaces réseau opérationnelles en même temps. 
 \begin{itemize}
 \itemE Pour l'installation, seul le port WAN du pare-feu est connecté au réseau (avec internet). Le port LAN n'est pas connecté.
-\itemE Une fois l'installation terminée. Le port WAN est déconencté. Le port LAN est connecté au réseau
+\itemE Une fois l'installation terminée, le port WAN est déconnecté. Le port LAN est connecté au réseau
 \end{itemize}
 
 \begin{center}
 \includegraphics[scale=0.7]{./ressource/installPfense.png}
 \end{center}
 
-Ainsi, l'interface d'administration de Pfsense est accessible depuis votre LAN sans avoir à gérer des règles de filtrage. Pour tester son fonctionnement, il suffit d'aller sur la page de connexion de pfsense via l'interface web: 
+Ainsi, l'interface d'administration de Pfsense est accessible depuis votre LAN sans avoir à gérer des règles de filtrage. Pour tester son fonctionnement, il suffit d'aller sur la page de connexion de Pfsense via l'interface web: 
 
 
 \begin{center}
@@ -566,7 +566,7 @@ Vous avez maintenant un environnement opérationnel
 \begin{minipage}{0.6\linewidth}
 Pour rappel : 
 \begin{itemize}
-\itemE \verb?kali? est une distribution spécialisée dans le pentest et la cybersécurité. Toutes les informations se trouvent sur  \href{https://www.kali.org/}{leur site}. Kali n'est pas la seule distribution spécialisée dans la cybersécurité. On peut citer \verb?Arch Linux?.
+\itemE \verb?Kali? est une distribution spécialisée dans le pentest et la cybersécurité. Toutes les informations se trouvent sur  \href{https://www.kali.org/}{leur site}. \verb?Kali? n'est pas la seule distribution spécialisée dans la cybersécurité. On peut citer \verb?Arch Linux?.
 \itemE Les identifiants de l'un des comptes présents sur la VM sont: 
 	\begin{itemize}
 	\item[+] Login : \verb?kali?
@@ -579,6 +579,7 @@ Pour rappel :
 \includegraphics[scale=0.4]{./ressource/logoKali}
 \end{center}
 \end{minipage}
+\vspace{0.25cm}
 
 La machine virtuelle nommée \verb?Kali? est présente dans le répertoire \verb?ressource_eleve/VM/?. La version utilisée est la suivante :
 
@@ -594,7 +595,7 @@ Codename:       kali-rolling
 \end{lstlisting}
 \section{Conclusion}
 
-Dans cette partie, nous avons mis en place l'environnement de travail. Dans la prochaine activité, il va falloir le sécurisé.
+Dans cette partie, nous avons mis en place l'environnement de travail. Dans la prochaine activité, il va falloir la sécuriser.
 
 \clearpage
 \appendix
@@ -652,7 +653,7 @@ Pour l'installation de Pfsense, il suffit de suivre les directive ci-dessous :
 \includegraphics[scale=0.5]{./ressource/VM_network3.png}
 \end{center}
 
-\paragraph{Une foix cette opération terminée,} vous pouvez lancer la machine.
+\paragraph{Une fois cette opération terminée,} vous pouvez lancer la machine.
 
 \begin{center}
 \includegraphics[scale=0.5]{./ressource/VM_network4.png}
