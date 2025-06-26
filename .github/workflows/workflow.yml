@@ -39,6 +39,10 @@ jobs:
           - folder: act05-gestionLog
             base: act05-gestionLog
             target: 01-syteme
+            
+          - folder: act07-stackoverflow
+            base: act07-stackoverflow
+            target: 01-syteme  
 
           - folder: act06-Wifi/_SeqIntro-ZenithCiel
             base: _SeqIntro-ZenithCiel
