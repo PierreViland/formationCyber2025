@@ -682,12 +682,13 @@ pviland@serveurCyber:~/00-serveurLemp$ sudo docker compose up -d
 \includegraphics[scale=0.7]{./ressource/nginxHttps}
 \end{center}
 
+\newpage
 \subsection{Explication de la configuration}
 Pour pouvoir lancer nginx en mode sécurisé, il faut effectuer les modifications suivantes  
 
-\paragraph{Modification du docker-compose.yml}
+\paragraph{Modification du docker-compose.yml} \ 
 
-Pour rappel  
+Pour rappel  : 
 \begin{encadre}{Un fichier \verb?docker-compose.yml?}
  est un fichier de configuration qui permet de définir et gérer plusieurs conteneurs Docker à l’aide d’un seul fichier, en spécifiant leurs images, volumes, réseaux, et dépendances.
 \end{encadre}
@@ -716,7 +717,7 @@ volumes:
 
 \paragraph{Modification du fichier default.conf} \ 
 
-Le fichier \verb?default.conf? contient la configuration par défaut du serveur \textbf{Nginx}. Il est disponible aussi (grâce au volume partagé) dans le répertoire \verb?./.docker/nginx/conf.d/? de la machine hôte.  Les modification principales sont : 
+Le fichier \verb?default.conf? contient la configuration par défaut du serveur \textbf{Nginx}. Il est disponible aussi (grâce au volume partagé) dans le répertoire \verb?./.docker/nginx/conf.d/? de la machine hôte.  Les modifications principales sont : 
 
 \begin{itemize}
 \itemE La redirection permanente du http vers le https. \textit{ligne 8}
@@ -729,14 +730,14 @@ où
 \begin{itemize}
 \item[+] \verb?301? : indique une redirection permanente
 \item[+] \verb?host? : représente le nom l'IP  (ex. 192.168.1.30) ou l'URL
-\item[+]  \verb?request_uri? : représente le partie chemin + la page + requête éventuelle (\textit{mapage.html?var=1})
+\item[+]  \verb?request_uri? : représente la partie chemin + la page + requête éventuelle (\textit{mapage.html?var=1})
 \end{itemize}
 
 \begin{itemize}
 \itemE Mettre le serveur à l'écoute sur le port 443 en utilisant SSL. \textit{ligne 12 à 22}
 
 	\begin{itemize}
-	\item[+] Activation des connexion sur l'addresse IP 192.168.1.30 en IPv4 et IPV6 en HTTP/2 
+	\item[+] Activation des connexions sur l'adresse IP 192.168.1.30 en IPv4 et IPV6 en HTTP/2 
 	
 	\begin{lstlisting}[style=commande]
 	listen 443 ssl http2;  # Activation du support HTTP/2 pour de meilleures performances
@@ -753,7 +754,7 @@ où
          ssl_certificate /etc/nginx/ssl/serveur_PV_30.crt;
          ssl_certificate_key /etc/nginx/ssl/serveur_PV_30.key;
 	\end{lstlisting}
-	Les chemins spécifiés ci-dessous doivent correspondre au volume partagé  décrit ligne 11 du \verb?docker-compose.yml?.
+	Les chemins spécifiés ci-dessus doivent correspondre au volume partagé  décrit ligne 11 du \verb?docker-compose.yml?.
 	\end{itemize}
 
 \end{itemize}
@@ -762,7 +763,7 @@ où
 Dans ce deuxième exemple, vous allez utiliser  :
  \begin{itemize}
  \itemE \textbf{Openssl} pour la génération des certificats
- \itemE \textbf{Apache} pour la serveur Web \footnote{Le dépôt s’appelait initialement 00-serveurLemp, en référence à la \textbf{stack LEMP} (Linux, Nginx, MySQL, PHP). Une branche dédiée a ensuite été créée pour illustrer l’utilisation du HTTPS avec un serveur Apache, formant ainsi un serveur \textbf{LAMP}. Toutefois, le nom du dépôt est resté inchangé.}
+ \itemE \textbf{Apache} pour le serveur Web \footnote{Le dépôt s’appelait initialement 00-serveurLemp, en référence à la \textbf{stack LEMP} (Linux, Nginx, MySQL, PHP). Une branche dédiée a ensuite été créée pour illustrer l’utilisation du HTTPS avec un serveur Apache, formant ainsi un serveur \textbf{LAMP}. Toutefois, le nom du dépôt est resté inchangé.}
  \end{itemize}
 
 Avant de commencer, il faut stopper les containers précédemment utilisés. 
@@ -868,7 +869,7 @@ avec
 \itemE \verb?ca.key? : clé privée de la CA
 \itemE \verb?certificatSigne.crt? : certificat signé
 \end{itemize}
-\paragraph{Remarque } :  Le \textbf{SAN} pour Subject Alternative Name permet de spécifier des noms supplémentaires ou des adresses IP pour lequel le certificat est valide. C'est devenu obligatoire pour la plus part des navigateurs.  Nous verrons dans la section suivante la manière des les configurer.
+\paragraph{Remarque } :  Le \textbf{SAN} pour Subject Alternative Name permet de spécifier des noms supplémentaires ou des adresses IP pour lesquels le certificat est valide. C'est devenu obligatoire pour la plupart des navigateurs.  Nous verrons dans la section suivante la manière des les configurer.
 
 
 \paragraph{L'ensemble des fichiers } généré est 
@@ -881,12 +882,12 @@ avec
 
 \subsubsection{Openssl : script}
 \label{lbl_script}
-Un script vous est proposé dans le répertoire \verb?openssl? présent dans votre répertoire de travail \verb?00-serveurLemp?. il permet de générer : 
+Un script vous est proposé dans le répertoire \verb?openssl? présent dans votre répertoire de travail \verb?00-serveurLemp?. Ll permet de générer : 
 \begin{itemize}
 \itemE Une clef privée pour un CA
 \itemE Un certificat pour un CA
 \itemE Une clef privée pour un serveur
-\itemE Un certificat pour le serveur signée par le CA.
+\itemE Un certificat pour le serveur signé par le CA.
 \end{itemize}
 
 \paragraph{Configuration du script} \ 
@@ -937,14 +938,14 @@ Vous avez normalement à disposition (au minium) les fichiers suivants
 \begin{itemize}
 \itemE le certificat du CA (.crt)
 \itemE la clef privée du CA (.key)
-\itemE le certificat signée du serveur (.crt)
+\itemE le certificat signé du serveur (.crt)
 \itemE la clef privée du serveur
 \end{itemize}
 
 \subsubsection{Configuration }
 
 
-\paragraph{Configuration des containers} via le  \verb?docker-compose.yml? . il doit contenir les lignes suivantes 
+\paragraph{Configuration des containers} via le  \verb?docker-compose.yml? . Il doit contenir les lignes suivantes 
 
 \begin{lstlisting}[style=commande]
   6     ports:
@@ -959,7 +960,7 @@ Vous avez normalement à disposition (au minium) les fichiers suivants
 où 
 \begin{itemize}
 \itemE \textbf{Ligne 8} : redirection du port d'écoute https : 443 sur le container 
-\itemE \textbf{Ligne 10} : monte le répertoire locale contenant les fichiers de configuration de apache dans le répertoire du conflagration du container apache
+\itemE \textbf{Ligne 10} : monte le répertoire locale contenant les fichiers de configuration de apache dans le répertoire de configuration du container apache
 \itemE \textbf{Ligne 12} : idem mais pour le répertoire contenant la clef et le certificat du serveur 
 \end{itemize}
 
@@ -973,7 +974,7 @@ Le montage des sources du site web se réalise de la même manière que précéd
 \includegraphics[scale=0.5]{./ressource/apacheGitHttpsConf}
 \end{center}
 
-Une fois ouvert, il est possible l'observer la redirection permanente de http vers https  ligne 6.
+Une fois ouvert, il est possible d'observer la redirection permanente de http vers https  ligne 6.
 \begin{lstlisting}[style=commande]
   5     # Redirection de HTTP vers HTTPS
   6     Redirect permanent / https:/192.168.1.30/
@@ -1005,29 +1006,29 @@ pviland@serveurCyber:~/00-serveurLemp$ sudo docker compose up -d
 \includegraphics[scale=0.7]{./ressource/apacheHttps}
 \end{center}
 
-En cliquant sur le cadenas à coté de l'URL, il est possible de voir les détails du CA (que l'on a donné durant l'exécution du script.)
+En cliquant sur le cadenas à coté de l'URL, il est possible de voir les détails du CA (fourni durant l'exécution du script.)
 
 
 
 \section{Certificat d'une CA officielle}
 
 \subsection{Autorités de certification publiques }
-Pour l'instant, seul les certificat signés par une CA personnelle ont été utilisé : 
+Pour l'instant, seul les certificats signés par une CA personnelle ont été utilisé : 
 \begin{itemize}
 \itemE Notre CA personnel a signé nos propres certificats. 
-\itemE Nous devons installé manuellement le certificat du CA dans les navigateurs.
+\itemE Nous devons installer manuellement le certificat du CA dans les navigateurs.
 \end{itemize} 
 
 \vspace{0.5cm}
 
-Cette solution reste très utilisée et pratique dans des environnements privées et ou d'entreprises. Par contre, il y a deux inconvénients : 
+Cette solution reste très utilisée et pratique dans des environnements privées et/ou d'entreprises. Par contre, il y a deux inconvénients : 
 \begin{itemize}
 \itemE Les certificats ne sont pas reconnus publiquement
 \itemE Si la CA est compromise tous les certificats signés par cette dernière deviennent potentiellement compromis.
 \end{itemize}
 
-
-Pour aplier à ces inconvénient, il est possible d'obtenir des certificats par une CA publique. Il faut pour cela :  
+\vspace{0.25cm}
+Pour palier à ces inconvénients, il est possible d'obtenir des certificats par une CA publique. Il faut pour cela :  
 \begin{itemize}
 \itemE Avoir un nom de domaine et avoir accès au serveur associé.
 \itemE Choisir le type de certificat
@@ -1091,7 +1092,7 @@ La commande suivante permet de voir la demande de challenge et la réponse atten
 sudo certbot certonly --standalone --debug-challenges -v
 \end{lstlisting}
 
-Après avoir indiqué le nom de domaine (par exemple \verb?monsuperdomaine.com?, la commande affiche une sortie un retour similaire à : 
+Après avoir indiqué le nom de domaine (par exemple \verb?monsuperdomaine.com?), la commande affiche un retour similaire à : 
 
 \begin{lstlisting}[style=commande]
 URL:
@@ -1116,18 +1117,18 @@ Cette sortie doit correspondre exactement à la valeur attendue affichée préc�
 \vspace{0.5cm}
 Si vous avez fini la demande de certificat, certboot a créé sur votre serveur une clef privée et un certificat de type \textbf{DV}.
 
-\paragraph{D'autres commandes} existent permettant d'administrer les certificats avec let's encrypt 
+\paragraph{D'autres commandes} existent, permettant d'administrer les certificats avec let's encrypt 
 \begin{itemize}
-\itemE Renouvellement certificats (validité 5 jours)
+\itemE Renouvellement certificats (validité 90 jours)
 \begin{lstlisting}[style=commande]
 sudo certbot renew
 \end{lstlisting}
-\itemE Affiche la liste des certificats actifs 
+\itemE Affichage de la liste des certificats actifs 
 \begin{lstlisting}[style=commande]
 certbot certificates
 \end{lstlisting}
 
-\itemE Supprime les certificats
+\itemE Suppression des certificats
 \begin{lstlisting}[style=commande]
 certbot delete --cert-name votredomaine.com
 \end{lstlisting}
@@ -1150,7 +1151,7 @@ certbot delete --cert-name votredomaine.com
 \begin{center}
 \includegraphics[scale=0.5]{./ressource/mailRssi}
 \end{center}
-\textbf{Néanmoins, cette démarche reste techniquement intéressante et mérite d'être présentée et testé en local}
+\textbf{Néanmoins, cette démarche reste techniquement intéressante et mérite d'être présenté et testé en local}
 
 \paragraph{Présentation}
 
@@ -1167,7 +1168,7 @@ Vous recevez un mail provenant de l'académie vous invitant à répondre à une 
 Le navigateur ne signale aucun avertissement, car le site utilise le protocole HTTPS.  Pourtant, vous êtes sur un faux site.
 
 \paragraph{Remarque}  
-Des efforts sur le nom de domaine auraient pu être faits, par exemple en utilisant un nom comme \verb?webmail.ac-rennes.fr?, mais c'est juste pour la preuve de concept.
+Des efforts sur le nom de domaine auraient pu être faits, par exemple en utilisant un nom comme \verb?webmail.ac-rennnes.fr?, mais c'est juste pour la preuve de concept.
 
 
 \paragraph{Explication}
@@ -1190,7 +1191,7 @@ Key is saved at:         /etc/letsencrypt/live/ciel-broceliande.myasustor.com/pr
 \end{lstlisting}    
 
 \begin{itemize}
-\itemE Vous créer sur votre serveur un site web ressemblant à un site connu par exemple en utilisant des commande de récupération de site : 
+\itemE Vous créez sur votre serveur un site web ressemblant à un site connu par exemple en utilisant des commandes de récupération de site : 
 \begin{lstlisting}[style=commande]
 httrack "http://www.exemple.com/page1.html" -O "/chemin/vers/dossier/local"
 
@@ -1199,7 +1200,7 @@ wget -p -k -E -H -nd -P "./" -i url.txt
 
 
 
-\itemE Vous récupérez les login et mot de passe
+\itemE Vous récupérez les logins et mots de passe
 \end{itemize}
 
 
@@ -1211,19 +1212,19 @@ La mise en place de cette manipulation est disponible sur \textbf{github} à l'a
 \href{https://github.com/PierreViland/httpsPhishingExemple/}{https://github.com/PierreViland/httpsPhishingExemple/}
 
 \paragraph{Conclusion} \ 
-Ce n'est pas par ce que vous avez une site en \textbf{HTTPS} que vous devez en avoir une confiance aveugle et absolue.
+Ce n'est pas parce que vous avez une site en \textbf{HTTPS} que vous devez en avoir une confiance aveugle et absolue.
 
 
 
 \section{HTTPS sur un serveur object connectés}
 
-Jusqu'à présent, nous avons uniquement abordé la génération de certificats pour des services connues (Nginx, Apache). Cependant, il est également possible de mettre en place une authentification mutuelle entre le serveur et les clients. Cette solution est souvent utilisée dans le cas des objets connectés, où le serveur souhaite vérifier l'authenticité des clients. 
+Jusqu'à présent, nous avons uniquement abordé la génération de certificats pour des services connus (Nginx, Apache). Cependant, il est également possible de mettre en place une authentification mutuelle entre le serveur et les clients. Cette solution est souvent utilisée dans le cas des objets connectés, où le serveur souhaite vérifier l'authenticité des clients. 
 
 Dans l'exemple ci-dessous des capteurs filaires et non filaires envoient des données par exemple la température à un serveur. Il faut que 
 \begin{itemize}
-\itemE Le serveur identifie les capteurs pour empêcher l'envoie de fausses informations par un serveur pirate
+\itemE Le serveur identifie les capteurs pour empêcher l'envoi de fausses informations par un serveur pirate
 \itemE Le capteur s'assure d'envoyer leurs données au bon serveur
-\itemE Les données doivent être envoyer de manière confidentielle.
+\itemE Les données doivent être envoyées de manière confidentielle
 \end{itemize}
 
 \begin{center}
@@ -1239,12 +1240,12 @@ Un exemple de mise en place de ce système est présent sur le dépôt :
 \paragraph{Remarque préliminaire} : Ce dépôt contient des programmes client pour l’ESP32 ainsi que des programmes client en Python destinés à des machines standards. Ce code pourra être davantage exploité dans une séquence sur la sécurité des IoT plus particulièrement celle du Wifi.  
 
 \paragraph{Tests} \ 
-Pour réaliser les tests, il est nécessaire de stopper les containers précédemment créer.
+Pour réaliser les tests, il est nécessaire de stopper les containers précédemment créés
 
 
 \subsection{En http}
 
-Avant tout chose, il faut cloner le dépôt dans un répertoire de travail 
+Avant toute chose, il faut cloner le dépôt dans un répertoire de travail 
 \begin{lstlisting}[style=commande]
 $ git clone https://github.com/PierreViland/serveurSimpleIot
 \end{lstlisting}
@@ -1266,7 +1267,7 @@ Dans le répertoire \verb?00-base_http?, il faut ensuite:
 	\item[+] ligne 8 : \verb?server_ip = "192.168.1.30"? $\Rightarrow$ Adresse ip du serveur
 	\item[+] ligne 11 : \verb?device_id = "device00"  ? $\Rightarrow$ nom de votre capteur
 	\end{itemize}
-\itemE lancer ensuite le client.
+\itemE Lancer ensuite le client.
 \end{itemize}
 
 
@@ -1275,16 +1276,16 @@ Vous devez voir des échanges entre le client et le serveur.
 \includegraphics[scale=0.5]{./ressource/exServeurIotHttp}
 \end{center}
 
-Sur Wireshark, il est possible d'observer les échanges non chiffré de la communication (normale c'est en http). 
+Sur Wireshark, il est possible d'observer les échanges non chiffré de la communication (c'est en http). 
 \begin{center}
 \includegraphics[scale=0.4]{./ressource/resWireshark}
 \end{center}
 
-\paragraph{Allez plus loin}. Le répertoire \verb?04-falsificationTrame/capture? contient des script permettant de se faire passer pour un device en falsifiant l'adresse IP et l'adresse MAC. Cet exemple est développé dans une séquence dédiées à la sécurité des Iot.
+\paragraph{Allez plus loin}. Le répertoire \verb?04-falsificationTrame/capture? contient des script permettant de se faire passer pour un device en falsifiant l'adresse IP et l'adresse MAC. Cet exemple est développé dans une séquence dédiée à la sécurité des Iot.
 
 \subsection{En https}
 
-L'ensemble des sources concernant la mise en place du https dans le cadre d'un serveur Iot est présent dans le répertoire \verb?01-https? Cette fois il faut \textbf{générer des certificats aussi bien pour le client que pour le serveur}.
+L'ensemble des sources concernant la mise en place du https dans le cadre d'un serveur Iot est présent dans le répertoire \verb?01-https? Cette fois, il faut \textbf{générer des certificats aussi bien pour le client que pour le serveur}.
 
 \vspace{0.5cm}
 Il est possible d'utiliser pfsense. Mais pour automatiser ces actions, il vous est proposé un script exploitant  \textbf{OpenSSL}. Il s'appelle \verb?geneCertificat.sh? et est présent dans le répertoire \verb?certificat?
@@ -1380,8 +1381,8 @@ M	01-https/certificat/geneCertificat.sh
 Basculement sur la branche 'clientTls1.2'
 Votre branche est à jour avec 'origin/clientTls.
 \end{lstlisting}
-vous allez imposer l'utilisation de \textbf{TLS v1.2} au client. De la manière dont le serveur est configuré, il va être accepter la connexion et donc utliser Tls v1.2. Cette version est normalement obsolète. Mais, pour des manipulations, elle a l'avantage de procéder des 'problèmes'. Par exemple, les certificats sont transmis en claire. 
-Vous pouvez le faire observer par les élèves comme montrer ci-dessous.
+vous allez imposer l'utilisation de \textbf{TLS v1.2} au client. De la manière dont le serveur est configuré, il va accepter la connexion et donc utiliser Tls v1.2. Cette version est normalement obsolète. Mais, pour des manipulations, elle a l'avantage d'avoir des 'failles'. Par exemple, les certificats sont transmis en claire. 
+Vous pouvez les observer comme montré ci-dessous.
 
 \begin{center}
 \includegraphics[scale=0.6	]{./ressource/tls1-2_Cert}

@@ -293,16 +293,18 @@ Vous voulez savoir si votre serveur HTTP dépasse un certain taux de requêtes p
 
 \vspace{0.5cm}
 \begin{minipage}{0.75\linewidth}
-\paragraph{Solutions alternatives : Zabbix}. C'est est une autre solution de surveillance open-source utilisée pour collecter des métriques, surveiller des applications et des infrastructures réseau en temps réel, ainsi que pour envoyer des alertes en cas de problèmes.
+\paragraph{Solutions alternatives : Zabbix}. C'est  une autre solution de surveillance open-source utilisée pour collecter des métriques, surveiller des applications et des infrastructures réseau en temps réel, ainsi que pour envoyer des alertes en cas de problèmes.
 \end{minipage}
 \begin{minipage}{0.25\linewidth}
 \begin{center}
 \includegraphics[scale=0.25]{./ressource/zabbix.png}
 \end{center}
 \end{minipage}
-\vspace{0.25cm}
+
+\vspace{0.5cm}
+
  Il permet de suivre les performances des systèmes, des serveurs et des équipements réseau grâce à des agents ou à des mécanismes de récupération comme SNMP. 
-Comparé à Prometheus, Zabbix a une approche plus centralisé et traditionnelle ce qui le rend moins performant dans des environnements de \textbf{micoservices} et de conteneurs. Il sera étudié dans une prochaine activité.
+Comparé à Prometheus, Zabbix a une approche plus centralisée et traditionnelle ce qui le rend moins performant dans des environnements de \textbf{microservices} et de conteneurs. Il sera étudié dans une prochaine activité.
 
 \begin{encadre}{Microservices}
 Architecture logicielle où une application est décomposée en plusieurs services indépendants responsable d'une fonctionnalité spécifique. Ces services communiquent généralement entre eux via des API et peuvent être développés, déployés, et mis à l'échelle de manière autonome.
@@ -394,7 +396,7 @@ Vous pouvez créer un tableau de bord montrant :
 
 \section{Dépôts utilisée}
 
-Durant cette activités, vous allez utiliser trois dépôts : 
+Durant cette activité, vous allez utiliser trois dépôts : 
 
 \begin{center}
  \rule{0.75\linewidth}{1pt}
@@ -421,7 +423,7 @@ Durant cette activités, vous allez utiliser trois dépôts :
 \begin{itemize}
 \itemE Dépôt contentant les containers pour les \textbf{serveurs Nginx et apache} : 
 \end{itemize}
-\href{git@github.com:PierreViland/00-serveurLemp.git}{git@github.com:PierreViland/00-serveurLemp.git}
+\href{https://github.com/PierreViland/00-serveurLemp.git}{git@github.com:PierreViland/00-serveurLemp.git}
 \end{minipage}
 \begin{minipage}{0.39\linewidth}
 \begin{center}
@@ -473,7 +475,7 @@ puis dans le répertoire \verb?01-stackMonitoring?, vous trouverez les le fichie
 
 Nous allons nous intéresser dans un premier temps à \textbf{Prometheus et graffana}. Le système fonctionne de la sorte:
 \begin{itemize}
-\itemE \textbf{Collecte de métriques} : Prometheus interroge périodiquement (scrape) des endpoints HTTP exposant des métriques au format spécifique, souvent via des exportateurs (pour des services comme Nginx, MySQL, etc.
+\itemE \textbf{Collecte de métriques} : Prometheus interroge périodiquement (scrape) des endpoints HTTP exposant des métriques au format spécifique, souvent via des exportateurs (pour des services comme Nginx, MySQL, etc).
 \itemE \textbf{Stockage des données} : Les métriques collectées sont stockées dans une base de données locale, optimisée pour les séries temporelles.
 \itemE \textbf{Requêtes} : Prometheus permet aux utilisateurs d’interroger les données via son langage de requêtes PromQL (Prometheus Query Language) pour obtenir des informations et des statistiques détaillées.
 \itemE \textbf{Alertes } : Il peut aussi être configuré pour envoyer des alertes en cas de seuils dépassés via des alertes Prometheus ou Alertmanager.
@@ -499,9 +501,9 @@ URL (par exemple http://localhost:9113/metrics) à laquelle Prometheus accède p
 
 \subsection{Exemple simple : serveur de température}
 
-Dans une premier, vous allez exploiter \textbf{le serveur maison Iot}. L'objectif est de récupérer des informations sur l'état du serveur, telles que le nombre de connexions ou le temps moyen entre chaque connexion.
+Dans un premier temps, vous allez exploiter \textbf{le serveur maison Iot}. L'objectif est de récupérer des informations sur l'état du serveur, telles que le nombre de connexions ou le temps moyen entre chaque connexion.
 
-En résumé, le système mise en place est le suivant
+En résumé, le système mis en place est le suivant
 
 \begin{center}
 \includegraphics[scale=0.7]{./ressource/schemIotPrometeus.drawio.png}
@@ -518,14 +520,14 @@ avec
 
 
 \vspace{0.5cm}
-Si ce n'est pas déjà fait, vous pouvez le récupérer le client et le serveur python (comme dans l'activité précédente) dans le dépôt  
+Si ce n'est pas déjà fait, vous pouvez récupérer le client et le serveur python (comme dans l'activité précédente) dans le dépôt  
 \begin{itemize}
 \itemE \href{https://github.com/PierreViland/serveurSimpleIot.git}{https://github.com/PierreViland/serveurSimpleIot.git}
 \end{itemize}
 
 
 \vspace{0.5cm}
-Vous pouvez soit utiliser la version HTTP (répertoire \verb?03-base_http+Monitoring? soit la version HTTPS (répertoire \verb?04-https+monitoring?)\footnote{Au 21/05/2025, il n'est pas encore créer $\Rightarrow$ A faire}. Dans tous les cas, les deux fichiers à exploiter sont : 
+Vous pouvez soit utiliser la version HTTP (répertoire \verb?03-base_http+Monitoring? soit la version HTTPS (répertoire \verb?04-https+monitoring?). Par soucis de simplicité, la version HTTP est testée dans cet exemple. Dans tous les cas, les deux fichiers à exploiter sont : 
 
 \begin{itemize}
 \itemE le serveur : \verb?00-serveurPyhton.py?
@@ -539,7 +541,7 @@ Vous pouvez soit utiliser la version HTTP (répertoire \verb?03-base_http+Monito
 Dans le code python du serveur : 
 
 \begin{itemize}
-\itemE Un exportateur est crée via un serveur HTTP en début de fichier
+\itemE Un exportateur est créé via un serveur HTTP en début de fichier
 \end{itemize}
 
 \begin{lstlisting}[style=commande]
@@ -670,9 +672,9 @@ http_temps_reponse_count 47.0
 
 \subsection{Lancement de la monitoring stack}
 
-Nous allons maintenant lancer l'ensemble des services de monitoring. Pour rappel L'ensemble des fichiers relatifs à la "monitoring stack" est présent dans le répertoire \ \textbf{01-stackMonitoring} du dépôt  \href{https://github.com/PierreViland/monitoringPV.git}{https://github.com/PierreViland/monitoringPV.git}
+Nous allons maintenant lancer l'ensemble des services de monitoring. Pour rappel, l'ensemble des fichiers relatifs à la "monitoring stack" est présent dans le répertoire \ \textbf{01-stackMonitoring} du dépôt  \href{https://github.com/PierreViland/monitoringPV.git}{https://github.com/PierreViland/monitoringPV.git}
 
-Pour lancer correctement la monitoring stack, Il est nécessaire de regarder si le fichier de de configuration de Prometheus nommé \verb?prometheus.yml? est correct :
+Pour lancer correctement la monitoring stack, il est nécessaire de regarder si le fichier  de configuration de Prometheus nommé \verb?prometheus.yml? est correct :
 
 Il doit contenir au minimum les lignes suivantes (pour scraper les métriques de notre serveur maison) : 
 \begin{lstlisting}[style=commande]
@@ -724,7 +726,7 @@ avec
  \rule{0.75\linewidth}{1pt}
  \end{center}
 
-Si tous c'est bien déroulé, vous devez avoir une fenêtre similaire à celle ci-dessous.
+Si tout s'est bien déroulé, vous devez avoir une fenêtre similaire à celle ci-dessous.
 
 \begin{center}
 \includegraphics[scale=0.7]{./ressource/prometheus}
@@ -744,7 +746,7 @@ Il faut juste faire attention au port
 
 
 \subsection{Grafana}
-Vous avez vu précédemment que \textbf{Prometheus} était adapté pour récupérer toutes sortes de métrique. \textbf{Grafana} va permettre d'afficher des  tableau de bord ("dashbord") pour afficher sour forme de graphique des rapports de monitoring. 
+Vous avez vu précédemment que \textbf{Prometheus} était adapté pour récupérer toutes sortes de métrique. \textbf{Grafana} va permettre d'afficher des  tableaux de bord ("dashbord") pour afficher sous forme de graphique des rapports de monitoring. 
 
 
 
@@ -912,9 +914,9 @@ alerting:
         - targets:
             - 'alertmanager:9093'
 \end{lstlisting}
-Ces lignes configure Prometheus pour qu’il envoie des alertes à un serveur "Alertmanager" qui écoute sur le port 9093 dès qu'une règle d'alerte est déclenchée.
+Ces lignes configurent Prometheus pour qu’il envoie des alertes à un serveur "Alertmanager" qui écoute sur le port 9093 dès qu'une règle d'alerte est déclenchée.
 
-\paragraph{le fichier docker-compose.yml} doit contenir les lignes permettant de lancer le container \verb?alertmanager?
+\paragraph{Le fichier docker-compose.yml} doit contenir les lignes permettant de lancer le container \verb?alertmanager?
 
 \begin{center}
 \includegraphics[scale=0.4]{./ressource/dockerAlert}
