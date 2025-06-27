@@ -54,3 +54,6 @@ Ensemble d’activités liées aux **attaques et à la protection du Wifi et de 
 - `act01-attaqueWifi` : Attaque du Wifi
 - `act02-authentificationDevice` : Sécurisation de la communication
 - `act03-dumpDevice` : Récupération des clefs
+
+### act07-stackoverflow
+Activité sur les **buffer overflow**
